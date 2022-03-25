@@ -6,12 +6,16 @@ target/
 
 ### STS ###
 .apt_generated
+.apt_generated_tests
+.mvn
 .classpath
 .factorypath
 .project
 .settings
 .springBeans
 .sts4-cache
+.classpath
+.factorypath
 
 ### IntelliJ IDEA ###
 .idea
