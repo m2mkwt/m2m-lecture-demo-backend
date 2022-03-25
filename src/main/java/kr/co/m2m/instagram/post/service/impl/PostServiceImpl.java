@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.m2m.framework.web.model.ResultListModel;
 import kr.co.m2m.instagram.post.mapper.PostMapper;
 import kr.co.m2m.instagram.post.model.PostVO;
 import kr.co.m2m.instagram.post.service.PostService;
@@ -33,5 +34,13 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostVO> select(PostVO vo){
 		return postMapper.selectPost(vo);
+	}
+	
+	@Override
+	public ResultListModel<PostVO> selectAll(PostVO vo){
+		ResultListModel<PostVO> rv = new ResultListModel<>();
+		rv.setResultList(postMapper.selectPostAll(vo));
+		rv.setMessage("SUCCESS");
+		return rv;
 	}
 }

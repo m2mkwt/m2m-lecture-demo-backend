@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.m2m.instagram.mapper.PostMapper">
+<mapper namespace="kr.co.m2m.instagram.post.mapper.PostMapper">
 	<insert id="insertPost">
 		insert into m2mDemoDB.dbo.post values (${memberidx},#{text},getDate())
 	</insert>
@@ -10,6 +10,9 @@
 	<update id="updatePost">
 		update dbo.post set text = #{text} where idx = ${idx}
 	</update>
+	<select id="selectPostAll" resultType="kr.co.m2m.instagram.post.model.PostVO">
+		select * from dbo.post
+	</select>
 	<select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO">
 		select * from m2mDemoDB.dbo.post where memberidx = ${memberidx}
 	</select>
