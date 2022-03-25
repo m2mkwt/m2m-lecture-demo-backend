@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="kr.co.m2m.instagram.mapper.CommentMapper">
+ 
+    <select id="commentCount" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM COMMENT
+    </select>
+    
+    <select id="commentList" resultType="kr.co.m2m.instagram.model.CommentVO">
+        SELECT
+            *
+        FROM COMMENT
+    </select>
+    
+    
+    <insert id="commentInsert" parameterType="kr.co.m2m.instagram.model.CommentVO">
+        INSERT INTO
+        COMMENT (CNO, BNO, CONTENT, WRITER, REG_DATE)
+        VALUES(#{cno},#{bno},#{content},#{writer},now()) 
+    </insert>
+    
+    <update id="commentUpdate" parameterType="kr.co.m2m.instagram.model.CommentVO">
+        UPDATE COMMENT
+            SET
+            CONTENT = #{content}
+        WHERE CNO = #{cno}
+    </update>
+    
+    <delete id="commentDelete" parameterType="int">
+        DELETE FROM COMMENT WHERE CNO = #{cno}
+    </delete>
+</mapper>
