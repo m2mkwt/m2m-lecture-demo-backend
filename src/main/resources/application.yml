@@ -1,0 +1,88 @@
+# Servlet 설정.
+server:
+  port: 8090
+  servlet:
+    context-path: '/ '
+    
+# Spring 설정.
+spring:
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    password: m2makstp!
+    url: jdbc:sqlserver://192.168.0.85:1433;instanceName=instagram
+    username: m2mtest01
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 5MB
+      max-request-size: 10MB
+  ## Spring-security 관련설정
+  security:
+    user:
+      name: test
+      password: test
+      
+  ## Redis 관련설정
+  redis:
+    ## host: 127.0.0.1
+    host: 192.168.0.89
+    port: 6379
+    password: m2makstp
+    lettuce:
+      pool:
+        max-active: 40
+        max-idle: 40
+        min-idle: 10
+
+# mybatis 설정.
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: kr.co.m2m.instagram
+  configuration:
+    cache-enabled: true
+    lazy-loading-enabled: true
+    multiple-result-sets-enabled: true
+    use-column-label: false
+    default-statement-timeout: 30000
+    map-underscore-to-camel-case: true
+        
+# 로깅 설정.
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} @%method:%line - %msg %n"
+  level:
+    root: info
+    kr.co.m2m.instagram: debug
+    kr.co.m2m.instagram.framework: debug
+    jdbc.sqltiming: debug
+    jdbc.audit: off
+    jdbc.resultsettable: debug
+    jdbc.connection: off 
+    org.springframework.security: info
+        
+---
+
+spring:
+  profiles: dev
+logging:
+  level:
+    root: info
+    kr.co.m2m.example.demo: info
+    kr.co.m2m.example.demo.framework: info
+
+---
+
+spring:
+  profiles: prd
+logging:
+  level:
+    root: info
+    kr.co.m2m.example.demo: warn
+    kr.co.m2m.example.demo.framework: info
