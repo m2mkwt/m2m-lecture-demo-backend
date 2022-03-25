@@ -1,59 +1,98 @@
-//package kr.co.m2m.instagram.config;
-//
-//import java.io.IOException;
-//
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.AuthenticationException;
-//import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-//import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-//
-//import lombok.extern.slf4j.Slf4j;
-//
-//@Configuration
-//@EnableWebSecurity
-//@Slf4j
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		// 인가 정책
-//		http.authorizeRequests() // 요청에 의한 보안을 실행한다.
-//				.anyRequest().authenticated(); // 모든요청을.인증한다.
-//		// 인증 정책
-//		http.formLogin() // formLogin 방식과 httpBasic 방식이 있다. (formLogin 방식 사용)
-//				.loginPage("/login") // 로그인 페이지 url (기본으로 제공되는 로그인 화면 페이지도 있다.)
-//				.defaultSuccessUrl("/main") // 로그인 성공시 url (우선순위 마지막)
-//				.failureUrl("/login") // 로그인 실패시 url (우선순위 마지막)
-//				.usernameParameter("username") // id 파라미터 명
-//				.passwordParameter("password") // password 파라미터 명
-//				.loginProcessingUrl("/loginProcess") // form의 action 경로url
-//				.successHandler(new AuthenticationSuccessHandler() {
-//					@Override
-//					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//							Authentication authentication) throws IOException, ServletException {
-//						// 기본적으로 성공시 success 핸들러를 호출한다. 이처럼 생성하여 직접 구현 가능하다.
-//						// 로그인 성공시 authentication 정보를 매개변수로 받는다.
-//						log.debug("authentication : " + authentication.getName());
-//						response.sendRedirect("/");
-//					}
-//				}).failureHandler(new AuthenticationFailureHandler() {
-//					@Override
-//					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-//							AuthenticationException exception) throws IOException, ServletException {
-//						// 기본적으로 실패시 fail 핸들러를 호출한다. 이처럼 생성하여 직접 구현 가능하다.
-//						// 로그인 실패시 exception 정보를 매개변수로 받는다.
-//						log.debug("exception : " + exception.getMessage());
-//						response.sendRedirect("/login");
-//					}
-//				}).permitAll(); // login 화면은 인증없이 누구나 접근이 가능해야 한다.
-//	}
-//
-//}
+package kr.co.m2m.instagram.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import kr.co.m2m.framework.auth.BEAuthenticationFilter;
+import kr.co.m2m.framework.auth.BEAuthenticationProvider;
+import kr.co.m2m.framework.auth.RedisBEAuthManager;
+import kr.co.m2m.framework.auth.handler.BEAccessDeniedHandler;
+import kr.co.m2m.framework.auth.handler.BEAuthenticationEntryPoint;
+import kr.co.m2m.instagram.common.handler.BEFailureHandler;
+import kr.co.m2m.instagram.common.handler.BESuccessHandler;
+
+/**
+ * @패키지명 : kr.co.m2m.example.demo.config
+ * @파일명 : SecurityConfigurer.java
+ * @작성자 : wtkim
+ * @생성일자 : 2020. 6. 5.
+ * @설명 : Spring Security 설정 Configurer
+ */
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	/**
+	 * 로그인 정보 인증 Provider
+	 */
+	@Autowired
+	private BEAuthenticationProvider beAuthProvider;
+
+	/**
+	 * REDIS 인증 manager
+	 */
+	@Autowired
+	private RedisBEAuthManager redisBEAuthManager;
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(this.beAuthProvider);
+	}
+
+	/**
+	 * Spring Security 처리예외 설정
+	 */
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", // WEB관련 static 자료
+				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**" // Swagger UI관련
+		);
+	}
+
+	/**
+	 * 이하 Spring Security 관련설정 - csrf, remember-me, cors, filter, 인증 URI패턴 handler
+	 * 로그인처리 등
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		// BackEnd 인증용 필터, 추후 @Autowired로 변환
+		BEAuthenticationFilter beAuthFilter = new BEAuthenticationFilter(this.authenticationManager(), null);
+		// csrf 끄기
+		http.csrf().disable();
+		// 인증 세션저장 끄기
+		http.rememberMe().disable();
+		// cors 설정
+		http.cors().disable();
+		// BackEnd 인증용 필터 등록, Tocken으로 인증하므로 별도 세션은 생성안함
+		http.addFilterBefore(beAuthFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션생성 안함
+		// 인증없이 접속가능한 패턴등록
+		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/error", "/error/**", "/example*", "/example*/**").permitAll();
+		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/post", "/post/**").permitAll()
+				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
+				.antMatchers("/**").authenticated(); // 그외는 인증을 거치도록 함
+		// 시큐리티 관련 Custom Handler등 등록
+		http.exceptionHandling().accessDeniedHandler(new BEAccessDeniedHandler()).and().exceptionHandling()
+				.authenticationEntryPoint(new BEAuthenticationEntryPoint()); // 401오류 제어
+		// 로그인정보등록 및 SuccessHandler 등록
+		http.formLogin().loginPage("/").loginPage("/login").usernameParameter("id").passwordParameter("password").loginProcessingUrl("/login_processing")
+				.failureUrl("/login-error").successHandler(new BESuccessHandler(redisBEAuthManager)).failureHandler(new BEFailureHandler());
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		// return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		return new BCryptPasswordEncoder();
+	}
+}
