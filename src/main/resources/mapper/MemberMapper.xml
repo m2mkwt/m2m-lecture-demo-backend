@@ -6,18 +6,18 @@
 <mapper namespace="kr.co.m2m.instagram.mapper.MemberMapper">
 	
 	<!--회원검색  -->
-	<select id="selectAllMembers" resultType="kr.co.m2m.instagram.model.MemberVO">
+	<select id="selectAllMembers" resultType="kr.co.m2m.instagram.member.model.MemberVO">
 		SELECT * FROM m2mDemoDB.dbo.member
 	</select>
 	
 	<!--회원가입  -->
-	<insert id="insertMember" parameterType="kr.co.m2m.instagram.model.MemberVO">
+	<insert id="insertMember" parameterType="kr.co.m2m.instagram.member.model.MemberVO">
 		INSERT INTO m2mDemoDB.dbo.member (login_name, user_name, email, password)
 		VALUES (#{login_name}, #{user_name}, #{email}, #{password})
 	</insert>
 	
 	<!--로그인 -->
-	<select id="login_check" resultType="kr.co.m2m.instagram.model.MemberVO">
+	<select id="login_check" resultType="kr.co.m2m.instagram.member.model.MemberVO">
 	  SELECT *
 	  FROM m2mDemoDB.dbo.member
 	  WHERE email=#{email} and password=#{password}

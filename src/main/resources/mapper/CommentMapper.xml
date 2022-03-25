@@ -11,20 +11,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM COMMENT
     </select>
     
-    <select id="commentList" resultType="kr.co.m2m.instagram.model.CommentVO">
+    <select id="commentList" resultType="kr.co.m2m.instagram.comment.model.CommentVO">
         SELECT
             *
         FROM COMMENT
     </select>
     
     
-    <insert id="commentInsert" parameterType="kr.co.m2m.instagram.model.CommentVO">
+    <insert id="commentInsert" parameterType="kr.co.m2m.instagram.comment.model.CommentVO">
         INSERT INTO
         COMMENT (CNO, BNO, CONTENT, WRITER, REG_DATE)
         VALUES(#{cno},#{bno},#{content},#{writer},now()) 
     </insert>
     
-    <update id="commentUpdate" parameterType="kr.co.m2m.instagram.model.CommentVO">
+    <update id="commentUpdate" parameterType="kr.co.m2m.instagram.comment.model.CommentVO">
         UPDATE COMMENT
             SET
             CONTENT = #{content}
