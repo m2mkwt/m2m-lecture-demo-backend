@@ -55,9 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", // WEB관련 static 자료
-				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**" // Swagger UI관련
-		);
+		web.ignoring().antMatchers();
 	}
 
 	/**
@@ -78,15 +76,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(beAuthFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션생성 안함
 		// 인증없이 접속가능한 패턴등록
-		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/error", "/error/**", "/example*", "/example*/**").permitAll();
-		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/post", "/post/**").permitAll()
-				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
+		http.authorizeRequests().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", // WEB관련 static 자료
+				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**").permitAll();
+		http.authorizeRequests().antMatchers("signup", "/test", "/test/**", "/post", "/post/**").permitAll()
+				.antMatchers("/login", "/login/**", "/assets", "/assets/**", "/static", "/static/**").permitAll() // 로그인 인증필요 없음
 				.antMatchers("/**").authenticated(); // 그외는 인증을 거치도록 함
 		// 시큐리티 관련 Custom Handler등 등록
 		http.exceptionHandling().accessDeniedHandler(new BEAccessDeniedHandler()).and().exceptionHandling()
 				.authenticationEntryPoint(new BEAuthenticationEntryPoint()); // 401오류 제어
 		// 로그인정보등록 및 SuccessHandler 등록
-		http.formLogin().loginPage("/").loginPage("/login").usernameParameter("id").passwordParameter("password").loginProcessingUrl("/login_processing")
+		http.formLogin().loginPage("/login").usernameParameter("id").passwordParameter("password").loginProcessingUrl("/login_processing")
 				.failureUrl("/login-error").successHandler(new BESuccessHandler(redisBEAuthManager)).failureHandler(new BEFailureHandler());
 	}
 
