@@ -1,17 +1,22 @@
 package kr.co.m2m.instagram.media.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.m2m.instagram.media.model.MediaVO;
 
 @Mapper
 public interface MediaMapper {
-	void insertFile();
 	
-	MediaVO selectPostFile(int post_id);
+	public int insertPostMedia(MediaVO vo);
 	
-	MediaVO selectMemberFile(int media_id);
+	public int insertProfileMedia(MediaVO vo);
+	
+	public int updateMedia(MediaVO vo);
+	
+	public int deleteMedia(int media_id);
+	
+	public MediaVO selectPostMedia(int post_id);
+	
+	public MediaVO selectProfileMedia(int media_id);
 	
 }
