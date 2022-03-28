@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.m2m.instagram.comment.model.CommentVO;
-import kr.co.m2m.instagram.comment.service.CommentService;
 import kr.co.m2m.instagram.comment.service.impl.CommentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +23,7 @@ public class CommentController {
  
 //    @Resource(name="kr.co.m2m.instagram.service.CommentService")
 	@Autowired
-    CommentService mCommentService;
+	CommentServiceImpl mCommentService;
     
     
     @RequestMapping("/list") //댓글 리스트
