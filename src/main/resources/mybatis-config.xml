@@ -16,9 +16,9 @@
     </settings>
     
     <typeAliases>
-    	<typeAlias type="kr.co.m2m.instagram.media.model.MemberVO" alias="MemberVO"/>
-    	<typeAlias type="kr.co.m2m.instagram.media.model.PostVO" alias="PostVO"/>
-    	<typeAlias type="kr.co.m2m.instagram.media.model.CommentVO" alias="CommentVO"/>
+    	<typeAlias type="kr.co.m2m.instagram.member.model.MemberVO" alias="MemberVO"/>
+    	<typeAlias type="kr.co.m2m.instagram.post.model.PostVO" alias="PostVO"/>
+    	<typeAlias type="kr.co.m2m.instagram.comment.model.CommentVO" alias="CommentVO"/>
     	<typeAlias type="kr.co.m2m.instagram.media.model.MediaVO" alias="MediaVO"/>
     </typeAliases>
 </configuration>

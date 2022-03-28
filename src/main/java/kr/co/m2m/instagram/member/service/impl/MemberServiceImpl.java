@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	//회원 가입
 	@Override
-	@Transactional
+//	@Transactional
 	public void insertMember(MemberVO memberVO) {
 		memberMapper.insertMember(memberVO);
 	}

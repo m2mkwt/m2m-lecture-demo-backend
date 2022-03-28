@@ -10,10 +10,10 @@ public class MemberVO {
 	public MemberVO() {
 		super();
 	}
-	public MemberVO(int member_id, String login_name, String user_name, String email,
+	public MemberVO(String login_name, String user_name, String email,
 			String password, char gender, char delete_yn, int media_id) {
 		super();
-		this.member_id = member_id;
+//		this.member_id = member_id;
 		this.login_name = login_name;
 		this.user_name = user_name;
 		this.email = email;
