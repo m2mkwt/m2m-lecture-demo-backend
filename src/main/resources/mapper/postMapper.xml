@@ -10,13 +10,13 @@
 	<update id="updatePost">
 		update dbo.post set text = #{text} where idx = ${idx}
 	</update>
-	<select id="selectPostAll" resultType="kr.co.m2m.instagram.post.model.PostVO">
+	<select id="selectPostAll" resultType="PostVO">
 		select * from dbo.post
 	</select>
-	<select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO">
+	<select id="selectPost" resultType="PostVO">
 		select * from m2mDemoDB.dbo.post where memberidx = ${memberidx}
 	</select>
-	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
+	<select id="selectPostDetail" resultType="PostVO">
 		select * from dbo.post where idx = ${idx}
 	</select>
 </mapper>

@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class BEAuthentication extends AbstractAuthenticationToken {
 
 	private Object authToken;
-	private String userId;
+	private int userId;
 	
 	public BEAuthentication(Object authToken) {
 		super(null);
@@ -20,7 +20,7 @@ public class BEAuthentication extends AbstractAuthenticationToken {
 	public BEAuthentication(BEAuthDetailModel authDetail,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
-		this.userId		= authDetail.getId();
+		this.userId		= authDetail.getMemberId();
 		this.authToken	= authDetail.getAuthToken();
 		this.setDetails(authDetail);
 		super.setAuthenticated(true);

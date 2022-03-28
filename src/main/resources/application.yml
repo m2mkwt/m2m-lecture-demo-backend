@@ -6,24 +6,18 @@ server:
     
 # Spring 설정.
 spring:
-  config:
-    activate:
-      on-profile: local   
+  profiles:
+    active: local
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    password: m2makstp!
-    url: jdbc:sqlserver://192.168.0.85:1433;instanceName=instagram
-    username: m2mtest02
+    password: m2mDev!@
+    url: jdbc:sqlserver://127.0.0.1:11433;instanceName=instagram
+    # url: jdbc:sqlserver://192.168.0.85:1433;instanceName=instagram
+    username: m2mDev
   mvc:
     view:
-      # prefix: /WEB-INF/views/
-      prefix: /static/dist/
-      suffix: .html
-
-  web:
-    resources:
-      static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, classpath:/static/dist      
-     
+      prefix: /WEB-INF/views/
+      suffix: .jsp
   servlet:
     multipart:
       enabled: true
@@ -38,8 +32,8 @@ spring:
       
   ## Redis 관련설정
   redis:
-    ## host: 127.0.0.1
-    host: 192.168.0.89
+    host: 127.0.0.1
+    ## host: 192.168.0.89
     port: 6379
     password: m2makstp
     lettuce:
