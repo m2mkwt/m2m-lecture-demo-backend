@@ -7,13 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // 로그출력에 사용함 (ex. log.debug(String), debug 외에 info, warn 등 사용 가능함)
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/media")
 public class MediaController {
 	
 	@RequestMapping(value = "upload", method = RequestMethod.POST)
@@ -27,6 +28,6 @@ public class MediaController {
 				e.printStackTrace();
 			}
 		}
-		return 	"login";
+		return 	"";
 	}
 }

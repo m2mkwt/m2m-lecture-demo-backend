@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.m2m.instagram.media.mapper.MediaMapper;
 import kr.co.m2m.instagram.media.model.MediaVO;
 import kr.co.m2m.instagram.media.service.MediaService;
 
+@Service
 public class MediaServiceImpl implements MediaService {
 
 	@Autowired

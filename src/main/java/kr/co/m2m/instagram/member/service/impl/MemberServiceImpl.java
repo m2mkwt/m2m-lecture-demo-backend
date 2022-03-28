@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
-		
+
 	//회원 검색
 	@Override
 	public List<MemberVO> getAllMembers() {
@@ -29,6 +29,12 @@ public class MemberServiceImpl implements MemberService {
 //	@Transactional
 	public void insertMember(MemberVO memberVO) {
 		memberMapper.insertMember(memberVO);
+	}
+
+	@Override
+	public void updateMember(MemberVO memberVO) {
+		
+		
 	}
 	
 }

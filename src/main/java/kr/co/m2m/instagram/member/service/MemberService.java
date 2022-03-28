@@ -9,5 +9,7 @@ public interface MemberService {
 	public List<MemberVO> getAllMembers();
 	
 	public void insertMember(MemberVO memberVO);
+	
+	public void updateMember(MemberVO memberVO);
 
 }
