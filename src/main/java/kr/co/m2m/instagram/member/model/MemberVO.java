@@ -1,6 +1,8 @@
 package kr.co.m2m.instagram.member.model;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 
@@ -10,10 +12,10 @@ public class MemberVO {
 	public MemberVO() {
 		super();
 	}
-	public MemberVO(int member_id, String login_name, String user_name, String email,
+	public MemberVO(String login_name, String user_name, String email,
 			String password, char gender, char delete_yn, int media_id) {
 		super();
-		this.member_id = member_id;
+//		this.member_id = member_id;
 		this.login_name = login_name;
 		this.user_name = user_name;
 		this.email = email;
@@ -29,8 +31,11 @@ public class MemberVO {
 	@NotBlank
 	private String user_name;
 	@NotBlank
+	@Email
 	private String email;
 	@NotBlank
+	@Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
+     message = "비밀번호는 영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.")
 	private String password;
 	private char gender;
 	private char delete_yn;

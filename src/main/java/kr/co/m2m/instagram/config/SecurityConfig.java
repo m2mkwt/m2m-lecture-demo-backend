@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", // WEB관련 static 자료
-				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**" // Swagger UI관련
+				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**","signup" // Swagger UI관련
 		);
 	}
 
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션생성 안함
 		// 인증없이 접속가능한 패턴등록
 		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/error", "/error/**", "/example*", "/example*/**").permitAll();
-		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/post", "/post/**").permitAll()
+		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/post", "/post/**","/signup").permitAll()
 				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
 				.antMatchers("/**").authenticated(); // 그외는 인증을 거치도록 함
 		// 시큐리티 관련 Custom Handler등 등록
