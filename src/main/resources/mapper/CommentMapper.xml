@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
-<mapper namespace="kr.co.m2m.instagram.mapper.CommentMapper">
+<mapper namespace="kr.co.m2m.instagram.comment.mapper.CommentMapper">
  
     <select id="commentCount" resultType="int">
         SELECT
@@ -13,30 +13,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!--  -->
     <select id="commentList" resultType="CommentVO">
         SELECT
-            (comment_id, member_id, post_id, text, REG_DATE)
+            comment_no, member_no, post_no, text, createdt
         FROM COMMENT
     </select>
     <select id="selectComment" resultType="CommentVO">
         SELECT
-            (comment_id, member_id, post_id, text, REG_DATE)
-        FROM COMMENT WHERE post_id = ${postId}
+            comment_no, member_no, post_no, text, creatdt
+        FROM COMMENT WHERE post_no = ${postId}
     </select>
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
-        COMMENT (comment_id, member_id, post_id, text, REG_DATE)
-        VALUES(${commentId},${memberId},${postId},#{text},#{deleteYN},now()) 
+        COMMENT (comment_no, member_no, post_no, text)
+        VALUES(${commentId},${memberId},${postId},#{text},#{deleteYN}) 
     </insert>
     
     <update id="updateComment" parameterType="CommentPO">
         UPDATE COMMENT
             SET
             text = #{text}
-        	WHERE comment_id = ${commentId}
+        	WHERE comment_no = ${commentId}
     </update>
     <update id="deleteComment" parameterType="CommentPO">
 	    UPDATE COMMENT
 	        SET
 	        delete_yn = 'Y'
-	    	WHERE comment_id = ${comment_id}
+	    	WHERE comment_no = ${commentId}
     </update>
 </mapper>
