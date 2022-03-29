@@ -7,14 +7,14 @@
 	
 	<!--회원검색  -->
 	<select id="getLoginMember" parameterType="kr.co.m2m.instagram.common.model.LoginSO" resultType="kr.co.m2m.instagram.common.model.LoginVO">
-		SELECT login_name
+		SELECT member_no
 		     , user_name
 		     , email
 		     , password
 		     , gender
-		     , media_id
+		     , media_no
 		  FROM dbo.member 
-		 WHERE member_id = #{id}
+		 WHERE login_id = #{id}
 	</select>	
 	
 	<!--회원검색  -->
@@ -24,7 +24,7 @@
 	
 	<!--회원가입  -->
 	<insert id="insertMember" parameterType="MemberVO">
-		INSERT INTO instagram.dbo.member (login_name, user_name, email, password, gender, delete_yn, media_id)
+		INSERT INTO instagram.dbo.member (login_id, user_name, email, password, gender, delete_yn, media_no)
 		VALUES (#{loginName}, #{userName}, #{email}, #{password}, #{gender}, 'Y', #{mediaId})
 	</insert>
 	
@@ -32,23 +32,23 @@
 	<!-- 비밀번호 변경 메뉴를 따로 만들수도 있으니 확인 필요함 -->
 	<update id="updateMember" parameterType="MemberVO">
 		UPDATE instagram.dbo.member
-		SET login_name = #{loginName}, user_name = #{userName}, email = #{email},
-			password = #{password}, gender = #{gender}, media_id = #{mediaId}
-		WHERE member_id = #{memberId}
+		SET login_id = #{loginName}, user_name = #{userName}, email = #{email},
+			password = #{password}, gender = #{gender}, media_no = #{mediaId}
+		WHERE member_no = #{memberId}
 	</update>
 	
 	<!-- 비밀번호 수정 -->
 	<update id="updateMemberPassword">
 		UPDATE insgram.dbo.member
 		SET password = #{password}
-		WHERE member_id = #{memberId}
+		WHERE member_no = #{memberId}
 	</update>
 	
 	<!--로그인 -->
 	<select id="login_check" resultType="MemberVO">
 	  SELECT *
 	  FROM instagram.dbo.member
-	  WHERE email=#{email} and password=#{password}
+	  WHERE email = #{email} and password = #{password}
 	 </select>
 	
 </mapper>

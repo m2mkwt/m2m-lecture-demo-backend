@@ -61,7 +61,9 @@ public class BEAuthenticationProvider implements AuthenticationProvider {
 			
 			if (vo == null)
 				throw new UsernameNotFoundException("UsernameNotFoundException");
-
+			
+			log.info(" ### [encrypt password] pw : {}", passwordEncoder.encode(authToken));
+			
 			boolean pwdBoolean = passwordEncoder.matches(authToken, vo.getPassword());
 			// 패스워드 확인
 			if (!pwdBoolean)
