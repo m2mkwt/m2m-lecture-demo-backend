@@ -2,19 +2,20 @@ package kr.co.m2m.instagram.comment.model;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotEmpty;
+import kr.co.m2m.framework.annotation.ValidInsert;
+import kr.co.m2m.framework.annotation.ValidUpdate;
+import kr.co.m2m.framework.web.model.BaseModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class CommentPO {
-	
+@EqualsAndHashCode(callSuper = false)
+public class CommentPO extends BaseModel<CommentPO>{
+	@NotEmpty(groups = { ValidInsert.class, ValidUpdate.class })
 	private int comment_id;
-	@NotBlank
 	private int member_id;
-	@NotBlank
 	private int post_id;
-	@NotBlank
 	private String text;
 	private char delete_yn;
 	private Date createdt;
