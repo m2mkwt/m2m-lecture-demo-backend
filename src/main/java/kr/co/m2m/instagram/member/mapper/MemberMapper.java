@@ -14,13 +14,13 @@ public interface MemberMapper {
 	//회원 검색
     LoginVO getLoginMember(LoginSO so);
 	
-	//회원 검색
-	List<MemberVO> selectAllMembers();
-	
 	//회원 가입
 	void insertMember(MemberVO memberVO);
 	
 	//회원정보 수정
 	void updateMember(MemberVO memberVO);
+	
+	//아이디 체크
+	int idCheck(MemberVO memberVO);
 	
 }
