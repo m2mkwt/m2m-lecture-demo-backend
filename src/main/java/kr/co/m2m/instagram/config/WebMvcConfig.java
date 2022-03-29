@@ -11,6 +11,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.core.Ordered;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -67,5 +68,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		bean.setValidationMessageSource(messageSource());
 		return bean;
 	}
-
+	
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")      //패턴
+                .allowedOrigins("*")    //URL
+                .allowedOrigins("http://localhost:8090","http://localhost:3000") //URL
+                .allowedHeaders("*")  //header
+                .allowedMethods("*");        //method
+    }
 }

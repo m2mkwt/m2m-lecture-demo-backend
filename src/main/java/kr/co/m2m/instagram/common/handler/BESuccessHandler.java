@@ -47,8 +47,6 @@ public class BESuccessHandler implements AuthenticationSuccessHandler {
 		m.put("isSuccess", true);
 		m.put("message", "LOGIN SUCCESS.");
 		m.put("messageCode", "LOGIN_SUCCESS.");
-		m.put("chiefYn", details.getChiefYn());
-		m.put("dept", details.getDept());
 		m.put("details", details);
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(mapper.writeValueAsString(m));

@@ -6,6 +6,18 @@
 <mapper namespace="kr.co.m2m.instagram.member.mapper.MemberMapper">
 	
 	<!--회원검색  -->
+	<select id="getLoginMember" parameterType="kr.co.m2m.instagram.common.model.LoginSO" resultType="kr.co.m2m.instagram.common.model.LoginVO">
+		SELECT login_name
+		     , user_name
+		     , email
+		     , password
+		     , gender
+		     , media_id
+		  FROM dbo.member 
+		 WHERE member_id = #{id}
+	</select>	
+	
+	<!--회원검색  -->
 	<select id="selectAllMembers" resultType="MemberVO">
 		SELECT * FROM instagram.dbo.member
 	</select>

@@ -4,10 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.m2m.instagram.common.model.LoginSO;
+import kr.co.m2m.instagram.common.model.LoginVO;
 import kr.co.m2m.instagram.member.model.MemberVO;
 
 @Mapper
 public interface MemberMapper {
+	
+	//회원 검색
+    LoginVO getLoginMember(LoginSO so);
 	
 	//회원 검색
 	List<MemberVO> selectAllMembers();
