@@ -11,9 +11,9 @@ import lombok.EqualsAndHashCode;
 public class CommentVO implements Serializable, Cloneable{
 	private static final long serialVersionUID = -7175278235351293400L;
 
-	private int commentId;
-	private int memberId;
-	private int postId;
+	private int commentNo;
+	private int memberNo;
+	private int postNo;
 	private String text;
 	private char deleteYN;
 	private Date createdt;

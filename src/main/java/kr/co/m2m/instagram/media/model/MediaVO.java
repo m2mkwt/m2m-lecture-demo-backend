@@ -10,12 +10,10 @@ import lombok.Data;
 public class MediaVO {
 
 	@NotBlank
-	private int media_id;
-	@NotBlank
-	private int post_id;
+	private int mediaNo;
 	@NotBlank
 	private String filename;
-	private char delete_yn;
+	private char deleteYn;
 	private Date createdt;
 	
 }

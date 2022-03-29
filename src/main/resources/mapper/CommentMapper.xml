@@ -24,19 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
         COMMENT (comment_no, member_no, post_no, text)
-        VALUES(${commentId},${memberId},${postId},#{text},#{deleteYN}) 
+        VALUES(${commentNo},${memberNo},${postNo},#{text},#{deleteYN}) 
     </insert>
     
     <update id="updateComment" parameterType="CommentPO">
         UPDATE COMMENT
-            SET
-            text = #{text}
-        	WHERE comment_no = ${commentId}
+            SET text = #{text}
+        	WHERE comment_no = ${commentNo}
     </update>
     <update id="deleteComment" parameterType="CommentPO">
 	    UPDATE COMMENT
-	        SET
-	        delete_yn = 'Y'
-	    	WHERE comment_no = ${commentId}
+	        SET delete_yn = 'Y'
+	    	WHERE comment_no = ${commentNo}
     </update>
 </mapper>

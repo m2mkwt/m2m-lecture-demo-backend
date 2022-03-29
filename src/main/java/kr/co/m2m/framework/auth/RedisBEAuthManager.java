@@ -126,7 +126,7 @@ public class RedisBEAuthManager {
 			return;
 		}
 		this.authDetailOper.getOperations().delete(keyByToken);
-		id = auth.getMemberId();
+		id = auth.getMemberNo();
 
 		String hexId = this.toHexStr(String.valueOf(id));
 		keyByIndex = (BEAuthTokenResolver.CLIENT_INDEX_PREFIX + ":" + hexId).toLowerCase();
@@ -182,7 +182,7 @@ public class RedisBEAuthManager {
 		String keyByToken;
 		String existedToken;
 
-		id = auth.getMemberId();
+		id = auth.getMemberNo();
 		expendTtl = auth.getExtendTtl();
 		token = (String) auth.getAuthToken();
 		auth.setIssueTime(System.currentTimeMillis());

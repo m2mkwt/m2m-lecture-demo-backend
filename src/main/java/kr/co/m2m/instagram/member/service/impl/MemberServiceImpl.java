@@ -36,8 +36,7 @@ public class MemberServiceImpl implements MemberService {
 	//회원 수정
 	@Override
 	public void updateMember(MemberVO memberVO) {
-		
-		
+		memberMapper.updateMember(memberVO);
 	}
 
 	

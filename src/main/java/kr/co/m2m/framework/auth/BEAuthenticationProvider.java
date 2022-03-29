@@ -74,12 +74,12 @@ public class BEAuthenticationProvider implements AuthenticationProvider {
 
 			authDetail = new BEAuthDetailModel();
 			authDetail.setAuthToken(accessToken);
-			authDetail.setMemberId(vo.getMemberId());
+			authDetail.setMemberNo(vo.getMemberNo());
 			authDetail.setEmail(vo.getEmail());
-			authDetail.setLoginName(vo.getLoginName());
+			authDetail.setLoginId(vo.getLoginId());
 			authDetail.setPassword(vo.getPassword());
 			authDetail.setGender(vo.getGender());
-			authDetail.setMediaId(vo.getMediaId());
+			authDetail.setMediaNo(vo.getMediaNo());
 			
 			grantedList = new ArrayList<>();
 			// log.info("authDetail : {}", authDetail);

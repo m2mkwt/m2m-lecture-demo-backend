@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 public class CommentSO extends BaseModel<CommentSO>{
-	private int commentId;
-	private int memberId;
-	private int postId;
+	private int commentNo;
+	private int memberNo;
+	private int postNo;
 	private String text;
 	private char deleteYN;
 	private Date createdt;
