@@ -3,6 +3,7 @@ package kr.co.m2m.instagram.post.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j // 로그출력에 사용함 (ex. log.debug(String), debug 외에 info, warn 등 사용 가능함)
 @RestController
 @RequestMapping("/test")
+@CrossOrigin("*")
 public class TestController {
 	
 	@Autowired
