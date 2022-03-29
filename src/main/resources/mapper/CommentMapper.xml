@@ -10,28 +10,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             COUNT(*)
         FROM COMMENT
     </select>
-    
+    <!--  -->
     <select id="commentList" resultType="CommentVO">
         SELECT
             (comment_id, member_id, post_id, text, REG_DATE)
         FROM COMMENT
     </select>
-    <insert id="commentInsert" parameterType="CommentVO">
+    <select id="selectComment" resultType="CommentVO">
+        SELECT
+            (comment_id, member_id, post_id, text, REG_DATE)
+        FROM COMMENT WHERE post_id = ${postId}
+    </select>
+    <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
         COMMENT (comment_id, member_id, post_id, text, REG_DATE)
         VALUES(${commentId},${memberId},${postId},#{text},#{deleteYN},now()) 
     </insert>
     
-    <update id="commentUpdate" parameterType="CommentVO">
+    <update id="updateComment" parameterType="CommentPO">
         UPDATE COMMENT
             SET
             text = #{text}
-        	WHERE post_id = ${postId}
+        	WHERE comment_id = ${commentId}
     </update>
-    <update id="commentDelete" parameterType="CommentVO">
+    <update id="deleteComment" parameterType="CommentPO">
 	    UPDATE COMMENT
 	        SET
 	        delete_yn = 'Y'
-	    	WHERE post_id = ${postId}
+	    	WHERE comment_id = ${comment_id}
     </update>
 </mapper>
