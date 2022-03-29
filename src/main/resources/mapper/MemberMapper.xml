@@ -14,7 +14,7 @@
 		     , gender
 		     , media_id
 		  FROM dbo.member 
-		 WHERE memberId = #{id}
+		 WHERE member_id = #{id}
 	</select>	
 	
 	<!--회원검색  -->

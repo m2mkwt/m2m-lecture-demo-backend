@@ -9,10 +9,11 @@ spring:
   profiles:
     active: local
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    # driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     password: m2makstp!
     # url: jdbc:sqlserver://127.0.0.1:11433;instanceName=instagram
-    url: jdbc:sqlserver://192.168.0.85:1433;instanceName=instagram
+    url: jdbc:log4jdbc:sqlserver://192.168.0.85:1433;instanceName=instagram
     username: m2mtest02
   mvc:
     view:
