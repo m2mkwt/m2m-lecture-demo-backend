@@ -24,12 +24,7 @@ public class MemberServiceImpl implements MemberService {
 	public LoginVO getLoginMember(LoginSO so){
 		return memberMapper.getLoginMember(so);
 	}
-	
-	//회원 검색
-	@Override
-	public List<MemberVO> getAllMembers() {
-		return memberMapper.selectAllMembers();
-	}
+
 	
 	//회원 가입
 	@Override
@@ -37,11 +32,22 @@ public class MemberServiceImpl implements MemberService {
 	public void insertMember(MemberVO memberVO) {
 		memberMapper.insertMember(memberVO);
 	}
-
+	
+	//회원 수정
 	@Override
 	public void updateMember(MemberVO memberVO) {
 		
 		
 	}
+
+	
+	//아이디 체크
+	@Override
+	public int idCheck(MemberVO memberVO) {
+		int result = memberMapper.idCheck(memberVO);
+		return result;
+	}
+	
+	
 	
 }

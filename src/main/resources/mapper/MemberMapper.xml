@@ -17,14 +17,9 @@
 		 WHERE member_id = #{id}
 	</select>	
 	
-	<!--회원검색  -->
-	<select id="selectAllMembers" resultType="MemberVO">
-		SELECT * FROM instagram.dbo.member
-	</select>
-	
 	<!--회원가입  -->
 	<insert id="insertMember" parameterType="MemberVO">
-		INSERT INTO instagram.dbo.member (login_name, user_name, email, password, gender, delete_yn, media_id)
+		INSERT INTO instagram.dbo.member (login_id, user_name, email, password, gender, delete_yn, media_no)
 		VALUES (#{loginName}, #{userName}, #{email}, #{password}, #{gender}, 'Y', #{mediaId})
 	</insert>
 	
@@ -49,6 +44,13 @@
 	  SELECT *
 	  FROM instagram.dbo.member
 	  WHERE email=#{email} and password=#{password}
+
+	 </select>
+	 
+	 <!--로그인체크 -->
+	 <select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM instagram.dbo.member
+		WHERE login_id = #{loginName}
 	 </select>
 	
 </mapper>
