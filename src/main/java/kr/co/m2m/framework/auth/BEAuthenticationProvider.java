@@ -55,23 +55,14 @@ public class BEAuthenticationProvider implements AuthenticationProvider {
 			String username = (String) authentication.getPrincipal();
 			log.info("### [AuthenticationProvider] - username : {}", username);
 
-			username = "13213";
 			// 회원 조회
 			so.setId(username);
-			
-			// vo = memberService.getLoginMember(so);
-			vo = new LoginVO();
-			vo.setMemberId(11);
-			vo.setLoginName("username");
-			vo.setEmail("test@test.com");
-			vo.setGender("M");
+			vo = memberService.getLoginMember(so);
 			
 			if (vo == null)
 				throw new UsernameNotFoundException("UsernameNotFoundException");
 
 			boolean pwdBoolean = passwordEncoder.matches(authToken, vo.getPassword());
-
-			pwdBoolean = true;
 			// 패스워드 확인
 			if (!pwdBoolean)
 				throw new BadCredentialsException("BadCredentialsException");
