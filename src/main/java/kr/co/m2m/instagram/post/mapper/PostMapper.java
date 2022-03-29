@@ -10,17 +10,17 @@ import kr.co.m2m.instagram.post.model.PostVO;
 @Mapper
 public interface PostMapper {
 
-public int insertPost(PostPO po); 
+	public int insertPost(PostPO po); 
 	
 	public int updatePost(PostPO po);
 	
 	public int deletePost(PostPO po);
 	
-	public List<PostVO> selectPost(PostVO vo);
+	public List<PostVO> selectPost(PostVO vo); 
+	
+	public PostVO selectPostDetail(PostVO vo);
 	
 	public List<PostVO> selectPostAll(PostVO vo);
-	
-	public List<PostVO> selectPostDetail(PostVO vo);
 	
 	
 }

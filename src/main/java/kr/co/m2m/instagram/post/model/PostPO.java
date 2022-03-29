@@ -14,13 +14,13 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class PostPO extends BaseModel<PostPO> {
+public class PostPO  {
 	
-	@NotEmpty(groups = {ValidDelete.class },message = "{member.postId.empty}")
-	private int postId;
-	@NotEmpty(groups = {ValidDelete.class },message = "{member.memberId.empty}" )
-	private int memberId;
-	private int mediaId;
+	@NotEmpty(groups = {ValidDelete.class },message = "{member.postNo.empty}")
+	private int postNo;
+	@NotEmpty(groups = {ValidDelete.class },message = "{member.memberNo.empty}" )
+	private int memberNo;
+	private int mediaNo;
 	@NotEmpty(groups = { ValidInsert.class, ValidUpdate.class },message = "{member.text.empty}")
 	private String text;
 	private char deleteYn;
