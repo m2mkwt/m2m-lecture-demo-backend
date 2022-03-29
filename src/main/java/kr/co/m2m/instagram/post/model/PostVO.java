@@ -18,22 +18,13 @@ public class PostVO implements Serializable, Cloneable{
 	public PostVO() {
 	}
 
-	public PostVO(int postId, @NotBlank int memberId, @NotBlank int mediaId, @NotBlank String text, char deleyeYn,
-			Date createdt) {
-		super();
-		this.postId = postId;
-		this.memberId = memberId;
-		this.mediaId = mediaId;
-		this.text = text;
-		this.deleyeYn = deleyeYn;
-		this.createdt = createdt;
-	}
+	
 
-	private int postId;
+	private int postNo;
 	@NotBlank
-	private int memberId;
+	private int memberNo;
 	@NotBlank
-	private int mediaId;
+	private int mediaNo;
 	@NotBlank
 	private String text;
 	private char deleyeYn;

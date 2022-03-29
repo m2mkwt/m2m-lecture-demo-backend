@@ -18,9 +18,9 @@ public interface PostMapper {
 	
 	public List<PostVO> selectPost(PostVO vo); 
 	
-	public List<PostVO> selectPostAll(PostVO vo);
+	public PostVO selectPostDetail(PostVO vo);
 	
-	public List<PostVO> selectPostDetail(PostVO vo);
+	public List<PostVO> selectPostAll(PostVO vo);
 	
 	
 }

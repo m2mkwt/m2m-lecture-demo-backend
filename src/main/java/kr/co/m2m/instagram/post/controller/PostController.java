@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
-import kr.co.m2m.framework.web.model.ResultModel;
+import kr.co.m2m.framework.web.model.ErrorResponse;
 import kr.co.m2m.instagram.post.model.PostPO;
 import kr.co.m2m.instagram.post.model.PostVO;
 import kr.co.m2m.instagram.post.service.impl.PostServiceImpl;
@@ -39,10 +39,10 @@ public class PostController {
 	
 	@GetMapping("detail") // 게시글 상세 내용 조회
 	public ResponseEntity<? extends BasicResponse> detail(PostVO vo,Model model) {
-		List<PostVO> resultList = postService.selectDetail(vo);
+		PostVO resultList = postService.selectDetail(vo);
 		log.info("detail select Parameter (VO) : {}"+ vo);
 		model.addAttribute("postDetailList",resultList);
-		return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
+		return ResponseEntity.ok().body(new CommonResponse<PostVO>(resultList));
 	}
 	
 	@ResponseBody
@@ -50,7 +50,11 @@ public class PostController {
 	public ResponseEntity<? extends BasicResponse> addPost(PostPO po,MultipartFile file) {
 		log.info("Input Parameter (PO) : {}"+ po);
 		String result = postService.insertPost(po);
-		return ResponseEntity.ok().body(new CommonResponse<String>(result));
+		if(result.contentEquals("insert Success")) {
+			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+		}else {
+			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
+		}
 	}
 	
 
@@ -59,15 +63,23 @@ public class PostController {
 	public ResponseEntity<? extends BasicResponse> editPost(PostPO po) {
 		log.info("update Parameter (PO) : {}"+ po);
 		String result = postService.updatePost(po);
-		return ResponseEntity.ok().body(new CommonResponse<String>(result));
+		if(result.contentEquals("update Success")) {
+			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+		}else {
+			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
+		}
 	}
 
 	@ResponseBody
-	@PostMapping("removePost") 
+	@PostMapping("removePost") // 게시글 삭제
 	public ResponseEntity<? extends BasicResponse> removePost(PostPO po) {
 		log.info("delete Parameter (PO) : {}"+ po);
 		String result = postService.deletePost(po);
-		return ResponseEntity.ok().body(new CommonResponse<String>(result));
+		if(result.contentEquals("delete Success")) {
+			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+		}else {
+			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
+		}
 	}
 
 	

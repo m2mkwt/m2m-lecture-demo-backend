@@ -61,8 +61,8 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	@Override
-	public List<PostVO> selectDetail(PostVO vo){
-		List<PostVO> resultList = postMapper.selectPostDetail(vo);
+	public PostVO selectDetail(PostVO vo){
+		PostVO resultList = postMapper.selectPostDetail(vo);
 		return resultList;
 	}
 	

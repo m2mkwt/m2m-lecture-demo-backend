@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.m2m.instagram.post.mapper.PostMapper">
 	<insert id="insertPost">
-		insert into instagram.dbo.post (member_id,media_id, text) values (#{memberId},#{mediaId},#{text})
+		insert into instagram.dbo.post (member_no,media_no, text) values (#{memberNo},#{mediaNo},#{text})
 	</insert>
 	<delete id="deletePost">
-		update instagram.dbo.post set delete_yn = 'Y' where post_id = #{postId}
+		update instagram.dbo.post set delete_yn = 'Y' where post_no = #{postNo}
 	</delete>
 	<update id="updatePost">
-		update instagram.dbo.post set text = #{text} where post_id = #{postId}
+		update instagram.dbo.post set text = #{text} where post_no = #{postNo}
 	</update>
 	<select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO">
 		select * from instagram.dbo.post
 	</select>
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		select * from instagram.dbo.post where post_id = #{postId}
+		select * from instagram.dbo.post where post_no = #{postNo}
 	</select>
 	<select id="selectPostAll" resultType="PostVO">
 		select * from dbo.post

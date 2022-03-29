@@ -16,7 +16,7 @@ public interface PostService {
 	
 	public List<PostVO> selectList(PostVO vo); 
 	
-	public List<PostVO> selectDetail(PostVO vo); 
+	public PostVO selectDetail(PostVO vo); 
 	
 	public ResultListModel<PostVO> selectAll(PostVO vo);
 }
