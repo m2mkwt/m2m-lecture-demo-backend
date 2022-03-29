@@ -12,25 +12,26 @@ public class PostVO {
 	public PostVO() {
 		super();
 	}
-	
-	public PostVO(int post_id, int member_id, int media_id, String text, char deleye_yn, Date createdt) {
+
+	public PostVO(int postId, @NotBlank int memberId, @NotBlank int mediaId, @NotBlank String text, char deleyeYn,
+			Date createdt) {
 		super();
-		this.post_id = post_id;
-		this.member_id = member_id;
-		this.media_id = media_id;
+		this.postId = postId;
+		this.memberId = memberId;
+		this.mediaId = mediaId;
 		this.text = text;
-		this.deleye_yn = deleye_yn;
+		this.deleyeYn = deleyeYn;
 		this.createdt = createdt;
 	}
 
-	private int post_id;
+	private int postId;
 	@NotBlank
-	private int member_id;
+	private int memberId;
 	@NotBlank
-	private int media_id;
+	private int mediaId;
 	@NotBlank
 	private String text;
-	private char deleye_yn;
+	private char deleyeYn;
 	private Date createdt;
 	
 }
