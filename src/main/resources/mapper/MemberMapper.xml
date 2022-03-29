@@ -14,7 +14,7 @@
 		     , gender
 		     , media_id
 		  FROM dbo.member 
-		 WHERE member_id = #{id}
+		 WHERE memberId = #{id}
 	</select>	
 	
 	<!--회원검색  -->
@@ -25,23 +25,23 @@
 	<!--회원가입  -->
 	<insert id="insertMember" parameterType="MemberVO">
 		INSERT INTO instagram.dbo.member (login_name, user_name, email, password, gender, delete_yn, media_id)
-		VALUES (#{login_name}, #{user_name}, #{email}, #{password}, #{gender}, 'Y', #{media_id})
+		VALUES (#{loginName}, #{userName}, #{email}, #{password}, #{gender}, 'Y', #{mediaId})
 	</insert>
 	
 	<!-- 회원수정 -->
 	<!-- 비밀번호 변경 메뉴를 따로 만들수도 있으니 확인 필요함 -->
 	<update id="updateMember" parameterType="MemberVO">
 		UPDATE instagram.dbo.member
-		SET login_name = #{login_name}, user_name = #{user_name}, email = #{email},
-			password = #{password}, gender = #{gender}, media_id = #{media_id}
-		WHERE member_id = #{member_id}
+		SET login_name = #{loginName}, user_name = #{userName}, email = #{email},
+			password = #{password}, gender = #{gender}, media_id = #{mediaId}
+		WHERE member_id = #{memberId}
 	</update>
 	
 	<!-- 비밀번호 수정 -->
 	<update id="updateMemberPassword">
 		UPDATE insgram.dbo.member
 		SET password = #{password}
-		WHERE member_id = #{member_id}
+		WHERE member_id = #{memberId}
 	</update>
 	
 	<!--로그인 -->
