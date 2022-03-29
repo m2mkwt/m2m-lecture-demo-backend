@@ -3,7 +3,6 @@ package kr.co.m2m.instagram.post.service;
 import java.util.List;
 
 import kr.co.m2m.framework.web.model.ResultListModel;
-import kr.co.m2m.framework.web.model.ResultModel;
 import kr.co.m2m.instagram.post.model.PostPO;
 import kr.co.m2m.instagram.post.model.PostVO;
 

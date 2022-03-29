@@ -14,7 +14,7 @@
 		select * from instagram.dbo.post
 	</select>
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		select * from instagram.dbo.post where post_id = #{postID}
+		select * from instagram.dbo.post where post_id = #{postId}
 	</select>
 	<select id="selectPostAll" resultType="PostVO">
 		select * from dbo.post
