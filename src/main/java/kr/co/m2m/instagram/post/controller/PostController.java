@@ -3,10 +3,17 @@ package kr.co.m2m.instagram.post.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.m2m.framework.web.model.BasicResponse;
+import kr.co.m2m.framework.web.model.CommonResponse;
+import kr.co.m2m.framework.web.model.ResultModel;
+import kr.co.m2m.instagram.post.model.PostPO;
 import kr.co.m2m.instagram.post.model.PostVO;
 import kr.co.m2m.instagram.post.service.impl.PostServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -20,32 +27,41 @@ public class PostController {
 	private PostServiceImpl postService;
 	
 	
-	@RequestMapping("select") // post내용물 나오는 페이지
-	public String select(PostVO vo,Model model) {
-		vo.setMember_id(1);
-		System.out.println(vo.getText());
-		List<PostVO> postList = postService.select(vo);
+	@RequestMapping("list") // post내용물 나오는 페이지
+	public ResponseEntity<? extends BasicResponse> list(PostVO vo,Model model) {
+		List<PostVO> postList = postService.selectPost(vo);
+		log.info("select Parameter (VO) : {}"+ vo);
 		model.addAttribute("postList",postList);
-		return "post/post";
-	}
-	@RequestMapping("uploadJsp") 
-	public String uploadJsp() {
-		return "post/upload";
+		return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(postList));
 	}
 	
-	@RequestMapping("upload")
-	public String upload(PostVO vo) {
-		postService.insert(vo);
-		return "redirect:/post/select";
+	@ResponseBody
+	@RequestMapping("addPost")  //글업로드
+	public ResponseEntity<? extends BasicResponse> addPost(PostPO po,MultipartFile file) {
+		log.info("Input Parameter (PO) : {}"+ po);
+		ResultModel<String> result = postService.insertPost(po);
 		
+		return ResponseEntity.ok().body(new CommonResponse<ResultModel<String>>(result));
 	}
 	
-//	@RequestMapping("postDetail") //게시글 눌렀을 때 
-	
-//	@RequestMapping("update") // 게시글 수정 
+//	@RequestMapping("detail") //게시글 눌렀을 때 
 	
 
-//	@RequestMapping("delete") // 게시글 수정 
+	@ResponseBody
+	@RequestMapping("editPost") // 게시글 수정 
+	public ResponseEntity<? extends BasicResponse> editPost(PostPO po) {
+		log.info("update Parameter (PO) : {}"+ po);
+		ResultModel<PostVO> result = postService.updatePost(po);
+		return ResponseEntity.ok().body(new CommonResponse<ResultModel<PostVO>>(result));
+	}
+
+	@ResponseBody
+	@RequestMapping("removePost") 
+	public ResponseEntity<? extends BasicResponse> removePost(PostPO po) {
+		log.info("delete Parameter (PO) : {}"+ po);
+		ResultModel<String> result = postService.deletePost(po);
+		return ResponseEntity.ok().body(new CommonResponse<ResultModel<String>>(result));
+	}
 
 	
 	
