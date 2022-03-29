@@ -59,9 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**","/signup" ,// WEB관련 static 자료
-				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**" // Swagger UI관련
-		);
+		web.ignoring().antMatchers();
 	}
 
 	/**
@@ -85,6 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 인증없이 접속가능한 패턴등록
 		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/login_processing", "/login-error/**", "/post", "/post/**").permitAll()
 				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
+				.antMatchers("/css/**", "/js/**", "/img/**", "/lib/**","/signup" , "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**").permitAll()
 				// .antMatchers(HttpMethod.OPTIONS, "login").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "login_processing").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "login-error").permitAll()
