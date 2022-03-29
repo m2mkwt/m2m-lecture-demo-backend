@@ -10,9 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class CommentPO extends BaseModel<CommentPO>{
-	@NotEmpty(groups = { ValidInsert.class, ValidUpdate.class })
+@EqualsAndHashCode
+public class CommentSO extends BaseModel<CommentSO>{
 	private int commentId;
 	private int memberId;
 	private int postId;

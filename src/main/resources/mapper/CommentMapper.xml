@@ -13,25 +13,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="commentList" resultType="CommentVO">
         SELECT
-            *
+            (comment_id, member_id, post_id, text, REG_DATE)
         FROM COMMENT
     </select>
     <insert id="commentInsert" parameterType="CommentVO">
         INSERT INTO
-        COMMENT (CNO, BNO, CONTENT, WRITER, REG_DATE)
-        VALUES(${comment_id},${member_id},${post_id},#{text},#{delete_yn},now()) 
+        COMMENT (comment_id, member_id, post_id, text, REG_DATE)
+        VALUES(${commentId},${memberId},${postId},#{text},#{deleteYN},now()) 
     </insert>
     
     <update id="commentUpdate" parameterType="CommentVO">
         UPDATE COMMENT
             SET
             text = #{text}
-        	WHERE post_id = ${post_id}
+        	WHERE post_id = ${postId}
     </update>
     <update id="commentDelete" parameterType="CommentVO">
 	    UPDATE COMMENT
 	        SET
-	        delete_yn = #{delete_yn}
-	    	WHERE post_id = ${post_id}
+	        delete_yn = 'Y'
+	    	WHERE post_id = ${postId}
     </update>
 </mapper>

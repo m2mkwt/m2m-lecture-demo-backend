@@ -46,11 +46,11 @@ public class CommentServiceImpl implements CommentService {
 		CommentVO cVO = new CommentVO();
 		try {
 			for (int i = 0; i < vo.size(); i++) {
-				cVO.setComment_id(vo.get(i).getComment_id());
-				cVO.setMember_id(vo.get(i).getMember_id());
-				cVO.setPost_id(vo.get(i).getPost_id());
+				cVO.setCommentId(vo.get(i).getCommentId());
+				cVO.setMemberId(vo.get(i).getMemberId());
+				cVO.setPostId(vo.get(i).getPostId());
 				cVO.setText(vo.get(i).getText());
-				cVO.setDelete_yn(vo.get(i).getDelete_yn());
+				cVO.setDeleteYN(vo.get(i).getDeleteYN());
 				cVO.setCreatedt(vo.get(i).getCreatedt());
 				this.mCommentMapper.commentUpdate(cVO);
 			}
