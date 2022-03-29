@@ -9,13 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
+
 import kr.co.m2m.framework.web.model.ErrorResponse;
 import kr.co.m2m.instagram.post.model.PostPO;
+
 import kr.co.m2m.instagram.post.model.PostVO;
 import kr.co.m2m.instagram.post.service.impl.PostServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +45,7 @@ public class PostController {
 		return ResponseEntity.ok().body(new CommonResponse<PostVO>(resultList));
 	}
 	
+
 	@ResponseBody
 	@PostMapping("addPost")  //게시글 업로드
 	public ResponseEntity<? extends BasicResponse> addPost(PostPO po,MultipartFile file) {
@@ -56,7 +57,9 @@ public class PostController {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
 	}
+
 	
+
 
 	@ResponseBody
 	@PostMapping("editPost") // 게시글 수정 
@@ -81,6 +84,7 @@ public class PostController {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
 	}
+
 
 	
 	

@@ -2,21 +2,14 @@ package kr.co.m2m.instagram.post.service.impl;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.m2m.framework.util.MessageUtils;
-import kr.co.m2m.framework.web.model.ResultListModel;
-import kr.co.m2m.framework.web.model.ResultModel;
-import kr.co.m2m.instagram.post.controller.PostController;
 import kr.co.m2m.instagram.post.mapper.PostMapper;
-import kr.co.m2m.instagram.post.model.PostPO;
 import kr.co.m2m.instagram.post.model.PostVO;
 import kr.co.m2m.instagram.post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 public class PostServiceImpl implements PostService {
@@ -24,6 +17,7 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	private PostMapper postMapper; 
 	
+
 
 	@Override
 	public String insertPost(PostPO po) {  //글 입력
@@ -53,6 +47,7 @@ public class PostServiceImpl implements PostService {
 			return "update Fail";
 		}
 	}
+
 	
 	@Override
 	public List<PostVO> selectList(PostVO vo){
@@ -60,6 +55,7 @@ public class PostServiceImpl implements PostService {
 		return resultList;
 	}
 	
+
 	@Override
 	public PostVO selectDetail(PostVO vo){
 		PostVO resultList = postMapper.selectPostDetail(vo);
@@ -73,4 +69,5 @@ public class PostServiceImpl implements PostService {
 		rv.setMessage("SUCCESS");
 		return rv;
 	}
+
 }

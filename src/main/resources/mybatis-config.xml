@@ -14,7 +14,7 @@
         <setting name="useGeneratedKeys" value="true" />
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    
+       
     <typeAliases>
     	<typeAlias type="kr.co.m2m.instagram.member.model.MemberVO" alias="MemberVO"/>
     	<typeAlias type="kr.co.m2m.instagram.post.model.PostVO" alias="PostVO"/>

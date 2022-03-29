@@ -107,7 +107,7 @@ public class RedisBEAuthManager {
 	}
 
 	public void expireAuth(String token) {
-		String id;
+		int id;
 		BEAuthDetailModel auth;
 		String keyByIndex = null;
 		String keyByToken;
@@ -126,10 +126,9 @@ public class RedisBEAuthManager {
 			return;
 		}
 		this.authDetailOper.getOperations().delete(keyByToken);
+		id = auth.getMemberId();
 
-		id = auth.getId();
-
-		String hexId = this.toHexStr(id);
+		String hexId = this.toHexStr(String.valueOf(id));
 		keyByIndex = (BEAuthTokenResolver.CLIENT_INDEX_PREFIX + ":" + hexId).toLowerCase();
 
 		this.authDetailOper.getOperations().delete(keyByIndex);
@@ -176,19 +175,19 @@ public class RedisBEAuthManager {
 	}
 
 	public void registAuth(BEAuthDetailModel auth) {
-		String id;
+		int id;
 		int expendTtl;
 		String token;
 		String keyByIndex = null;
 		String keyByToken;
 		String existedToken;
 
-		id = auth.getId();
+		id = auth.getMemberId();
 		expendTtl = auth.getExtendTtl();
 		token = (String) auth.getAuthToken();
 		auth.setIssueTime(System.currentTimeMillis());
 
-		String hexId = this.toHexStr(id);
+		String hexId = this.toHexStr(String.valueOf(id));
 		keyByIndex = (BEAuthTokenResolver.CLIENT_INDEX_PREFIX + ":" + hexId).toLowerCase();
 		keyByToken = (BEAuthTokenResolver.AUTH_TOKEN_PREFIX + token).toLowerCase();
 		existedToken = null;

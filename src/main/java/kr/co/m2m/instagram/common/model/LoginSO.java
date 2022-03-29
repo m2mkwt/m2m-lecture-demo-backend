@@ -10,5 +10,5 @@ import lombok.EqualsAndHashCode;
 public class LoginSO implements Serializable, Cloneable {
 
 	private String id; /* 아이디 */
-	private String pw; /* 비밀번호 */
+	private String password; /* 비밀번호 */
 }

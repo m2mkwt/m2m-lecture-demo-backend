@@ -3,6 +3,7 @@ package kr.co.m2m.instagram.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -12,6 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import kr.co.m2m.framework.auth.BEAuthenticationFilter;
 import kr.co.m2m.framework.auth.BEAuthenticationProvider;
@@ -55,9 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", // WEB관련 static 자료
-				"/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**" // Swagger UI관련
-		);
+		web.ignoring().antMatchers();
 	}
 
 	/**
@@ -73,15 +75,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 인증 세션저장 끄기
 		http.rememberMe().disable();
 		// cors 설정
-		http.cors().disable();
+		// http.cors().disable();
+		http.cors();
 		// BackEnd 인증용 필터 등록, Tocken으로 인증하므로 별도 세션은 생성안함
 		http.addFilterBefore(beAuthFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션생성 안함
 		// 인증없이 접속가능한 패턴등록
-		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/error", "/error/**", "/example*", "/example*/**").permitAll();
-		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/test", "/test/**", "/post", "/post/**").permitAll()
+		http.authorizeRequests().antMatchers("/", "/main", "/main/**", "/login_processing", "/login-error/**", "/post", "/post/**").permitAll()
 				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
-				.antMatchers("/**").authenticated(); // 그외는 인증을 거치도록 함
+				.antMatchers("/css/**", "/js/**", "/img/**", "/lib/**","/signup" , "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**").permitAll()
+				// .antMatchers(HttpMethod.OPTIONS, "login").permitAll()
+				.antMatchers(HttpMethod.OPTIONS, "login_processing").permitAll()
+				.antMatchers(HttpMethod.OPTIONS, "login-error").permitAll()
+				.anyRequest().authenticated(); // 그외는 인증을 거치도록 함
 		// 시큐리티 관련 Custom Handler등 등록
 		http.exceptionHandling().accessDeniedHandler(new BEAccessDeniedHandler()).and().exceptionHandling()
 				.authenticationEntryPoint(new BEAuthenticationEntryPoint()); // 401오류 제어
@@ -95,4 +101,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		return new BCryptPasswordEncoder();
 	}
+	
+	//Cors 설정
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }
