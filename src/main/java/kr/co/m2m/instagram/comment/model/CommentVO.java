@@ -1,5 +1,6 @@
 package kr.co.m2m.instagram.comment.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
@@ -7,29 +8,33 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CommentVO {
+public class CommentVO implements Serializable, Cloneable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7175278235351293400L;
 	public CommentVO() {
 		super();
 	}
-	public CommentVO(int comment_id, int member_id, int post_id, String text, char delete_yn, Date createdt) {
+	public CommentVO(int commentId, int memberId, int postId, String text, char deleteYN, Date createdt) {
 		super();
-		this.comment_id = comment_id;
-		this.member_id = member_id;
-		this.post_id = post_id;
+		this.commentId = commentId;
+		this.memberId = memberId;
+		this.postId = postId;
 		this.text = text;
-		this.delete_yn = delete_yn;
+		this.deleteYN = deleteYN;
 		this.createdt = createdt;
 	}
 	
-	private int comment_id;
+	private int commentId;
 	@NotBlank
-	private int member_id;
+	private int memberId;
 	@NotBlank
-	private int post_id;
+	private int postId;
 	@NotBlank
 	private String text;
-	private char delete_yn;
+	private char deleteYN;
 	private Date createdt;
 
 }

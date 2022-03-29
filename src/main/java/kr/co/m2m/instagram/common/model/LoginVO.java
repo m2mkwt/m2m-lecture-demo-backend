@@ -8,8 +8,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 public class LoginVO implements Serializable, Cloneable {
-	private String id; /* 아이디 */
-	private String pw; /* 비밀번호 */
-	private String name; /* 이름 */
-	private String email; /* 이메일 */
+	private int memberId;
+	private String loginName;
+	private String userName;
+	private String email;
+	private String password;
+	private String gender;
+	private String deleteYn;
+	private int mediaId;
 }
