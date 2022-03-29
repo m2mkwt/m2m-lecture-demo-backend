@@ -9,13 +9,15 @@ import kr.co.m2m.instagram.post.model.PostVO;
 
 public interface PostService {
 
-	public ResultModel<String> insertPost(PostPO po); 
+	public String insertPost(PostPO po); 
 		
-	public ResultModel<PostVO> updatePost(PostPO po);
+	public String updatePost(PostPO po);
 		
-	public ResultModel<String> deletePost(PostPO po);
+	public String deletePost(PostPO po);
 	
-	public List<PostVO> selectPost(PostVO vo);
+	public List<PostVO> selectList(PostVO vo); 
+	
+	public List<PostVO> selectDetail(PostVO vo); 
 	
 	public ResultListModel<PostVO> selectAll(PostVO vo);
 }

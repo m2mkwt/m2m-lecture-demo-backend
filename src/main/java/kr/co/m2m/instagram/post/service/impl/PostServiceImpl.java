@@ -26,31 +26,43 @@ public class PostServiceImpl implements PostService {
 	
 
 	@Override
-	public ResultModel<String> insertPost(PostPO po) {  //글 입력
-		ResultModel<String> rv = new ResultModel<>();
-		postMapper.insertPost(po);
-		rv.setMessage("insert Success");
-		return rv;
+	public String insertPost(PostPO po) {  //글 입력
+		int result = postMapper.insertPost(po);
+		if(result==1) {
+			return "insert Success";
+		}else {
+			return "insert Fail";
+		}
 	}
 	
 	@Override
-	public ResultModel<String> deletePost(PostPO po) {  
-		ResultModel<String> rv = new ResultModel<>();
-		postMapper.deletePost(po);
-		rv.setMessage("delete Success");
-		return rv;
+	public String deletePost(PostPO po) {  
+		int result = postMapper.deletePost(po);
+		if(result==1) {
+			return "delete Success";
+		}else {
+			return "delete Fail";
+		}
 	}
 	@Override
-	public ResultModel<PostVO> updatePost(PostPO po) {  
-		ResultModel<PostVO> rv = new ResultModel<>();
-		postMapper.updatePost(po);
-		rv.setMessage("update Success");
-		return rv;
+	public String updatePost(PostPO po) {  
+		int result = postMapper.updatePost(po);
+		if(result==1) {
+			return "update Success";
+		}else {
+			return "update Fail";
+		}
 	}
 	
 	@Override
-	public List<PostVO> selectPost(PostVO vo){
+	public List<PostVO> selectList(PostVO vo){
 		List<PostVO> resultList = postMapper.selectPost(vo);
+		return resultList;
+	}
+	
+	@Override
+	public List<PostVO> selectDetail(PostVO vo){
+		List<PostVO> resultList = postMapper.selectPostDetail(vo);
 		return resultList;
 	}
 	

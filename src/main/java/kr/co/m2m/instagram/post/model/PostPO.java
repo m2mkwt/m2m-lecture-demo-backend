@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class PostPO extends BaseModel<PostPO> {
+public class PostPO  {
 	
 	@NotEmpty(groups = {ValidDelete.class },message = "{member.postId.empty}")
 	private int postId;
