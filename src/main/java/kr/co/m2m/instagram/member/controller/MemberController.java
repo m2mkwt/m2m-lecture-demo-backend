@@ -2,13 +2,10 @@ package kr.co.m2m.instagram.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -28,6 +25,7 @@ public class MemberController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+
 	// 로그인
 	@RequestMapping("login")
 	public String login() {
@@ -50,10 +48,13 @@ public class MemberController {
 	}
 
 	// 패스워드 검사
-	private void checkPass(String password) {
-
+	@ResponseBody
+	@RequestMapping(value = "pwCheck", produces ="application/json")
+	public int pwCheck(@RequestBody MemberVO memberVO) {
+		int result = SecurityUtil.checkPassword(memberVO.getPassword());
+		return result;
 	}
-
+	
     //회원 가입 폼
 	@PostMapping("signup")
 	public String signup(@RequestBody MemberVO memberVO) {
@@ -63,7 +64,7 @@ public class MemberController {
 		//회원정보 등록
 		memberService.insertMember(memberVO);
 		
-		return "redirect:/login";
+		return "redirect:/member/login";
 
 	}
 
