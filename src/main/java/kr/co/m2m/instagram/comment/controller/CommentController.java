@@ -40,11 +40,10 @@ public class CommentController {
     	return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
     }
     @GetMapping("select") //게시판 댓글
-	public ResponseEntity<? extends BasicResponse> selectComment(CommentSO cs,Model model) {
-    	List<CommentSO> selectComment = commentService.selectComment(cs);
-    	model.addAttribute("selectComment",selectComment);
-    	log.info("Contorller Start..... SO : {}", model);
-		return ResponseEntity.ok().body(new CommonResponse<List<CommentSO>>(selectComment));
+	public ResponseEntity<? extends BasicResponse> selectComment(CommentVO cv,Model model) {
+    	CommentVO resultList = commentService.selectComment(cv);
+    	model.addAttribute("selectComment",resultList);
+		return ResponseEntity.ok().body(new CommonResponse<CommentVO>(resultList));
 	}
     @ResponseBody
     @PostMapping("insert") //댓글 작성
