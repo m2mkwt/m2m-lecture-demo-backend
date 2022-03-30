@@ -19,7 +19,9 @@ import kr.co.m2m.instagram.member.service.impl.MemberServiceImpl;
 import kr.co.m2m.framework.util.SecurityUtil;
 import kr.co.m2m.instagram.member.model.MemberVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -78,14 +80,14 @@ public class MemberController {
 	@RequestMapping("profile")
 	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
 		MemberVO mvo = memberService.selectMember(memberNo);
-		log.info(mvo);
+		log.info(mvo.toString());
 		return mvo;
 	}
 	
 	// 프로필(회원 정보) 수정
 	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
 	public ModelAndView updateProfile(@RequestBody MemberVO mvo/* , RedirectAttributes rattr */) {
-	  log.info(mvo);
+		log.info(mvo.toString());
 		String msg = memberService.updateMember(mvo);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:profile");
