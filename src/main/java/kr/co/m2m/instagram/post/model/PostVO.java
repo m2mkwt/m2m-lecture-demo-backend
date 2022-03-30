@@ -29,6 +29,7 @@ public class PostVO implements Serializable, Cloneable{
 	private String text;
 	private String deleyeYn;
 	private Date createdt;
+
 	private int likeCnt;
 	@NotBlank
 	private String loginId;
@@ -36,4 +37,5 @@ public class PostVO implements Serializable, Cloneable{
 	private String filename;
 	private int commentCnt;
 	
+
 }

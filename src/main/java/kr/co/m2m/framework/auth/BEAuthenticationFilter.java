@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BEAuthenticationFilter extends OncePerRequestFilter {
 
 	private static final String BEARER_TOKEN_PREFIX = "Bearer ";
-	private static final String[] ALLOW_PATHS = new String[] { "/login", "/error", "/favicon.ico","/signup" };
+	private static final String[] ALLOW_PATHS = new String[] { "/login", "/error", "/favicon.ico","/signup","/idCheck" };
 
 	private AuthenticationManager authMgr;
 	private AuthenticationEntryPoint authEntry;

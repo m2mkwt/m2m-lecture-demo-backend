@@ -1,6 +1,5 @@
 package kr.co.m2m.instagram.member.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,58 +23,40 @@ public class MemberController {
 
 	@Autowired
 	MemberServiceImpl memberService;
-	
-	
-	
-	//로그인 
+
+	// 로그인
 	@RequestMapping("login")
 	public String login() {
 		System.out.println("로그인");
-		return"login";
+		return "login";
 	}
-		
-	
 
-	//회원 가입 진입
+	// 회원 가입 진입
 	@GetMapping("signup")
 	public String signUpForm() {
 		return "signup";
 	}
-	
-	
-	//아이디 중복검사
+
+	// 아이디 중복검사
 	@ResponseBody
-	@RequestMapping(value="/idCheck",method = RequestMethod.POST)
-	public int idCheck(MemberVO memberVO) {
+	@RequestMapping(value = "idCheck", produces ="application/json")
+	public int idCheck(@RequestBody MemberVO memberVO) {
 		int result = memberService.idCheck(memberVO);
 		return result;
 	}
-	
-	//패스워드 검사
+
+	// 패스워드 검사
 	private void checkPass(String password) {
 
 	}
-	
-	
-	
-	
+
 //	회원 가입 폼
 	@PostMapping("signup")
 	public String signup(@RequestBody MemberVO memberVO) {
-		
-		int result = memberService.idCheck(memberVO);
-		try {
-			if(result==1) {
-				System.out.println("같은아이디 존재");
-				return"/signup";
-			}else if(result==0){
-				memberService.insertMember(memberVO);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-		
-		return "redirect:/login"; 
+
+		memberService.insertMember(memberVO);
+
+		return "redirect:/login";
 
 	}
 

@@ -14,27 +14,31 @@ import kr.co.m2m.instagram.comment.model.CommentPO;
 import kr.co.m2m.instagram.comment.model.CommentSO;
 import kr.co.m2m.instagram.comment.model.CommentVO;
 import kr.co.m2m.instagram.comment.service.CommentService;
+import kr.co.m2m.instagram.post.model.PostPO;
+import kr.co.m2m.instagram.post.model.PostVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@Transactional(rollbackFor = Throwable.class)
+//@Transactional(rollbackFor = Throwable.class)
 public class CommentServiceImpl implements CommentService {
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	//private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private CommentMapper commentMapper;
 	
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	//@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	//댓글전체목록
-	public List<CommentVO> commentList(CommentVO cv){
-        return commentMapper.commentList(cv);
+	public List<CommentVO> listComment(CommentVO cv){
+		List<CommentVO> commentList = commentMapper.listComment(cv);
+        return commentList;
     }
 	//게시글 댓글 목록
 	public List<CommentSO> selectComment(CommentSO cs) {
-		return  commentMapper.selectComment(cs);
+		List<CommentSO> selectComment = commentMapper.selectComment(cs);
+        return selectComment;
 	}
 	//댓글 작성
 	public String insertComment(CommentPO cp) {
@@ -63,6 +67,15 @@ public class CommentServiceImpl implements CommentService {
 			return "delete Fail";
 		}
 	}
+	//좋아요
+	public String likesCount(PostPO pp) {
+		int result = commentMapper.likesCount(pp);
+		if(result==1) {
+			return "like Success";
+		}else {
+			return "like Fail";
+	}
+}
 
 }
 

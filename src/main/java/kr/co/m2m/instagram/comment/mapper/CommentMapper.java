@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.m2m.instagram.comment.model.CommentPO;
 import kr.co.m2m.instagram.comment.model.CommentSO;
 import kr.co.m2m.instagram.comment.model.CommentVO;
+import kr.co.m2m.instagram.post.model.PostPO;
 
 
 //@Repository("kr.co.m2m.instagram.mapper.CommentMapper")
@@ -13,7 +14,7 @@ import kr.co.m2m.instagram.comment.model.CommentVO;
 public interface CommentMapper {
  
     // 댓글 목록
-	public List<CommentVO> commentList(CommentVO cv);
+	public List<CommentVO> listComment(CommentVO cv);
 	
 	// 댓글 상세페이지
 	public List<CommentSO> selectComment(CommentSO cs);
@@ -26,6 +27,10 @@ public interface CommentMapper {
  
     // 댓글 삭제
     public int deleteComment(CommentPO cp);
+    
+    //좋아요
+	public int likesCount(PostPO pp);
+
 
 
 }
