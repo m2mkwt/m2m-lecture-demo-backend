@@ -17,7 +17,7 @@ public interface CommentMapper {
 	public List<CommentVO> listComment(CommentVO cv);
 	
 	// 댓글 상세페이지
-	public List<CommentSO> selectComment(CommentSO cs);
+	public CommentVO selectComment(CommentVO cv);
  
     // 댓글 작성
 	public int insertComment(CommentPO cp);
@@ -30,6 +30,8 @@ public interface CommentMapper {
     
     //좋아요
 	public int likesCount(PostPO pp);
+
+
 
 
 

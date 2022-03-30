@@ -5,10 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="kr.co.m2m.instagram.comment.mapper.CommentMapper">
  	<!-- 좋아요 -->
- 	<update id="likeCount" parameterType="PostPO">>
+ 	<update id="likesCount" parameterType="PostPO">
  		update 
- 			post set like_cnt = like_cnt+1 
- 		where post_no = ${postNO};
+ 			instagram.dbo.post set like_cnt = like_cnt+1 
+ 		where post_no = ${postNo};
  	</update>
  	<!-- 댓글 수 -->
     <select id="commentCount" resultType="int">
@@ -18,19 +18,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <!-- 댓글 전체 리스트 -->
     <select id="listComment" resultType="CommentVO">
-    		select * from instagram.dbo.comment
+        SELECT TCO.comment_no
+		      ,TCO.member_no
+			  ,TCO.post_no
+			  ,TCO.text
+			  ,TCO.createdt
+			  ,TMB.login_id  AS login_id
+		FROM dbo.comment AS TCO
+		INNER JOIN dbo.member AS TMB
+		    ON TCO.member_no = TMB.member_no;
+
     </select>
     <!-- 포스트 댓글  -->
-    <select id="selectComment" resultType="CommentVO">
-        SELECT
-            comment_no, member_no, post_no, text, delete_yn, creatdt
-        FROM instagram.dbo.comment WHERE post_no = ${postNO}
+    <select id="selectComment" resultType="CommentVO">   
+		SELECT TCO.comment_no
+		      ,TCO.member_no
+			  ,TCO.post_no
+			  ,TCO.text
+			  ,TCO.createdt
+			  ,TMB.login_id  AS login_id
+		FROM dbo.comment AS TCO
+		 INNER JOIN dbo.member AS TMB
+		    ON TCO.member_no = TMB.member_no
+		WHERE TCO.post_no = ${postNo};
     </select>
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
-        COMMENT (comment_no, member_no, post_no, text)
-        VALUES(${commentNo},${memberNo},${postNo},#{text},#{deleteYN}) 
+        COMMENT (member_no, post_no, text, delete_yn)
+        VALUES(${memberNo},${postNo},#{text},#{deleteYN}) 
     </insert>
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">

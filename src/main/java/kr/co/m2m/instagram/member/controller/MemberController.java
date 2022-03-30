@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -33,6 +31,7 @@ public class MemberController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+
 	// 로그인
 	@RequestMapping("login")
 	public String login() {
@@ -55,10 +54,13 @@ public class MemberController {
 	}
 
 	// 패스워드 검사
-	private void checkPass(String password) {
-
+	@ResponseBody
+	@RequestMapping(value = "pwCheck", produces ="application/json")
+	public int pwCheck(@RequestBody MemberVO memberVO) {
+		int result = SecurityUtil.checkPassword(memberVO.getPassword());
+		return result;
 	}
-
+	
     //회원 가입 폼
 	@PostMapping("signup")
 	public String signup(@RequestBody MemberVO memberVO) {
@@ -68,7 +70,7 @@ public class MemberController {
 		//회원정보 등록
 		memberService.insertMember(memberVO);
 		
-		return "redirect:/login";
+		return "redirect:/member/login";
 
 	}
 	
@@ -76,14 +78,14 @@ public class MemberController {
 	@RequestMapping("profile")
 	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
 		MemberVO mvo = memberService.selectMember(memberNo);
-		System.out.println(mvo);
+		log.info(mvo);
 		return mvo;
 	}
 	
 	// 프로필(회원 정보) 수정
 	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
 	public ModelAndView updateProfile(@RequestBody MemberVO mvo/* , RedirectAttributes rattr */) {
-		System.out.println(mvo);
+	  log.info(mvo);
 		String msg = memberService.updateMember(mvo);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:profile");

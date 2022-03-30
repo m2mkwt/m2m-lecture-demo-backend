@@ -11,7 +11,7 @@ public interface CommentService {
 	//댓글 전체
 	public List<CommentVO> listComment(CommentVO cv);
 	//댓글 상세보기
-	public List<CommentSO> selectComment(CommentSO cs);
+	public CommentVO selectComment(CommentVO cv);
 	//댓글 작성
 	public String insertComment(CommentPO cp);
 	//댓글 수정

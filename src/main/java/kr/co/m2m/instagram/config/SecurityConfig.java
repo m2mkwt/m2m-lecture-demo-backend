@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(beAuthFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션생성 안함
 		// 인증없이 접속가능한 패턴등록
-		http.authorizeRequests().antMatchers("/", "/comment/**","/main", "/main/**", "/login_processing", "/login-error/**", "/post", "/post/**","/idCheck").permitAll()
+		http.authorizeRequests().antMatchers("/", "/comment/**","/main", "/main/**", "/login_processing", "/login-error/**", "/post", "/post/**","/member","/member/**").permitAll()
 				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
 				.antMatchers("/css/**", "/js/**", "/img/**", "/lib/**","/signup" , "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**").permitAll()
 				// .antMatchers(HttpMethod.OPTIONS, "login").permitAll()
