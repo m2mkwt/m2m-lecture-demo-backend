@@ -8,6 +8,7 @@
 	<!--회원검색  -->
 	<select id="getLoginMember" parameterType="kr.co.m2m.instagram.common.model.LoginSO" resultType="kr.co.m2m.instagram.common.model.LoginVO">
 		SELECT member_no
+		     , login_id
 		     , user_name
 		     , email
 		     , password

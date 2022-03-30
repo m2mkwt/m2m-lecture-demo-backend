@@ -75,9 +75,9 @@ public class BEAuthenticationProvider implements AuthenticationProvider {
 			authDetail = new BEAuthDetailModel();
 			authDetail.setAuthToken(accessToken);
 			authDetail.setMemberNo(vo.getMemberNo());
-			authDetail.setEmail(vo.getEmail());
 			authDetail.setLoginId(vo.getLoginId());
-			authDetail.setPassword(vo.getPassword());
+			authDetail.setUserName(vo.getUserName());
+			authDetail.setEmail(vo.getEmail());
 			authDetail.setGender(vo.getGender());
 			authDetail.setMediaNo(vo.getMediaNo());
 			
