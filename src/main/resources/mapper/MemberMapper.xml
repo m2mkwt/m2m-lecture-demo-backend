@@ -25,11 +25,9 @@
 	</insert>
 	
 	<!-- 회원수정 -->
-	<!-- 비밀번호 변경 메뉴를 따로 만들수도 있으니 확인 필요함 -->
 	<update id="updateMember" parameterType="MemberVO">
 		UPDATE instagram.dbo.member
-		SET login_id = #{loginId}, user_name = #{userName}, email = #{email},
-			password = #{password}, gender = #{gender}, media_no = #{mediaNo}
+		SET login_id = #{loginId}, user_name = #{userName}, email = #{email}, gender = #{gender}
 		WHERE member_no = #{memberNo}
 	</update>
 	
@@ -53,5 +51,11 @@
 		SELECT COUNT(*) FROM instagram.dbo.member
 		WHERE login_id = #{loginId}
 	 </select>
-	
+	 
+	 <!-- 회원정보 조회 -->
+	 <select id="selectMember" resultType="MemberVO" parameterType="Integer">
+	 	SELECT member_no, login_id, user_name, email, gender, media_no
+	 	FROM dbo.member
+	 	WHERE member_no = #{memberNo}
+	 </select>
 </mapper>

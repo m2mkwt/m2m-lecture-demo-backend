@@ -1,13 +1,19 @@
 package kr.co.m2m.instagram.member.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.m2m.instagram.member.service.impl.MemberServiceImpl;
 import kr.co.m2m.framework.util.SecurityUtil;
@@ -67,5 +73,41 @@ public class MemberController {
 		return "redirect:/member/login";
 
 	}
-
+	
+	// 프로필(회원 정보) 조회
+	@RequestMapping("profile")
+	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
+		MemberVO mvo = memberService.selectMember(memberNo);
+		log.info(mvo);
+		return mvo;
+	}
+	
+	// 프로필(회원 정보) 수정
+	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
+	public ModelAndView updateProfile(@RequestBody MemberVO mvo/* , RedirectAttributes rattr */) {
+	  log.info(mvo);
+		String msg = memberService.updateMember(mvo);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:profile");
+//		rattr.addAttribute("msg", msg);
+//		rattr.addAttribute("memberNo", mvo.getMemberNo());
+		return modelAndView;
+	}
+	
+//	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
+//	public String updateProfile(@RequestBody MemberVO mvo, RedirectAttributes rattr) {
+//		System.out.println(mvo);
+//		String msg = memberService.updateMember(mvo);
+//		rattr.addAttribute("msg", msg);
+//		rattr.addAttribute("memberNo", mvo.getMemberNo());
+//		return "redirect:profile";
+//	}
+	
+	// 회원 비밀번호 수정
+//	@RequestMapping(value = "udpatePassword", method = RequestMethod.POST)
+//	public String updatePassword(@RequestBody Map<String, String> passwordMap) {
+//		
+//		return null;
+//	}
+	
 }

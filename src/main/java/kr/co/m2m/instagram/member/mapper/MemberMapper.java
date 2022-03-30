@@ -18,7 +18,10 @@ public interface MemberMapper {
 	void insertMember(MemberVO memberVO);
 	
 	//회원정보 수정
-	void updateMember(MemberVO memberVO);
+	int updateMember(MemberVO memberVO);
+	
+	//회원정보 조회
+	MemberVO selectMember(int memberNo);
 	
 	//아이디 체크
 	int idCheck(MemberVO memberVO);
