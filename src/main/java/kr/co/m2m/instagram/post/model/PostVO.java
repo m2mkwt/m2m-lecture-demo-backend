@@ -17,9 +17,9 @@ public class PostVO implements Serializable, Cloneable{
 	
 	public PostVO() {
 	}
-
 	
-
+	
+	
 	private int postNo;
 	@NotBlank
 	private int memberNo;
@@ -27,7 +27,15 @@ public class PostVO implements Serializable, Cloneable{
 	private int mediaNo;
 	@NotBlank
 	private String text;
-	private char deleyeYn;
+	private String deleyeYn;
 	private Date createdt;
-	private int likes;
+
+	private int likeCnt;
+	@NotBlank
+	private String loginId;
+	@NotBlank
+	private String filename;
+	private int commentCnt;
+	
+
 }
