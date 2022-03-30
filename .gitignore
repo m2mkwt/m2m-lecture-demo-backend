@@ -37,3 +37,4 @@ build/
 .vscode/
 
 .git
+src/main/java/kr/co/m2m/instagram/member/controller/MemberController.java
