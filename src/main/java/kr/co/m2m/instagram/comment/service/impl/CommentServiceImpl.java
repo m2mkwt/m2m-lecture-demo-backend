@@ -30,11 +30,13 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	//댓글전체목록
 	public List<CommentVO> commentList(CommentVO cv){
-        return commentMapper.commentList(cv);
+		List<CommentVO> commentList = commentMapper.commentList(cv);
+        return commentList;
     }
 	//게시글 댓글 목록
 	public List<CommentSO> selectComment(CommentSO cs) {
-		return  commentMapper.selectComment(cs);
+		List<CommentSO> selectComment = commentMapper.selectComment(cs);
+        return selectComment;
 	}
 	//댓글 작성
 	public String insertComment(CommentPO cp) {
