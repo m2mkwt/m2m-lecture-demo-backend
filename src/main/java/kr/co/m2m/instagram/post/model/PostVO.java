@@ -29,5 +29,5 @@ public class PostVO implements Serializable, Cloneable{
 	private String text;
 	private char deleyeYn;
 	private Date createdt;
-	
+	private int likes;
 }

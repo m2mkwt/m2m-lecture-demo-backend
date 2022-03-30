@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="kr.co.m2m.instagram.comment.mapper.CommentMapper">
  	<!-- 좋아요 -->
- 	<update id="likeCount" parameterType="CommentVO">>
+ 	<update id="likeCount" parameterType="PostPO">>
  		update 
  			post set like_cnt = like_cnt+1 
  		where post_no = ${postNO};
@@ -14,19 +14,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="commentCount" resultType="int">
         SELECT
             COUNT(*)
-        FROM COMMENT
+        FROM instagram.dbo.comment
     </select>
     <!-- 댓글 전체 리스트 -->
-    <select id="commentList" resultType="CommentVO">
-        SELECT
-            *
-        FROM COMMENT
+    <select id="listComment" resultType="CommentVO">
+    		select * from instagram.dbo.comment
     </select>
     <!-- 포스트 댓글  -->
     <select id="selectComment" resultType="CommentVO">
         SELECT
             comment_no, member_no, post_no, text, delete_yn, creatdt
-        FROM COMMENT WHERE post_no = ${postNO}
+        FROM instagram.dbo.comment WHERE post_no = ${postNO}
     </select>
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
@@ -36,13 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">
-        UPDATE COMMENT
+        UPDATE instagram.dbo.comment
             SET text = #{text}
         	WHERE comment_no = ${commentNo}
     </update>
 	<!-- 댓글 삭제  -->
     <update id="deleteComment" parameterType="CommentPO">
-	    UPDATE COMMENT
+	    UPDATE instagram.dbo.comment
 	        SET delete_yn = 'Y'
 	    	WHERE comment_no = ${commentNo}
     </update>
