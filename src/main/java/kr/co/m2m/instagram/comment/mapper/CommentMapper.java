@@ -26,6 +26,9 @@ public interface CommentMapper {
  
     // 댓글 삭제
     public int deleteComment(CommentPO cp);
+    
+    //좋아요
+	public int likesCount(CommentVO cv);
 
 
 }

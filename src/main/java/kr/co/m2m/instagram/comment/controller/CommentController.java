@@ -57,5 +57,10 @@ public class CommentController {
 		String result = commentService.deleteComment(cp);
 		return ResponseEntity.ok().body(new CommonResponse<String>(result));
 	}
+    @PostMapping("likes")//좋아요 수
+    public int likesCount(CommentVO vo) {
+    	int likeCheck = commentService.likesCount(vo);
+		return likeCheck;
+    }
 }
    
