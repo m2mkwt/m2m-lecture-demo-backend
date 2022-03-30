@@ -13,7 +13,9 @@ public interface MemberService {
 	//회원 가입
 	public void insertMember(MemberVO memberVO);
 	//회원 수정
-	public void updateMember(MemberVO memberVO);
+	public String updateMember(MemberVO memberVO);
+	//회원 조회
+	public MemberVO selectMember(int memberNo);
 	//아이디 체크
 	public int idCheck(MemberVO memberVO);
 

@@ -35,8 +35,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	//회원 수정
 	@Override
-	public void updateMember(MemberVO memberVO) {
-		memberMapper.updateMember(memberVO);
+	public String updateMember(MemberVO memberVO) {
+		int result = memberMapper.updateMember(memberVO);
+		String msg;
+		if (result > 0) msg = "수정완료";
+		else msg = "수정실패";
+		return msg;
 	}
 
 	
@@ -45,6 +49,12 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(MemberVO memberVO) {
 		int result = memberMapper.idCheck(memberVO);
 		return result;
+	}
+
+
+	@Override
+	public MemberVO selectMember(int memberNo) {
+		return memberMapper.selectMember(memberNo);
 	}
 	
 	
