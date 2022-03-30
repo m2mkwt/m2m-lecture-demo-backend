@@ -17,7 +17,7 @@ public class CommentPO extends BaseModel<CommentPO>{
 	private int memberNo;
 	private int postNo;
 	private String text;
-	private char deleteYN;
+	private String deleteYN;
 	private Date createdt;
 
 }
