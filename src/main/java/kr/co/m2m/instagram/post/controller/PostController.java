@@ -14,12 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
-
 import kr.co.m2m.framework.web.model.ErrorResponse;
 import kr.co.m2m.instagram.post.model.PostPO;
-
 import kr.co.m2m.instagram.post.model.PostVO;
-import kr.co.m2m.instagram.post.service.impl.PostServiceImpl;
+import kr.co.m2m.instagram.post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // 로그출력에 사용함 (ex. log.debug(String), debug 외에 info, warn 등 사용 가능함)
@@ -28,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PostController {
 	
 	@Autowired
-	private PostServiceImpl postService;
+	private PostService postService;
 	
 	
 	@GetMapping("list") // 게시글 전체 리스트 조회

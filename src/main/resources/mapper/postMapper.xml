@@ -2,22 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.m2m.instagram.post.mapper.PostMapper">
 	<insert id="insertPost">
-		insert into instagram.dbo.post (member_no,media_no, text) values (#{memberNo},#{mediaNo},#{text})
+		INSERT INTO instagram.dbo.post (member_no,media_no, text) 
+		VALUES (#{memberNo},#{mediaNo},#{text})
 	</insert>
 	<delete id="deletePost">
-		update instagram.dbo.post set delete_yn = 'Y' where post_no = #{postNo}
+		UPDATE instagram.dbo.post 
+		SET delete_yn = 'Y' 
+		WHERE post_no = #{postNo}
 	</delete>
 	<update id="updatePost">
-		update instagram.dbo.post set text = #{text} where post_no = #{postNo}
+		UPDATE instagram.dbo.post 
+		SET text = #{text} 
+		WHERE post_no = #{postNo}
 	</update>
 	<select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		select * from instagram.dbo.post
+		SELECT TPO.post_no
+		      ,TPO.member_no
+			  ,TPO.text
+			  ,TPO.createdt
+			  ,TPO.like_cnt
+			  ,TCO.text AS commentText
+			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
+			  , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
+	 	  FROM dbo.post AS TPO
+		 INNER JOIN dbo.comment TCO
+	     	ON TPO.post_no = TCO.post_no;
 	</select>
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		select * from instagram.dbo.post where post_no = #{postNo}
+		SELECT post_no
+			 , member_no
+			 , media_no
+			 , text
+			 , createdt
+		  FROM instagram.dbo.post 
+		 WHERE post_no = #{postNo}
 	</select>
 	<select id="selectPostAll" resultType="PostVO">
-		select * from dbo.post
+		SELECT * 
+		FROM dbo.post
 	</select>
 </mapper>
 

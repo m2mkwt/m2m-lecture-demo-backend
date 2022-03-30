@@ -23,6 +23,6 @@ public class PostPO  {
 	private int mediaNo;
 	@NotEmpty(groups = { ValidInsert.class, ValidUpdate.class },message = "{member.text.empty}")
 	private String text;
-	private char deleteYn;
+	private String deleteYn;
 	private Date createdt;
 }
