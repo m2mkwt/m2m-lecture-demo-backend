@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/comment")
-//@CrossOrigin("*")
+@CrossOrigin("*")
 public class CommentController {
  
 	@Autowired
@@ -77,7 +77,7 @@ public class CommentController {
 		}
     }
     @ResponseBody
-    @PostMapping("likes")//좋아요 증가
+    @PostMapping(value = "likes")//좋아요 증가
     public ResponseEntity<? extends BasicResponse> likesCount(PostPO pp){
     	String result = commentService.likesCount(pp);
 		if(result.contentEquals("like Success")) {
