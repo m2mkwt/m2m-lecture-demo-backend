@@ -35,7 +35,7 @@ public class BEFailureHandler implements AuthenticationFailureHandler {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> m = new HashMap<>();
 
-		HttpStatus httpStatus = HttpStatus.FORBIDDEN; // 403
+		HttpStatus httpStatus = HttpStatus.UNAUTHORIZED; // 401
 		m.put("isSuccess", false);
 		m.put("timestamp", new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		m.put("code", httpStatus.value());
@@ -52,7 +52,7 @@ public class BEFailureHandler implements AuthenticationFailureHandler {
 		}
 		log.info("onAuthenticationFailure - m : {}", m);
 
-		response.setCharacterEncoding("UTF-16");
+		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		response.setStatus(httpStatus.value());        
 		response.getWriter().write(mapper.writeValueAsString(m));

@@ -7,18 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SecurityUtil {
 
-	/* 마스크를 업무적으로 안할 경우 마스크 방지 여부를 체크한는데  사용하는 키 */
-	private static final String KEY_PROTECT = "MASK.PROTECT";
-
-	/* 개인정보권한이 있는 사용사 있는지 구분하는 키 */
-	private static final String KEY_UNMASK_AUTH = "MASK.UNMASKAUTH";
-
-	/* 마스킹 여부를 관리하는 Thread 변수를 저장하는 저장소 */
-	private static final ThreadLocal<Map<String, Boolean>> TL = new ThreadLocal<Map<String, Boolean>>();
-
-	/* 마스킹 Char */
-	private static final char MASKCHAR = '*';
-
 	/* Password 길이를 Check한다 */
 	private static int checkPwdLength(char[] plainText) {
 		int lowerChar = 0, upperChar = 0, numberChar = 0, specialChar = 0;
