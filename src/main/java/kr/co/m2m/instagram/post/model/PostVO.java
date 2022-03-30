@@ -34,6 +34,6 @@ public class PostVO implements Serializable, Cloneable{
 	private String loginId;
 	@NotBlank
 	private String filename;
-	private String commentText;
+	private int commentCnt;
 	
 }

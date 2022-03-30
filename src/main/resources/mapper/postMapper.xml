@@ -21,12 +21,13 @@
 			  ,TPO.text
 			  ,TPO.createdt
 			  ,TPO.like_cnt
-			  ,TCO.text AS commentText
+			  ,TMB.login_id  AS login_id
+			  , (SELECT count(*) FROM dbo.comment AS TCO WHERE TCO.post_no = TPO.post_no ) AS comment_cnt
 			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
-			  , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
-	 	  FROM dbo.post AS TPO
-		 INNER JOIN dbo.comment TCO
-	     	ON TPO.post_no = TCO.post_no;
+		  FROM dbo.post AS TPO
+		 INNER JOIN dbo.member AS TMB
+		    ON TPO.member_no = TMB.member_no;
+	
 	</select>
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
 		SELECT post_no
