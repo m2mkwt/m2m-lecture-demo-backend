@@ -63,7 +63,10 @@ public class CommentServiceImpl implements CommentService {
 			return "delete Fail";
 		}
 	}
-
+	@Override
+	public int likesCount(CommentVO cv) {
+		return commentMapper.likesCount(cv);
+	}
 }
 
 

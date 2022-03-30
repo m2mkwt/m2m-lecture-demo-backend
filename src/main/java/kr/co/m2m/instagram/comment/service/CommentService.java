@@ -17,5 +17,6 @@ public interface CommentService {
 	public String updateComment(CommentPO cp);
 	//댓글 삭제
 	public String deleteComment(CommentPO cp);
-	
+	//좋아요 수 
+	public int likesCount(CommentVO vo);
 }
