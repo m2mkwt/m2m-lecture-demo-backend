@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class MemberVO {
 		
-	private int memberId;
+	private int memberNo;
 	
 	@NotBlank
-	private String loginName;
+	private String loginId;
 	
 	@NotBlank
 	private String userName;
@@ -25,6 +25,6 @@ public class MemberVO {
 	
 	private char deleteYn;
 	
-	private int mediaId;
+	private int mediaNo;
 	
 }

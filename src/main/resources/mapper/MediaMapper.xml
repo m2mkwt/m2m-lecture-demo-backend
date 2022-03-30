@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.m2m.instagram.media.mapper.MediaMapper">
-	<insert id="insertPostMedia" parameterType="MediaVO" useGeneratedKeys="true" keyProperty="media_id">
-		INSERT INTO media (post_id, filename)
-		VALUES (#{post_id}, #{filename})
-	</insert>
-	<insert id="insertProfileMedia" parameterType="MediaVO" useGeneratedKeys="true" keyProperty="media_id">
-		INSERT INTO media (post_id, filename)
-		VALUES (0, #{filename})
+	<insert id="insertMedia" parameterType="MediaVO" useGeneratedKeys="true" keyProperty="mediaNo">
+		INSERT INTO media (filename)
+		VALUES (#{filename})
 	</insert>
 	<update id="updateMedia" parameterType="MediaVO">
 		UPDATE media
 		SET filename = #{filename}
-		WHERE media_id = #{media_id}
+		WHERE media_no = #{mediaNo}
 	</update>
 	<update id="deleteMedia" parameterType="Integer">
 		UPDATE media
 		SET delete_yn = 'Y'
-		WHERE media_id = #{media_id}
+		WHERE media_no = #{mediaNo}
 	</update>
-	<select id="selectPostMedia" resultType="MediaVO">
+	<select id="selectMedia" resultType="MediaVO">
 		SELECT * FROM media
-		WHERE post_id = #{post_id}
-	</select>
-	<select id="selectProfileMedia" resultType="MediaVO">
-		SELECT * FROM media
-		WHERE media_id = #{media_id}
+		WHERE media_no = #{mediaNo}
 	</select>
 </mapper>
 

@@ -20,7 +20,7 @@ public class BEAuthentication extends AbstractAuthenticationToken {
 	public BEAuthentication(BEAuthDetailModel authDetail,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
-		this.userId		= authDetail.getMemberId();
+		this.userId		= authDetail.getMemberNo();
 		this.authToken	= authDetail.getAuthToken();
 		this.setDetails(authDetail);
 		super.setAuthenticated(true);

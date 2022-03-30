@@ -17,48 +17,39 @@ public class MediaServiceImpl implements MediaService {
 	@Autowired
 	MediaMapper mediaMapper;
 	
+	// 이미지 추가
 	@Override
-	public int insertPostMedia(MultipartFile file) {
+	public int insertMedia(MultipartFile file) {
 		String filename = uploadFile(file);
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		mediaMapper.insertPostMedia(vo);
-		return vo.getMedia_id();
+		mediaMapper.insertMedia(vo);
+		return vo.getMediaNo();
 	}
 
+	// 이미지 수정
 	@Override
-	public int insertProfileMedia(MultipartFile file) {
+	public int updateMedia(MultipartFile file, int mediaNo) {
 		String filename = uploadFile(file);
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		mediaMapper.insertProfileMedia(vo);
-		return vo.getMedia_id();
+		vo.setMediaNo(mediaNo);
+		return mediaMapper.updateMedia(vo);
 	}
 
+	// 이미지 삭제
 	@Override
-	public int updateMedia(MultipartFile file, int media_id) {
-		String filename = uploadFile(file);
-		MediaVO vo = new MediaVO();
-		vo.setFilename(filename);
-		vo.setMedia_id(media_id);
-		return mediaMapper.insertPostMedia(vo);
+	public int deleteMedia(int mediaNo) {
+		return mediaMapper.deleteMedia(mediaNo);
 	}
 
+	// 이미지 조회
 	@Override
-	public int deleteMedia(int media_id) {
-		return mediaMapper.deleteMedia(media_id);
+	public MediaVO selectMedia(int mediaNo) {
+		return mediaMapper.selectMedia(mediaNo);
 	}
 
-	@Override
-	public MediaVO selectPostMedia(int post_id) {
-		return mediaMapper.selectPostMedia(post_id);
-	}
-
-	@Override
-	public MediaVO selectProfileMedia(int media_id) {
-		return mediaMapper.selectProfileMedia(media_id);
-	}
-
+	// 파일 업로드
 	@Override
 	public String uploadFile(MultipartFile file) {
 		String dirPath = "C:\\savedir";

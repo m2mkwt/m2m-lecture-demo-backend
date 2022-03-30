@@ -3,35 +3,45 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  
-<mapper namespace="kr.co.m2m.instagram.mapper.CommentMapper">
- 
+<mapper namespace="kr.co.m2m.instagram.comment.mapper.CommentMapper">
+ 	<!-- 좋아요 -->
+ 	<update id="likeCount" parameterType="PostPO">>
+ 		update 
+ 			post set like_cnt = like_cnt+1 
+ 		where post_no = ${postNO};
+ 	</update>
+ 	<!-- 댓글 수 -->
     <select id="commentCount" resultType="int">
         SELECT
             COUNT(*)
-        FROM COMMENT
+        FROM instagram.dbo.comment
     </select>
-    
-    <select id="commentList" resultType="CommentVO">
+    <!-- 댓글 전체 리스트 -->
+    <select id="listComment" resultType="CommentVO">
+    		select * from instagram.dbo.comment
+    </select>
+    <!-- 포스트 댓글  -->
+    <select id="selectComment" resultType="CommentVO">
         SELECT
-            (comment_id, member_id, post_id, text, REG_DATE)
-        FROM COMMENT
+            comment_no, member_no, post_no, text, delete_yn, creatdt
+        FROM instagram.dbo.comment WHERE post_no = ${postNO}
     </select>
-    <insert id="commentInsert" parameterType="CommentVO">
+    <!-- 댓글 작성  -->
+    <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
-        COMMENT (comment_id, member_id, post_id, text, REG_DATE)
-        VALUES(${commentId},${memberId},${postId},#{text},#{deleteYN},now()) 
+        COMMENT (comment_no, member_no, post_no, text)
+        VALUES(${commentNo},${memberNo},${postNo},#{text},#{deleteYN}) 
     </insert>
-    
-    <update id="commentUpdate" parameterType="CommentVO">
-        UPDATE COMMENT
-            SET
-            text = #{text}
-        	WHERE post_id = ${postId}
+    <!-- 댓글 수정  -->
+    <update id="updateComment" parameterType="CommentPO">
+        UPDATE instagram.dbo.comment
+            SET text = #{text}
+        	WHERE comment_no = ${commentNo}
     </update>
-    <update id="commentDelete" parameterType="CommentVO">
-	    UPDATE COMMENT
-	        SET
-	        delete_yn = 'Y'
-	    	WHERE post_id = ${postId}
+	<!-- 댓글 삭제  -->
+    <update id="deleteComment" parameterType="CommentPO">
+	    UPDATE instagram.dbo.comment
+	        SET delete_yn = 'Y'
+	    	WHERE comment_no = ${commentNo}
     </update>
 </mapper>

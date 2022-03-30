@@ -62,6 +62,8 @@ public class BEAuthenticationProvider implements AuthenticationProvider {
 			if (vo == null)
 				throw new UsernameNotFoundException("UsernameNotFoundException");
 
+            log.info(" ##### [AuthenticationProvider] Encrypt authToken : {}", passwordEncoder.encode(authToken));
+           
 			boolean pwdBoolean = passwordEncoder.matches(authToken, vo.getPassword());
 			// 패스워드 확인
 			if (!pwdBoolean)
@@ -72,12 +74,12 @@ public class BEAuthenticationProvider implements AuthenticationProvider {
 
 			authDetail = new BEAuthDetailModel();
 			authDetail.setAuthToken(accessToken);
-			authDetail.setMemberId(vo.getMemberId());
+			authDetail.setMemberNo(vo.getMemberNo());
 			authDetail.setEmail(vo.getEmail());
-			authDetail.setLoginName(vo.getLoginName());
+			authDetail.setLoginId(vo.getLoginId());
 			authDetail.setPassword(vo.getPassword());
 			authDetail.setGender(vo.getGender());
-			authDetail.setMediaId(vo.getMediaId());
+			authDetail.setMediaNo(vo.getMediaNo());
 			
 			grantedList = new ArrayList<>();
 			// log.info("authDetail : {}", authDetail);
