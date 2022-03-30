@@ -21,8 +21,8 @@ public class PostPO  {
 	@NotEmpty(groups = {ValidDelete.class },message = "{member.memberNo.empty}" )
 	private int memberNo;
 	private int mediaNo;
-	@NotEmpty(groups = { ValidInsert.class, ValidUpdate.class },message = "{member.text.empty}")
-	private String text;
+	@NotEmpty(groups = { ValidInsert.class, ValidUpdate.class },message = "{member.content.empty}")
+	private String content;
 	private String deleteYn;
 	private Date createdt;
 }

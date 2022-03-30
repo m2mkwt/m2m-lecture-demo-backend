@@ -26,7 +26,7 @@ public class PostVO implements Serializable, Cloneable{
 	@NotBlank
 	private int mediaNo;
 	@NotBlank
-	private String text;
+	private String content;
 	private String deleyeYn;
 	private Date createdt;
 

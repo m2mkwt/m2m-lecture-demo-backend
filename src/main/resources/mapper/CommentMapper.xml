@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT TCO.comment_no
 		      ,TCO.member_no
 			  ,TCO.post_no
-			  ,TCO.text
+			  ,TCO.content
 			  ,TCO.createdt
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT TCO.comment_no
 		      ,TCO.member_no
 			  ,TCO.post_no
-			  ,TCO.text
+			  ,TCO.content
 			  ,TCO.createdt
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
@@ -45,13 +45,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
-        COMMENT (member_no, post_no, text, delete_yn)
-        VALUES(${memberNo},${postNo},#{text},#{deleteYN}) 
+        COMMENT (member_no, post_no, content, delete_yn)
+        VALUES(${memberNo},${postNo},#{content},#{deleteYN}) 
     </insert>
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">
         UPDATE instagram.dbo.comment
-            SET text = #{text}
+            SET content = #{content}
         	WHERE comment_no = ${commentNo}
     </update>
 	<!-- 댓글 삭제  -->
