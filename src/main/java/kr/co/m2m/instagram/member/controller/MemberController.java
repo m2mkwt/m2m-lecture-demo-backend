@@ -1,6 +1,7 @@
 package kr.co.m2m.instagram.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,9 @@ public class MemberController {
 	@Autowired
 	MemberServiceImpl memberService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	// 로그인
 	@RequestMapping("login")
 	public String login() {
@@ -50,12 +54,15 @@ public class MemberController {
 
 	}
 
-//	회원 가입 폼
+    //회원 가입 폼
 	@PostMapping("signup")
 	public String signup(@RequestBody MemberVO memberVO) {
-
+		//패스워드 암호화
+		String enc = passwordEncoder.encode(memberVO.getPassword());
+		memberVO.setPassword(enc);
+		//회원정보 등록
 		memberService.insertMember(memberVO);
-
+		
 		return "redirect:/login";
 
 	}
