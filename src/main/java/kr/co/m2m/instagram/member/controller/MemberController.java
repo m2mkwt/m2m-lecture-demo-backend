@@ -76,40 +76,4 @@ public class MemberController {
 
 	}
 	
-	// 프로필(회원 정보) 조회
-	@RequestMapping("profile")
-	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
-		MemberVO mvo = memberService.selectMember(memberNo);
-		log.info(mvo.toString());
-		return mvo;
-	}
-	
-	// 프로필(회원 정보) 수정
-	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
-	public ModelAndView updateProfile(@RequestBody MemberVO mvo/* , RedirectAttributes rattr */) {
-		log.info(mvo.toString());
-		String msg = memberService.updateMember(mvo);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:profile");
-//		rattr.addAttribute("msg", msg);
-//		rattr.addAttribute("memberNo", mvo.getMemberNo());
-		return modelAndView;
-	}
-	
-//	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
-//	public String updateProfile(@RequestBody MemberVO mvo, RedirectAttributes rattr) {
-//		System.out.println(mvo);
-//		String msg = memberService.updateMember(mvo);
-//		rattr.addAttribute("msg", msg);
-//		rattr.addAttribute("memberNo", mvo.getMemberNo());
-//		return "redirect:profile";
-//	}
-	
-	// 회원 비밀번호 수정
-//	@RequestMapping(value = "udpatePassword", method = RequestMethod.POST)
-//	public String updatePassword(@RequestBody Map<String, String> passwordMap) {
-//		
-//		return null;
-//	}
-	
 }

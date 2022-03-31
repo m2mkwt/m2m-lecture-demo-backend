@@ -87,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// .antMatchers(HttpMethod.OPTIONS, "login").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "login_processing").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "login-error").permitAll()
-				.antMatchers("/test", "/test/**").permitAll() // 테스트용
+				.antMatchers("/profile/", "/mypage", "/profile/**", "/mypage/**").permitAll() // 테스트용
 				.anyRequest().authenticated(); // 그외는 인증을 거치도록 함
 		// 시큐리티 관련 Custom Handler등 등록
 		http.exceptionHandling().accessDeniedHandler(new BEAccessDeniedHandler()).and().exceptionHandling()

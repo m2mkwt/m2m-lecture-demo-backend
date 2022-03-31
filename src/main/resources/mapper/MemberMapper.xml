@@ -20,20 +20,20 @@
 	
 	<!--회원가입  -->
 	<insert id="insertMember" parameterType="MemberVO">
-		INSERT INTO instagram.dbo.member (login_id, user_name, email, password, gender, media_no)
+		INSERT INTO dbo.member (login_id, user_name, email, password, gender, media_no)
 		VALUES (#{loginId}, #{userName}, #{email}, #{password}, #{gender}, #{mediaNo})
 	</insert>
 	
 	<!-- 회원수정 -->
 	<update id="updateMember" parameterType="MemberVO">
-		UPDATE instagram.dbo.member
+		UPDATE dbo.member
 		SET login_id = #{loginId}, user_name = #{userName}, email = #{email}, gender = #{gender}
 		WHERE member_no = #{memberNo}
 	</update>
 	
 	<!-- 비밀번호 수정 -->
-	<update id="updateMemberPassword">
-		UPDATE insgram.dbo.member
+	<update id="updatePassword" parameterType="MemberVO">
+		UPDATE dbo.member
 		SET password = #{password}
 		WHERE member_no = #{memberNo}
 	</update>
@@ -41,7 +41,7 @@
 	<!--로그인 -->
 	<select id="login_check" resultType="MemberVO">
 	  SELECT *
-	  FROM instagram.dbo.member
+	  FROM dbo.member
 	  WHERE email=#{email} and password=#{password}
 
 	 </select>
@@ -55,6 +55,13 @@
 	 <!-- 회원정보 조회 -->
 	 <select id="selectMember" resultType="MemberVO" parameterType="Integer">
 	 	SELECT member_no, login_id, user_name, email, gender, media_no
+	 	FROM dbo.member
+	 	WHERE member_no = #{memberNo}
+	 </select>
+	 
+	 <!-- 비밀번호 조회 -->
+	 <select id="selectPassword" resultType="String" parameterType="Integer">
+	 	SELECT password
 	 	FROM dbo.member
 	 	WHERE member_no = #{memberNo}
 	 </select>

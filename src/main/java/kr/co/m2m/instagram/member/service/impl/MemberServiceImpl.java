@@ -3,6 +3,7 @@ package kr.co.m2m.instagram.member.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.m2m.instagram.common.model.LoginSO;
@@ -18,7 +19,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberMapper memberMapper;
-
+	
 	//회원 검색
 	@Override
 	public LoginVO getLoginMember(LoginSO so){
@@ -38,8 +39,8 @@ public class MemberServiceImpl implements MemberService {
 	public String updateMember(MemberVO memberVO) {
 		int result = memberMapper.updateMember(memberVO);
 		String msg;
-		if (result > 0) msg = "수정완료";
-		else msg = "수정실패";
+		if (result > 0) msg = "update success";
+		else msg = "update failure";
 		return msg;
 	}
 
@@ -56,7 +57,19 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO selectMember(int memberNo) {
 		return memberMapper.selectMember(memberNo);
 	}
-	
-	
+
+	@Override
+	public String updatePassword(MemberVO memberVO) {
+		int result = memberMapper.updatePassword(memberVO);
+		String msg;
+		if (result > 0) msg = "update success";
+		else msg = "update failure";
+		return msg;
+	}
+
+	@Override
+	public String selectPassword(int memberNo) {
+		return memberMapper.selectPassword(memberNo);
+	}
 	
 }
