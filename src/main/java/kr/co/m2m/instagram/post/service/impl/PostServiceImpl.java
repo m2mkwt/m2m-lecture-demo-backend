@@ -1,6 +1,7 @@
 package kr.co.m2m.instagram.post.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,16 @@ public class PostServiceImpl implements PostService {
 	public PostVO selectDetail(PostVO vo){
 		PostVO resultList = postMapper.selectPostDetail(vo);
 		return resultList;
+	}
+
+	@Override
+	public int countPost(int memberNo) {
+		return postMapper.countPost(memberNo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMyPost(int memberNo) {
+		return postMapper.selectMyPost(memberNo);
 	}
 	
 //	@Override

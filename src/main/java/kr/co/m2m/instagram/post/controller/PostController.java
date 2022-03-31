@@ -1,6 +1,7 @@
 package kr.co.m2m.instagram.post.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,9 +60,6 @@ public class PostController {
 		}
 	}
 
-	
-
-
 	@ResponseBody
 	@PostMapping("editPost") // 게시글 수정 
 	public ResponseEntity<? extends BasicResponse> editPost(PostPO po) {
@@ -84,9 +83,23 @@ public class PostController {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
 	}
-
-
 	
+	// 내 게시글 갯수 조회
+	@GetMapping("countPost")
+	public ResponseEntity<? extends BasicResponse> countPost(int memberNo) {
+		int result = postService.countPost(memberNo);
+		log.info("count My Post : total {}"+ result);
+		return ResponseEntity.ok().body(new CommonResponse<Integer>(result));
+	}
+	
+	// 내 게시글 리스트 조회
+	@GetMapping("listPost")
+	public ResponseEntity<? extends BasicResponse> selectMyPost(int memberNo, Model model) {
+		List<Map<String, String>> myPost = postService.selectMyPost(memberNo);
+		log.info("select Count MembeNo : {}" + memberNo);
+		model.addAttribute("myPost", myPost);
+		return ResponseEntity.ok().body(new CommonResponse<List<Map<String, String>>>(myPost));
+	}
 	
 	
 }
