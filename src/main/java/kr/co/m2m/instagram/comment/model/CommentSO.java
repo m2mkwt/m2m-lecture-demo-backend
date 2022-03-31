@@ -12,8 +12,9 @@ public class CommentSO extends BaseModel<CommentSO>{
 	private int commentNo;
 	private int memberNo;
 	private int postNo;
-	private String content;
+	private String contentComment;
 	private char deleteYN;
 	private Date createdt;
+	private String loginId;
 
 }

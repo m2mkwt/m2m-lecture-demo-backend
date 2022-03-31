@@ -32,19 +32,13 @@ public class CommentController {
 	@Autowired
     private CommentServiceImpl commentService;
 	
-    @GetMapping("selectCommentlist") //댓글 전체 리스트
+    @GetMapping("selectCommentlist") //댓글 리스트
     public ResponseEntity<? extends BasicResponse> selectCommentlist(CommentVO cv,Model model) {
     	List<CommentVO> commentList = commentService.listComment(cv);
     	log.info("listComment select Parameter (VO) : {}"+ cv);
     	model.addAttribute("commentList",commentList);
     	return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
     }
-    @GetMapping("searchCommentlist") //게시판 댓글
-	public ResponseEntity<? extends BasicResponse> searchCommentlist(CommentVO cv,Model model) {
-    	CommentVO resultList = commentService.selectComment(cv);
-    	model.addAttribute("selectComment",resultList);
-		return ResponseEntity.ok().body(new CommonResponse<CommentVO>(resultList));
-	}
     @ResponseBody
     @PostMapping("addComment") //댓글 작성
 	public ResponseEntity<? extends BasicResponse> addComment(@Valid CommentPO cp,Model model) {
