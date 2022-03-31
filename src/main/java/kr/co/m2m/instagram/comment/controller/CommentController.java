@@ -39,14 +39,14 @@ public class CommentController {
     	model.addAttribute("commentList",commentList);
     	return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
     }
-    @GetMapping("select") //게시판 댓글
+    @GetMapping("list") //게시판 댓글
 	public ResponseEntity<? extends BasicResponse> selectComment(CommentVO cv,Model model) {
     	CommentVO resultList = commentService.selectComment(cv);
     	model.addAttribute("selectComment",resultList);
 		return ResponseEntity.ok().body(new CommonResponse<CommentVO>(resultList));
 	}
     @ResponseBody
-    @PostMapping("insert") //댓글 작성
+    @PostMapping("registComment") //댓글 작성
 	public ResponseEntity<? extends BasicResponse> insertComment(@Valid CommentPO cp,Model model) {
 		String result = commentService.insertComment(cp);
 		if(result.contentEquals("insert Success")) {
@@ -56,7 +56,7 @@ public class CommentController {
 		}
 	}
     @ResponseBody
-    @PostMapping(value = "update") //댓글 수정
+    @PostMapping(value = "editComment") //댓글 수정
 	public ResponseEntity<? extends BasicResponse> updateComment(CommentPO cp) {
 		String result = commentService.updateComment(cp);
 		if(result.contentEquals("update Success")) {
@@ -66,7 +66,7 @@ public class CommentController {
 		}
     }
     @ResponseBody
-    @PostMapping(value = "delete") //댓글 삭제
+    @PostMapping(value = "removeComment") //댓글 삭제
 	public ResponseEntity<? extends BasicResponse> deleteComment(CommentPO cp) {
 		String result = commentService.deleteComment(cp);
 		if(result.contentEquals("delete Success")) {
@@ -76,7 +76,7 @@ public class CommentController {
 		}
     }
     @ResponseBody
-    @PostMapping(value = "likes")//좋아요 증가
+    @PostMapping(value = "likePost")//좋아요 증가
     public ResponseEntity<? extends BasicResponse> likesCount(PostPO pp){
     	String result = commentService.likesCount(pp);
 		if(result.contentEquals("like Success")) {
