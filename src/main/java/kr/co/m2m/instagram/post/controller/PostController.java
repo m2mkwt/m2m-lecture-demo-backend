@@ -90,22 +90,4 @@ public class PostController {
 		}
 	}
 	
-	// 내 게시글 갯수 조회
-	@GetMapping("getPostCnt")
-	public ResponseEntity<? extends BasicResponse> getPostCnt(int memberNo) {
-		int result = postService.countPost(memberNo);
-		log.info("count My Post : total {}"+ result);
-		return ResponseEntity.ok().body(new CommonResponse<Integer>(result));
-	}
-	
-	// 내 게시글 리스트 조회
-	@GetMapping("searchPostList")
-	public ResponseEntity<? extends BasicResponse> searchPostList(int memberNo, Model model) {
-		List<Map<String, String>> myPost = postService.selectMyPost(memberNo);
-		log.info("select Count MembeNo : {}" + memberNo);
-		model.addAttribute("myPost", myPost);
-		return ResponseEntity.ok().body(new CommonResponse<List<Map<String, String>>>(myPost));
-	}
-	
-	
 }

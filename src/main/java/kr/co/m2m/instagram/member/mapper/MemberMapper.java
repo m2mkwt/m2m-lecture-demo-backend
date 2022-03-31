@@ -26,4 +26,10 @@ public interface MemberMapper {
 	//아이디 체크
 	int idCheck(MemberVO memberVO);
 	
+	//비밀번호 수정
+	int updatePassword(MemberVO memberVO);
+	
+	//비밀번호 조회
+	String selectPassword(int memberNo);
+	
 }
