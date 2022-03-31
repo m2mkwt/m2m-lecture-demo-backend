@@ -2,6 +2,8 @@ package kr.co.m2m.instagram.member.controller;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,14 +67,14 @@ public class MemberController {
 	
     //회원 가입 폼
 	@PostMapping("signup")
-	public String signup(@RequestBody MemberVO memberVO) {
+	public String signup(@Valid@RequestBody MemberVO memberVO) {
 		//패스워드 암호화
 		String enc = passwordEncoder.encode(memberVO.getPassword());
 		memberVO.setPassword(enc);
 		//회원정보 등록
 		memberService.insertMember(memberVO);
 		
-		return "redirect:/member/login";
+		return "success";
 
 	}
 	
