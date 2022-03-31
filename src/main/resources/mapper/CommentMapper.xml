@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<update id="likesCount" parameterType="PostPO">
  		update 
  			instagram.dbo.post set like_cnt = like_cnt+1 
- 		where post_no = ${postNo};
+ 		where post_no = ${postNo}
  	</update>
  	<!-- 댓글 수 -->
     <select id="commentCount" resultType="int">
@@ -27,8 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
 		INNER JOIN dbo.member AS TMB
-		    ON TCO.member_no = TMB.member_no;
-		WHERE post_no = #{post_no}
+		    ON TCO.member_no = TMB.member_no
+		WHERE post_no = #{postNo}
     </select>
     <!-- 포스트 댓글  -->
     <select id="selectComment" resultType="CommentVO">   
@@ -41,13 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
 		    ON TCO.member_no = TMB.member_no
-		WHERE TCO.post_no = ${postNo};
+		WHERE TCO.post_no = ${postNo}
     </select>
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
         COMMENT (member_no, post_no, content, delete_yn)
-        VALUES(${memberNo},${postNo},#{content},#{deleteYN}) 
+        VALUES(${memberNo},${postNo},#{content},#{deleteYN})
     </insert>
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">

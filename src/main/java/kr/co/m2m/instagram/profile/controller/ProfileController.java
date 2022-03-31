@@ -28,7 +28,7 @@ public class ProfileController {
 	
 	// 프로필(회원 정보) 조회
 	@RequestMapping("getProfile")
-	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
+	public MemberVO selectMember(@RequestParam(name = "memberNo") int memberNo) {
 		MemberVO mvo = memberService.selectMember(memberNo);
 		log.info(mvo.toString());
 		return mvo;
