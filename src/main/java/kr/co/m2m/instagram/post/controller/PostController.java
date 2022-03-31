@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +57,7 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("addPost")  //게시글 업로드
-	public ResponseEntity<? extends BasicResponse> addPost(PostPO po,MultipartFile file) {
+	public ResponseEntity<? extends BasicResponse> addPost(@RequestBody PostPO po,MultipartFile file) {
 		log.info("Input Parameter (PO) : {}"+ po);
 		String result = postService.insertPost(po);
 		if(result.contentEquals("insert Success")) {
@@ -68,7 +69,7 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("editPost") // 게시글 수정 
-	public ResponseEntity<? extends BasicResponse> editPost(PostPO po) {
+	public ResponseEntity<? extends BasicResponse> editPost(@RequestBody PostPO po) {
 		log.info("update Parameter (PO) : {}"+ po);
 		String result = postService.updatePost(po);
 		if(result.contentEquals("update Success")) {
@@ -80,7 +81,7 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("removePost") // 게시글 삭제
-	public ResponseEntity<? extends BasicResponse> removePost(PostPO po) {
+	public ResponseEntity<? extends BasicResponse> removePost(@RequestBody PostPO po) {
 		log.info("delete Parameter (PO) : {}"+ po);
 		String result = postService.deletePost(po);
 		if(result.contentEquals("delete Success")) {
@@ -89,23 +90,5 @@ public class PostController {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
 	}
-	
-	// 내 게시글 갯수 조회
-	@GetMapping("getPostCnt")
-	public ResponseEntity<? extends BasicResponse> getPostCnt(int memberNo) {
-		int result = postService.countPost(memberNo);
-		log.info("count My Post : total {}"+ result);
-		return ResponseEntity.ok().body(new CommonResponse<Integer>(result));
-	}
-	
-	// 내 게시글 리스트 조회
-	@GetMapping("searchPostList")
-	public ResponseEntity<? extends BasicResponse> searchPostList(int memberNo, Model model) {
-		List<Map<String, String>> myPost = postService.selectMyPost(memberNo);
-		log.info("select Count MembeNo : {}" + memberNo);
-		model.addAttribute("myPost", myPost);
-		return ResponseEntity.ok().body(new CommonResponse<List<Map<String, String>>>(myPost));
-	}
-	
 	
 }

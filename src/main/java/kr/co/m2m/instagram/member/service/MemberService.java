@@ -18,5 +18,9 @@ public interface MemberService {
 	public MemberVO selectMember(int memberNo);
 	//아이디 체크
 	public int idCheck(MemberVO memberVO);
+	//비밀번호 수정
+	public String updatePassword(MemberVO memberVO);
+	//비밀번호 조회
+	public String selectPassword(int memberNo);
 
 }
