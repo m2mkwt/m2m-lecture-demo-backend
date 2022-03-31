@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,29 +23,36 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // 로그출력에 사용함 (ex. log.debug(String), debug 외에 info, warn 등 사용 가능함)
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/api/v1/post")
 public class PostController {
 	
 	@Autowired
 	private PostService postService;
 	
 	
-	@GetMapping("list") // 게시글 전체 리스트 조회
-	public ResponseEntity<? extends BasicResponse> list(PostVO vo,Model model) {
+	@GetMapping("selectPostList") // 게시글 전체 리스트 조회
+	public ResponseEntity<? extends BasicResponse> selectPostList(PostVO vo,Model model) {
 		List<PostVO> resultList = postService.selectList(vo);
 		log.info("list select Parameter (VO) : {}"+ vo);
 		model.addAttribute("postList",resultList);
 		return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
 	}
 	
-	@GetMapping("detail") // 게시글 상세 내용 조회
-	public ResponseEntity<? extends BasicResponse> detail(PostVO vo,Model model) {
+	@GetMapping("getPost") // 게시글 상세 내용 조회
+	public ResponseEntity<? extends BasicResponse> getPostDetail(PostVO vo,Model model) {
 		PostVO resultList = postService.selectDetail(vo);
 		log.info("detail select Parameter (VO) : {}"+ vo);
 		model.addAttribute("postDetailList",resultList);
 		return ResponseEntity.ok().body(new CommonResponse<PostVO>(resultList));
 	}
 	
+	@GetMapping("getProfile") // 게시글 상세 내용 조회
+	public ResponseEntity<? extends BasicResponse> getProfile(PostVO vo,Model model) {
+		PostVO resultList = postService.selectDetail(vo);
+		log.info("detail select Parameter (VO) : {}"+ vo);
+		model.addAttribute("postDetailList",resultList);
+		return ResponseEntity.ok().body(new CommonResponse<PostVO>(resultList));
+	}
 
 	@ResponseBody
 	@PostMapping("addPost")  //게시글 업로드
@@ -85,16 +91,16 @@ public class PostController {
 	}
 	
 	// 내 게시글 갯수 조회
-	@GetMapping("countPost")
-	public ResponseEntity<? extends BasicResponse> countPost(int memberNo) {
+	@GetMapping("getPostCnt")
+	public ResponseEntity<? extends BasicResponse> getPostCnt(int memberNo) {
 		int result = postService.countPost(memberNo);
 		log.info("count My Post : total {}"+ result);
 		return ResponseEntity.ok().body(new CommonResponse<Integer>(result));
 	}
 	
 	// 내 게시글 리스트 조회
-	@GetMapping("listPost")
-	public ResponseEntity<? extends BasicResponse> selectMyPost(int memberNo, Model model) {
+	@GetMapping("searchPostList")
+	public ResponseEntity<? extends BasicResponse> searchPostList(int memberNo, Model model) {
 		List<Map<String, String>> myPost = postService.selectMyPost(memberNo);
 		log.info("select Count MembeNo : {}" + memberNo);
 		model.addAttribute("myPost", myPost);

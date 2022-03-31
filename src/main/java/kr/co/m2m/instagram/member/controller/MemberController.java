@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/api/v1/member")
 public class MemberController {
 
 	@Autowired
@@ -32,40 +32,26 @@ public class MemberController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-
-	// 로그인
-	@RequestMapping("login")
-	public String login() {
-		System.out.println("로그인");
-		return "login";
-	}
-
-	// 회원 가입 진입
-	@GetMapping("signup")
-	public String signUpForm() {
-		return "signup";
-	}
 
 	// 아이디 중복검사
 	@ResponseBody
-	@RequestMapping(value = "idCheck", produces ="application/json")
-	public int idCheck(@RequestBody MemberVO memberVO) {
+	@RequestMapping(value = "checkValidId", produces ="application/json")
+	public int checkValidId(@RequestBody MemberVO memberVO) {
 		int result = memberService.idCheck(memberVO);
 		return result;
 	}
 
 	// 패스워드 검사
 	@ResponseBody
-	@RequestMapping(value = "pwCheck", produces ="application/json")
-	public int pwCheck(@RequestBody MemberVO memberVO) {
+	@RequestMapping(value = "checkValidPw", produces ="application/json")
+	public int checkValidPw(@RequestBody MemberVO memberVO) {
 		int result = SecurityUtil.checkPassword(memberVO.getPassword());
 		return result;
 	}
 	
     //회원 가입 폼
-	@PostMapping("signup")
-	public String signup(@RequestBody MemberVO memberVO) {
+	@PostMapping("registMember")
+	public String registMember(@RequestBody MemberVO memberVO) {
 		//패스워드 암호화
 		String enc = passwordEncoder.encode(memberVO.getPassword());
 		memberVO.setPassword(enc);
@@ -76,17 +62,25 @@ public class MemberController {
 
 	}
 	
+	// 회원정보 조회 조회
+	@RequestMapping("getMember")
+	public MemberVO getMember(@RequestParam(value = "memberNo") int memberNo) {
+		MemberVO mvo = memberService.selectMember(memberNo);
+		log.info(mvo.toString());
+		return mvo;
+	}
+	
 	// 프로필(회원 정보) 조회
-	@RequestMapping("profile")
-	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
+	@RequestMapping("getProfile")
+	public MemberVO getProfile(@RequestParam(value = "memberNo") int memberNo) {
 		MemberVO mvo = memberService.selectMember(memberNo);
 		log.info(mvo.toString());
 		return mvo;
 	}
 	
 	// 프로필(회원 정보) 수정
-	@RequestMapping(value = "updateProfile", method = RequestMethod.POST)
-	public ModelAndView updateProfile(@RequestBody MemberVO mvo/* , RedirectAttributes rattr */) {
+	@RequestMapping(value = "editProfile", method = RequestMethod.POST)
+	public ModelAndView editProfile(@RequestBody MemberVO mvo/* , RedirectAttributes rattr */) {
 		log.info(mvo.toString());
 		String msg = memberService.updateMember(mvo);
 		ModelAndView modelAndView = new ModelAndView();
@@ -106,8 +100,8 @@ public class MemberController {
 //	}
 	
 	// 회원 비밀번호 수정
-//	@RequestMapping(value = "udpatePassword", method = RequestMethod.POST)
-//	public String updatePassword(@RequestBody Map<String, String> passwordMap) {
+//	@RequestMapping(value = "editPassword", method = RequestMethod.POST)
+//	public String editPassword(@RequestBody Map<String, String> passwordMap) {
 //		
 //		return null;
 //	}
