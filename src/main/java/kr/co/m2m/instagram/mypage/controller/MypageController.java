@@ -37,17 +37,17 @@ public class MypageController {
 	
 	// 내 게시글 목록(게시글번호,파일명) 리스트 조회
 	@GetMapping("searchPostList")
-	public ResponseEntity<? extends BasicResponse> countPost(int memberNo) {
-		MemberVO result = memberService.selectMember(memberNo);
+	public ResponseEntity<? extends BasicResponse> selectMyPost(int memberNo) {
+		List<Map<String, String>> result = postService.selectMyPost(memberNo);
 		log.info("count My Post : total {}", result);
-		return ResponseEntity.ok().body(new CommonResponse<MemberVO>(result));
+		return ResponseEntity.ok().body(new CommonResponse<List<Map<String, String>>>(result));
 	}
 	
 	// 내 게시글 총 개수 조회
 	@GetMapping("getPostCnt")
-	public ResponseEntity<? extends BasicResponse> selectMyPost(int memberNo) {
-		List<Map<String, String>> result = postService.selectMyPost(memberNo);
+	public ResponseEntity<? extends BasicResponse> countPost(int memberNo) {
+		int result = postService.countPost(memberNo);
 		log.info("select Count MembeNo : {}", memberNo);
-		return ResponseEntity.ok().body(new CommonResponse<List<Map<String, String>>>(result));
+		return ResponseEntity.ok().body(new CommonResponse<Integer>(result));
 	}
 }
