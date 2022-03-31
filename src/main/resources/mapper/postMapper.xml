@@ -42,5 +42,21 @@
 		SELECT * 
 		FROM dbo.post
 	</select>
+	
+	<!-- 내 게시글 개수 조회 -->
+	<select id="countPost" parameterType="Integer">
+		SELECT COUNT(*)
+		FROM dbo.post
+		WHERE member_no = #{memberNo}
+	</select>
+	
+	<!-- 내 게시글 리스트 조회 -->
+	<select id="selectMyPost" parameterType="Integer">
+		SELECT P.post_no, M.filename
+		FROM dbo.post P, dbo.media M
+		WHERE P.media_no = M.media_no
+			and P.member_no = #{memberNo}
+	</select>
+	
 </mapper>
 

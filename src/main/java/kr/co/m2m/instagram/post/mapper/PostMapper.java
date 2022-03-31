@@ -1,6 +1,7 @@
 package kr.co.m2m.instagram.post.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,5 +23,8 @@ public interface PostMapper {
 	
 	public List<PostVO> selectPostAll(PostVO vo);
 	
+	public int countPost(int memberNo);
+	
+	public List<Map<String, String>> selectMyPost(int memberNo);
 	
 }
