@@ -52,7 +52,7 @@ public class CommentController {
 	}
     @ResponseBody
     @PostMapping(value = "editComment") //댓글 수정
-	public ResponseEntity<? extends BasicResponse> editComment(CommentPO cp) {
+	public ResponseEntity<? extends BasicResponse> editComment(@RequestBody CommentPO cp) {
 		String result = commentService.updateComment(cp);
 		if(result.contentEquals("update Success")) {
 			return ResponseEntity.ok().body(new CommonResponse<String>(result));
@@ -62,9 +62,9 @@ public class CommentController {
     }
     @ResponseBody
     @PostMapping(value = "removeComment") //댓글 삭제
-	public ResponseEntity<? extends BasicResponse> removeComment(CommentPO cp) {
+	public ResponseEntity<? extends BasicResponse> removeComment(@RequestBody CommentPO cp) {
 		String result = commentService.deleteComment(cp);
-		if(result.contentEquals("delete Success")) {
+		if(result.contentEquals("delete Success")) { 
 			return ResponseEntity.ok().body(new CommonResponse<String>(result));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
@@ -72,7 +72,7 @@ public class CommentController {
     }
     @ResponseBody
     @PostMapping(value = "likePost")//좋아요 증가
-    public ResponseEntity<? extends BasicResponse> likesCount(PostPO pp){
+    public ResponseEntity<? extends BasicResponse> likesCount(@RequestBody PostPO pp){
     	String result = commentService.likesCount(pp);
 		if(result.contentEquals("like Success")) {
 			return ResponseEntity.ok().body(new CommonResponse<String>(result));
