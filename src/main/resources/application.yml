@@ -42,7 +42,11 @@ spring:
         max-active: 40
         max-idle: 40
         min-idle: 10
-
+  file:
+    upload:
+      path: C:\\00_WORK\\workspace\\frontend\\m2m-lecture-demo-frontend\\public\\upload
+      url: /upload
+      
 # mybatis 설정.
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
