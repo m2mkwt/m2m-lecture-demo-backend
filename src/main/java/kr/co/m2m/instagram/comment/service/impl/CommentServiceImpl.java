@@ -35,12 +35,6 @@ public class CommentServiceImpl implements CommentService {
 		List<CommentVO> commentList = commentMapper.listComment(cv);
         return commentList;
     }
-	//게시글 댓글 목록
-	public CommentVO selectComment(CommentVO cv) {
-		CommentVO resultList = commentMapper.selectComment(cv);
-		return resultList;
-	}
-
 	//댓글 작성
 	public String insertComment(CommentPO cp) {
 		int result = commentMapper.insertComment(cp);

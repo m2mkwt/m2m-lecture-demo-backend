@@ -15,10 +15,7 @@ public interface CommentMapper {
  
     // 댓글 목록
 	public List<CommentVO> listComment(CommentVO cv);
-	
-	// 댓글 상세페이지
-	public CommentVO selectComment(CommentVO cv);
- 
+
     // 댓글 작성
 	public int insertComment(CommentPO cp);
 
