@@ -22,6 +22,8 @@ import kr.co.m2m.instagram.comment.model.CommentSO;
 import kr.co.m2m.instagram.comment.model.CommentVO;
 import kr.co.m2m.instagram.comment.service.impl.CommentServiceImpl;
 import kr.co.m2m.instagram.post.model.PostPO;
+import kr.co.m2m.instagram.post.model.PostVO;
+import kr.co.m2m.instagram.post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -32,6 +34,7 @@ public class CommentController {
  
 	@Autowired
     private CommentServiceImpl commentService;
+	private PostService postService;
 	
     @GetMapping("selectCommentlist") //댓글 리스트
     public ResponseEntity<? extends BasicResponse> selectCommentlist(CommentVO cv,Model model) {
@@ -45,7 +48,10 @@ public class CommentController {
 	public ResponseEntity<? extends BasicResponse> addComment(@Valid @RequestBody CommentPO cp,Model model) {
 		String result = commentService.insertComment(cp);
 		if(result.contentEquals("insert Success")) {
-			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+			CommentVO cv = new CommentVO();
+			cv.setPostNo(cp.getPostNo());
+			List<CommentVO> commentList = commentService.listComment(cv);
+			return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
@@ -55,7 +61,10 @@ public class CommentController {
 	public ResponseEntity<? extends BasicResponse> editComment(@RequestBody CommentPO cp) {
 		String result = commentService.updateComment(cp);
 		if(result.contentEquals("update Success")) {
-			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+			CommentVO cv = new CommentVO();
+			cv.setPostNo(cp.getPostNo());
+			List<CommentVO> commentList = commentService.listComment(cv);
+			return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
@@ -65,7 +74,10 @@ public class CommentController {
 	public ResponseEntity<? extends BasicResponse> removeComment(@RequestBody CommentPO cp) {
 		String result = commentService.deleteComment(cp);
 		if(result.contentEquals("delete Success")) { 
-			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+			CommentVO cv = new CommentVO();
+			cv.setPostNo(cp.getPostNo());
+			List<CommentVO> commentList = commentService.listComment(cv);
+			return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
@@ -75,7 +87,10 @@ public class CommentController {
     public ResponseEntity<? extends BasicResponse> likesCount(@RequestBody PostPO pp){
     	String result = commentService.likesCount(pp);
 		if(result.contentEquals("like Success")) {
-			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+			PostVO vo = new PostVO();
+			vo.setPostNo(pp.getPostNo());
+			List<PostVO> resultList = postService.selectList(vo);
+			return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
