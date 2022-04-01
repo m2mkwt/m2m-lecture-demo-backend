@@ -23,12 +23,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,TCO.post_no
 			  ,TCO.content
 			  ,TCO.delete_yn
-			  ,TCO.createdt
+			  ,format(TCO.createdt,'yyyy년 MM월 dd일')
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
 		    ON TCO.member_no = TMB.member_no
 		WHERE TCO.post_no = ${postNo} and TCO.delete_yn = 'N'
+		
     </select>
     <!-- 포스트 댓글  -->
     <select id="selectComment" resultType="CommentVO">   
@@ -36,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      ,TCO.member_no
 			  ,TCO.post_no
 			  ,TCO.content
-			  ,TCO.createdt
+			  ,format(TCO.createdt,'yyyy년 MM월 dd일')
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
