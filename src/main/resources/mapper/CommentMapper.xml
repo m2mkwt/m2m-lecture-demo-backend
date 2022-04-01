@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<update id="likesCount" parameterType="PostPO">
  		update 
  			instagram.dbo.post set like_cnt = like_cnt+1 
- 		where post_no = ${postNo}
+ 		where post_no = ${postNo};
  	</update>
  	<!-- 댓글 수 -->
     <select id="commentCount" resultType="int">
@@ -41,18 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
 		    ON TCO.member_no = TMB.member_no
-		WHERE TCO.post_no = ${postNo}
+		WHERE TCO.post_no = ${postNo};
     </select>
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
-<<<<<<< HEAD
         COMMENT (member_no, post_no, content)
         VALUES(${memberNo},${postNo},#{content}) 
-=======
-        COMMENT (member_no, post_no, content, delete_yn)
-        VALUES(${memberNo},${postNo},#{content},#{deleteYN})
->>>>>>> branch 'develop' of https://github.com/m2mkwt/m2m-lecture-demo-backend.git
     </insert>
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">
