@@ -19,7 +19,7 @@
 		SELECT TPO.post_no
 		      ,TPO.member_no
 			  ,TPO.content
-			  ,format(TPO.createdt,'yyyy년 MM월 dd일')
+			  ,format(TPO.createdt,'yyyy년 MM월 dd일 HH시 mm분')
 			  ,TPO.like_cnt
 			  ,TMB.login_id  AS login_id
 			  , (SELECT count(*) FROM dbo.comment AS TCO WHERE TCO.post_no = TPO.post_no and TCO.delete_yn = 'N' ) AS comment_cnt
@@ -34,9 +34,10 @@
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
 		SELECT TPO.post_no
 			  ,TPO.content
-			  ,format(TPO.createdt,'yyyy년 MM월 dd일')
+			  ,format(TPO.createdt,'yyyy년 MM월 dd일 HH시 mm분')
 			  ,TPO.like_cnt
 			  , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
+			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
 		  FROM dbo.post AS TPO
 		  where post_no = #{postNo} AND TPO.delete_yn = 'N';
 	</select>
