@@ -9,9 +9,9 @@ public interface MediaMapper {
 	
 	public int insertMedia(MediaVO vo);
 		
-	public int updateMedia(MediaVO vo);
+	public void updateMedia(MediaVO vo);
 	
-	public int deleteMedia(int mediaNo);
+	public void deleteMedia(int mediaNo);
 	
 	public MediaVO selectMedia(int mediaNo);
 	

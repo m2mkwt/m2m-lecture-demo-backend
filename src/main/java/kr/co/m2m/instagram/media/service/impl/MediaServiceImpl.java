@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.m2m.framework.web.model.FileVO;
 import kr.co.m2m.instagram.media.mapper.MediaMapper;
 import kr.co.m2m.instagram.media.model.MediaVO;
 import kr.co.m2m.instagram.media.service.MediaService;
@@ -19,28 +20,27 @@ public class MediaServiceImpl implements MediaService {
 	
 	// 이미지 추가
 	@Override
-	public int insertMedia(MultipartFile file) {
-		String filename = uploadFile(file);
+	public void insertMedia(FileVO file) {
+	    String filename = file.getFileUrl() + '/' + file.getFileName();
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
 		mediaMapper.insertMedia(vo);
-		return vo.getMediaNo();
 	}
 
 	// 이미지 수정
 	@Override
-	public int updateMedia(MultipartFile file, int mediaNo) {
-		String filename = uploadFile(file);
+	public void updateMedia(FileVO file, int mediaNo) {
+	    String filename = file.getFileUrl() + '/' + file.getFileName();
+	    mediaMapper.deleteMedia(mediaNo);
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		vo.setMediaNo(mediaNo);
-		return mediaMapper.updateMedia(vo);
+		mediaMapper.insertMedia(vo);
 	}
 
 	// 이미지 삭제
 	@Override
-	public int deleteMedia(int mediaNo) {
-		return mediaMapper.deleteMedia(mediaNo);
+	public void deleteMedia(int mediaNo) {
+		mediaMapper.deleteMedia(mediaNo);
 	}
 
 	// 이미지 조회
@@ -48,22 +48,5 @@ public class MediaServiceImpl implements MediaService {
 	public MediaVO selectMedia(int mediaNo) {
 		return mediaMapper.selectMedia(mediaNo);
 	}
-
-	// 파일 업로드
-	@Override
-	public String uploadFile(MultipartFile file) {
-		String dirPath = "C:\\savedir";
-		String filename = file.getOriginalFilename();
-		if (!file.isEmpty()) {
-			File f = new File(dirPath, filename);
-			try {
-				file.transferTo(f);
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return filename;
-	}
-
 
 }

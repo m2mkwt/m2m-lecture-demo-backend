@@ -14,6 +14,8 @@ import kr.co.m2m.framework.web.model.CommonResponse;
 import kr.co.m2m.framework.web.model.ErrorResponse;
 import kr.co.m2m.framework.web.model.FileVO;
 import kr.co.m2m.instagram.common.service.CommonService;
+import kr.co.m2m.instagram.media.model.MediaVO;
+import kr.co.m2m.instagram.media.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // 로그출력에 사용함 (ex. log.debug(String), debug 외에 info, warn 등 사용 가능함)
@@ -24,13 +26,23 @@ public class CommonController {
   @Autowired
   private CommonService commonService;
   
+  @Autowired
+  private MediaService mediaService;
+  
   @CrossOrigin("*")
   @RequestMapping(value = "uploadImg", method = RequestMethod.POST)
-  public ResponseEntity<? extends BasicResponse> requestUploadImage(@RequestParam("fileList") MultipartFile mFile) {
+  public ResponseEntity<? extends BasicResponse> requestUploadImage(@RequestParam("fileList") MultipartFile mFile, @RequestParam("memberNo") int mediaNo) {
     FileVO file = null;
     log.info("[uploadImg] mFile : {}", mFile);
     try {
       file = commonService.saveSvrFileData(mFile, "");
+      
+      MediaVO mediaVO = mediaService.selectMedia(mediaNo);
+      // 기존 파일 미존재 시 insert
+      if (mediaVO == null) mediaService.insertMedia(file);
+      // 기존 파일 존재 시 update
+      else mediaService.updateMedia(file, mediaNo);
+      
       log.info("[uploadImg] file : {}", file);
     } catch (Exception e) {
         log.info("[uploadImg] e : {}", e);

@@ -45,11 +45,14 @@ public class ProfileController {
 	
 	// 회원 비밀번호 수정
 	@RequestMapping(value = "editPassword", method = RequestMethod.POST)
-	public String updatePassword(@RequestBody Map<String, String> map, @RequestParam int memberNo) {
+	public String updatePassword(@RequestBody Map<String, Object> map) {
+		String oldPassword = map.get("oldPassword").toString();
+		int memberNo = (Integer)map.get("memberNo");
+		log.info("Map info : {}", map.toString());
 		String dbPassword = memberService.selectPassword(memberNo);
-		boolean test = passwordEncoder.matches(map.get("oldPassword"), dbPassword);
+		boolean test = passwordEncoder.matches(oldPassword, dbPassword);
 		if (test) {
-			String newPassword = passwordEncoder.encode(map.get("newPassword"));
+			String newPassword = passwordEncoder.encode((String)map.get("newPassword"));
 			MemberVO mvo = new MemberVO();
 			mvo.setMemberNo(memberNo);
 			mvo.setPassword(newPassword);
