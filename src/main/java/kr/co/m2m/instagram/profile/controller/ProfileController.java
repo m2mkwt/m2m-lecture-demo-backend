@@ -28,7 +28,7 @@ public class ProfileController {
 	
 	// 프로필(회원 정보) 조회
 	@RequestMapping("getProfile")
-	public MemberVO selectMember(@RequestParam(value = "memberNo") int memberNo) {
+	public MemberVO selectMember(@RequestParam int memberNo) {
 		MemberVO mvo = memberService.selectMember(memberNo);
 		log.info(mvo.toString());
 		return mvo;
@@ -36,12 +36,11 @@ public class ProfileController {
 	
 	// 프로필(회원 정보) 수정
 	@RequestMapping(value = "editProfile", method = RequestMethod.POST)
-	public ModelAndView updateProfile(@RequestBody MemberVO mvo) {
+	public String updateProfile(@RequestBody MemberVO mvo) {
 		log.info(mvo.toString());
 		String msg = memberService.updateMember(mvo);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:profile");
-		return modelAndView;
+		log.info("Update Member Profile : {}", msg);
+		return msg;
 	}
 	
 	// 회원 비밀번호 수정
