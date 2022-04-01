@@ -87,10 +87,11 @@ public class CommentController {
     public ResponseEntity<? extends BasicResponse> likesCount(@RequestBody PostPO pp){
     	String result = commentService.likesCount(pp);
 		if(result.contentEquals("like Success")) {
-			PostVO vo = new PostVO();
-			vo.setPostNo(pp.getPostNo());
-			List<PostVO> resultList = postService.selectList(vo);
-			return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
+//			PostVO vo = new PostVO();
+//			vo.setPostNo(pp.getPostNo());
+//			List<PostVO> resultList = postService.selectList(vo);
+//			return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
+			return ResponseEntity.ok().body(new CommonResponse<String>(result));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
