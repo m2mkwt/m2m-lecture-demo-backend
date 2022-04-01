@@ -81,13 +81,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(beAuthFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션생성 안함
 		// 인증없이 접속가능한 패턴등록
-		http.authorizeRequests().antMatchers("/", "/api/v1/comment/**","/main", "/api/v1/member/**", "/login_processing", "/login-error/**", "/api/v1/post", "/api/v1/post/**","/api/v1/member","/api/v1/member/**").permitAll()
+		http.authorizeRequests()
+				.antMatchers("/", "/api/v1/comment/**","/main", "/login_processing", "/login-error/**", "/api/v1/post", "/api/v1/post/**","/api/v1/member", "/api/v1/member/**").permitAll()
 				.antMatchers("/login", "/login/**").permitAll() // 로그인 인증필요 없음
 				.antMatchers("/css/**", "/js/**", "/img/**", "/lib/**","/signup" , "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**").permitAll()
 				// .antMatchers(HttpMethod.OPTIONS, "login").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "login_processing").permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "login-error").permitAll()
-				.antMatchers("/api/v1/profile/", "/api/v1/mypage", "/api/v1/profile/**", "/api/v1/mypage/**").permitAll() // 테스트용
 				.anyRequest().authenticated(); // 그외는 인증을 거치도록 함
 		// 시큐리티 관련 Custom Handler등 등록
 		http.exceptionHandling().accessDeniedHandler(new BEAccessDeniedHandler()).and().exceptionHandling()
