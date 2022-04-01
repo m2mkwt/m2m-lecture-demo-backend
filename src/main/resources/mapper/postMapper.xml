@@ -26,7 +26,9 @@
 			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
 		  FROM dbo.post AS TPO
 		 INNER JOIN dbo.member AS TMB
-		    ON TPO.member_no = TMB.member_no;
+		    ON TPO.member_no = TMB.member_no
+		 WHERE TPO.delete_yn = 'N'
+	  ORDER BY DESC;
 	
 	</select>
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
@@ -36,7 +38,7 @@
 			  ,TPO.like_cnt
 			  , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
 		  FROM dbo.post AS TPO
-		  where post_no = #{postNo};
+		  where post_no = #{postNo} AND TPO.delete_yn = 'N';
 	</select>
 	<select id="selectPostAll" resultType="PostVO">
 		SELECT * 
@@ -56,6 +58,8 @@
 		FROM dbo.post P, dbo.media M
 		WHERE P.media_no = M.media_no
 			and P.member_no = #{memberNo}
+			AND P.delete_yn = 'N'
+	   ORDER BY DESC;
 	</select>
 	
 </mapper>
