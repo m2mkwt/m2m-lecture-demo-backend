@@ -30,13 +30,13 @@
 	
 	</select>
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		SELECT post_no
-			 , member_no
-			 , media_no
-			 , content
-			 , createdt
-		  FROM instagram.dbo.post 
-		 WHERE post_no = #{postNo}
+		SELECT TPO.post_no
+			  ,TPO.content
+			  ,TPO.createdt
+			  ,TPO.like_cnt
+			  , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
+		  FROM dbo.post AS TPO
+		  where post_no = #{postNo};
 	</select>
 	<select id="selectPostAll" resultType="PostVO">
 		SELECT * 
