@@ -46,8 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
-        COMMENT (member_no, post_no, content, delete_yn)
-        VALUES(${memberNo},${postNo},#{content},#{deleteYN}) 
+        COMMENT (member_no, post_no, content)
+        VALUES(${memberNo},${postNo},#{content}) 
     </insert>
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">

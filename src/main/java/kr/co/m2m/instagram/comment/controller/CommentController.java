@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class CommentController {
     }
     @ResponseBody
     @PostMapping("addComment") //댓글 작성
-	public ResponseEntity<? extends BasicResponse> addComment(@Valid CommentPO cp,Model model) {
+	public ResponseEntity<? extends BasicResponse> addComment(@Valid @RequestBody CommentPO cp,Model model) {
 		String result = commentService.insertComment(cp);
 		if(result.contentEquals("insert Success")) {
 			return ResponseEntity.ok().body(new CommonResponse<String>(result));
