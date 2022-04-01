@@ -22,7 +22,7 @@
 			  ,TPO.createdt
 			  ,TPO.like_cnt
 			  ,TMB.login_id  AS login_id
-			  , (SELECT count(*) FROM dbo.comment AS TCO WHERE TCO.post_no = TPO.post_no ) AS comment_cnt
+			  , (SELECT count(*) FROM dbo.comment AS TCO WHERE TCO.post_no = TPO.post_no and TCO.delete_yn = 'N' ) AS comment_cnt
 			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
 		  FROM dbo.post AS TPO
 		 INNER JOIN dbo.member AS TMB

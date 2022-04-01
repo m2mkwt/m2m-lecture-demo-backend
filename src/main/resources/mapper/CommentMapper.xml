@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="commentCount" resultType="int">
         SELECT
             COUNT(*)
-        FROM instagram.dbo.comment
+        FROM instagram.dbo.comment where post_no = ${postNo} and delete_yn = 'N'
     </select>
     <!-- 댓글 전체 리스트 -->
     <select id="listComment" resultType="CommentVO">
