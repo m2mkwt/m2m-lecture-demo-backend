@@ -38,8 +38,11 @@ public class MypageController {
 		Map<String, Object> result = new HashMap<>();
 		MemberVO mvo = memberService.selectMember(memberNo);
 		result.put("mvo", mvo);
-		String imgName = mediaService.selectMedia(mvo.getMediaNo()).getFilename();
-		result.put("imgName", imgName);
+		int mediaNo = mvo.getMediaNo();
+		if (mediaNo > 0) {
+			String imgName = mediaService.selectMedia(mediaNo).getFilename();
+			result.put("imgName", imgName);
+		}
 		log.info("count My Post : total {}", result);
 		return ResponseEntity.ok().body(new CommonResponse<Map<String, Object>>(result));
 	}
