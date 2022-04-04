@@ -31,12 +31,23 @@ public class PostController {
 	private PostService postService;
 	
 	
-	@GetMapping("selectPostList") // 게시글 전체 리스트 조회
-	public ResponseEntity<? extends BasicResponse> selectPostList(PostVO vo,Model model) {
-		List<PostVO> resultList = postService.selectList(vo);
+	@RequestMapping("selectPostList") // 게시글 전체 리스트 조회
+	public ResponseEntity<? extends BasicResponse> selectPostList(@RequestBody PostVO vo) {
 		log.info("list select Parameter (VO) : {}"+ vo);
-		model.addAttribute("postList",resultList);
-		return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
+		BasicResponse resEntity = null;
+		List<PostVO> resultList = null;
+		try {
+		  resultList = postService.selectList(vo);
+		  int totalCnt = postService.countPost(0);
+		  
+		  CommonResponse<List<PostVO>> commResp =  new CommonResponse<List<PostVO>>(resultList);
+		  commResp.setCount(totalCnt);
+		  resEntity = commResp;
+		  log.info("[selectPostList] resEntity : {}", resEntity);;
+        } catch (Exception e) {
+          resEntity = new ErrorResponse("조회중 오류가 발생했습니다.");
+        }
+		return ResponseEntity.ok().body(resEntity);
 	}
 	
 	@GetMapping("getPost") // 게시글 상세 내용 조회
