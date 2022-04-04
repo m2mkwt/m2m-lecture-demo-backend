@@ -8,7 +8,7 @@ import kr.co.m2m.instagram.media.model.MediaVO;
 @Mapper
 public interface MediaMapper {
 	
-	public int insertMedia(MediaVO vo);
+	public void insertMedia(MediaVO vo);
 	
 	public void updateProfileMedia(FileVO vo);
 		

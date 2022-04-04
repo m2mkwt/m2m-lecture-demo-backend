@@ -32,8 +32,8 @@ public class MediaServiceImpl implements MediaService {
 	    String filename = file.getFileUrl() + '/' + file.getFileName();
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		int mediaNo = mediaMapper.insertMedia(vo);
-		file.setMediaNo(mediaNo);
+		mediaMapper.insertMedia(vo);
+		file.setMediaNo(vo.getMediaNo());
 		mediaMapper.updateProfileMedia(file);
 		return file;
 	}
@@ -43,8 +43,8 @@ public class MediaServiceImpl implements MediaService {
 	    String filename = file.getFileUrl() + '/' + file.getFileName();
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		int mediaNo = mediaMapper.insertMedia(vo);
-		file.setMediaNo(mediaNo);
+		mediaMapper.insertMedia(vo);
+		file.setMediaNo(vo.getMediaNo());
 		return file;
 	}
 
@@ -67,8 +67,8 @@ public class MediaServiceImpl implements MediaService {
 	    mediaMapper.deleteMedia(file);
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		int mediaNo = mediaMapper.insertMedia(vo);
-		file.setMediaNo(mediaNo);
+		mediaMapper.insertMedia(vo);
+		file.setMediaNo(vo.getMediaNo());
 		mediaMapper.updatePostMedia(file);
 		return file;
 	}
