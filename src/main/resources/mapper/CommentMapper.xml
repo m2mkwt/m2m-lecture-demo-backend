@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="kr.co.m2m.instagram.comment.mapper.CommentMapper">
  	<!-- 좋아요 -->
- 	<update id="likesCount" parameterType="PostPO">
+ 	<update id="likesCount" parameterType="PostVO">
  		update 
  			instagram.dbo.post set like_cnt = like_cnt+1 
  		where post_no = ${postNo};
@@ -62,4 +62,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        SET delete_yn = 'Y'
 	    	WHERE comment_no = ${commentNo}
     </update>
+    <select id="likesCnt" resultType="PostVO">
+        SELECT
+			like_cnt
+        FROM instagram.dbo.post where post_no = ${postNo}
+    </select>
 </mapper>

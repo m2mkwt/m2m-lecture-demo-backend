@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.m2m.instagram.comment.model.CommentPO;
 import kr.co.m2m.instagram.comment.model.CommentSO;
 import kr.co.m2m.instagram.comment.model.CommentVO;
-import kr.co.m2m.instagram.post.model.PostPO;
+import kr.co.m2m.instagram.post.model.PostVO;
 
 
 //@Repository("kr.co.m2m.instagram.mapper.CommentMapper")
@@ -26,7 +26,9 @@ public interface CommentMapper {
     public int deleteComment(CommentPO cp);
     
     //좋아요
-	public int likesCount(PostPO pp);
+	public int likesCount(PostVO vo);
+
+	public List<PostVO> likesCnt(PostVO vo);
 
 
 

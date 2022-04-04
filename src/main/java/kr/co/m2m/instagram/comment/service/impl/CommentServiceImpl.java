@@ -63,15 +63,18 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 	//좋아요
-	public String likesCount(PostPO pp) {
-		int result = commentMapper.likesCount(pp);
+	public String likesCount(PostVO vo) {
+		int result = commentMapper.likesCount(vo);
 		if(result==1) {
 			return "like Success";
 		}else {
 			return "like Fail";
 	}
 }
-
+	public List<PostVO> likesCnt(PostVO vo) {
+		List<PostVO> likesCnt = commentMapper.likesCnt(vo);
+        return likesCnt;
+	}
 }
 
 

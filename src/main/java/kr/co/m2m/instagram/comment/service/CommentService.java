@@ -4,7 +4,7 @@ import java.util.List;
 
 import kr.co.m2m.instagram.comment.model.CommentPO;
 import kr.co.m2m.instagram.comment.model.CommentVO;
-import kr.co.m2m.instagram.post.model.PostPO;
+import kr.co.m2m.instagram.post.model.PostVO;
 
 public interface CommentService {
 	//댓글 전체
@@ -16,6 +16,8 @@ public interface CommentService {
 	//댓글 삭제
 	public String deleteComment(CommentPO cp);
 	//좋아요 수 
-	public String likesCount(PostPO pp);
+	public String likesCount(PostVO vo);
+	//
+	public List<PostVO> likesCnt(PostVO vo);
 
 }

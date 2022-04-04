@@ -84,14 +84,11 @@ public class CommentController {
     }
     @ResponseBody
     @PostMapping(value = "likePost")//좋아요 증가
-    public ResponseEntity<? extends BasicResponse> likesCount(@RequestBody PostPO pp){
-    	String result = commentService.likesCount(pp);
+    public ResponseEntity<? extends BasicResponse> likesCount(@RequestBody PostVO vo){
+    	String result = commentService.likesCount(vo);
 		if(result.contentEquals("like Success")) {
-//			PostVO vo = new PostVO();
-//			vo.setPostNo(pp.getPostNo());
-//			List<PostVO> resultList = postService.selectList(vo);
-//			return ResponseEntity.ok().body(new CommonResponse<List<PostVO>>(resultList));
-			return ResponseEntity.ok().body(new CommonResponse<String>(result));
+			List<PostVO> resultList = commentService.likesCnt(vo);
+			return ResponseEntity.ok().body(new CommonResponse <List<PostVO>>(resultList));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}
