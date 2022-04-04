@@ -5,12 +5,17 @@
 		INSERT INTO media (filename)
 		VALUES (#{filename})
 	</insert>
-	<update id="updateMedia" parameterType="MediaVO">
-		UPDATE media
-		SET filename = #{filename}
-		WHERE media_no = #{mediaNo}
+	<update id="updateProfileMedia" parameterType="FileVO">
+		UPDATE member
+		SET media_no = #{mediaNo}
+		WHERE member_no = #{memberNo}
 	</update>
-	<update id="deleteMedia" parameterType="Integer">
+	<update id="updatePostMedia" parameterType="FileVO">
+		UPDATE post
+		SET media_no = #{mediaNo}
+		WHERE post_no = #{postNo}
+	</update>
+	<update id="deleteMedia" parameterType="FileVO">
 		UPDATE media
 		SET delete_yn = 'Y'
 		WHERE media_no = #{mediaNo}

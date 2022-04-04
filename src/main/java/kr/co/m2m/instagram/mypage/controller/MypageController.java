@@ -1,5 +1,6 @@
 package kr.co.m2m.instagram.mypage.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
+import kr.co.m2m.instagram.media.service.MediaService;
 import kr.co.m2m.instagram.member.model.MemberVO;
 import kr.co.m2m.instagram.member.service.MemberService;
 import kr.co.m2m.instagram.post.service.PostService;
@@ -27,12 +29,19 @@ public class MypageController {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	MediaService mediaService;
+	
 	// 회원정보 조회
 	@GetMapping("getMember")
 	public ResponseEntity<? extends BasicResponse> getMember(int memberNo) {
-		MemberVO result = memberService.selectMember(memberNo);
+		Map<String, Object> result = new HashMap<>();
+		MemberVO mvo = memberService.selectMember(memberNo);
+		result.put("mvo", mvo);
+		String imgName = mediaService.selectMedia(mvo.getMediaNo()).getFilename();
+		result.put("imgName", imgName);
 		log.info("count My Post : total {}", result);
-		return ResponseEntity.ok().body(new CommonResponse<MemberVO>(result));
+		return ResponseEntity.ok().body(new CommonResponse<Map<String, Object>>(result));
 	}
 	
 	// 내 게시글 목록(게시글번호,파일명) 리스트 조회

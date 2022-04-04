@@ -1,6 +1,8 @@
 package kr.co.m2m.instagram.common.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +18,9 @@ import kr.co.m2m.framework.web.model.FileVO;
 import kr.co.m2m.instagram.common.service.CommonService;
 import kr.co.m2m.instagram.media.model.MediaVO;
 import kr.co.m2m.instagram.media.service.MediaService;
+import kr.co.m2m.instagram.member.model.MemberVO;
+import kr.co.m2m.instagram.member.service.MemberService;
+import kr.co.m2m.instagram.post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // 로그출력에 사용함 (ex. log.debug(String), debug 외에 info, warn 등 사용 가능함)
@@ -29,20 +34,38 @@ public class CommonController {
   @Autowired
   private MediaService mediaService;
   
+  @Autowired
+  private MemberService memberService;
+  
+  @Autowired
+  private PostService postService;
+  
   @CrossOrigin("*")
   @RequestMapping(value = "uploadImg", method = RequestMethod.POST)
-  public ResponseEntity<? extends BasicResponse> requestUploadImage(@RequestParam("fileList") MultipartFile mFile, @RequestParam("memberNo") int mediaNo) {
+  public ResponseEntity<? extends BasicResponse> requestUploadImage(@RequestParam("fileList") MultipartFile mFile,
+//		  @RequestParam(name = "memberNo", defaultValue = "0") int memberNo,
+//		  @RequestParam(name = "mediaNo", defaultValue = "0") int mediaNo,
+//		  @RequestParam(name = "uploadType", defaultValue = "") String uploadType) {
+		  @RequestParam Map<String, Object> map){
     FileVO file = null;
     log.info("[uploadImg] mFile : {}", mFile);
+    log.info("[upload info] map : {}", map);
     try {
       file = commonService.saveSvrFileData(mFile, "");
-      
-      MediaVO mediaVO = mediaService.selectMedia(mediaNo);
-      // 기존 파일 미존재 시 insert
-      if (mediaVO == null) mediaService.insertMedia(file);
-      // 기존 파일 존재 시 update
-      else mediaService.updateMedia(file, mediaNo);
-      
+      int memberNo = Integer.parseInt(map.get("memberNo").toString());
+	  file.setMemberNo(memberNo);
+      String uploadType = map.get("uploadType").toString();
+      if (uploadType.equals("profile")) {
+          int mediaNo = Integer.parseInt(map.get("mediaNo").toString());
+    	  file.setMediaNo(mediaNo);
+    	  if (mediaNo == 0) file = mediaService.insertProfileMedia(file);
+    	  else file = mediaService.updateProfileMedia(file);
+      } else {
+          int postNo = Integer.parseInt(map.get("postNo").toString());
+    	  file.setPostNo(postNo);
+    	  if (postNo == 0) file = mediaService.insertPostMedia(file);
+    	  else file = mediaService.updatePostMedia(file);
+      }
       log.info("[uploadImg] file : {}", file);
     } catch (Exception e) {
         log.info("[uploadImg] e : {}", e);
