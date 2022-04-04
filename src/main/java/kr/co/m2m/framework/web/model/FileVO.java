@@ -40,5 +40,14 @@ public class FileVO implements Serializable {
 
 	/** 임시파일 여부 */
 	private String tempYn;
-
+	
+	/** 이미지 번호 **/
+	private int mediaNo;
+	
+	/** 회원 번호 (프로필 이미지 처리용) **/
+	private int memberNo;
+	
+	/** 게시글 번호 (게시글 이미지 처리용) **/
+	private int postNo;
+	
 }

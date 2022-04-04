@@ -11,37 +11,79 @@ import kr.co.m2m.framework.web.model.FileVO;
 import kr.co.m2m.instagram.media.mapper.MediaMapper;
 import kr.co.m2m.instagram.media.model.MediaVO;
 import kr.co.m2m.instagram.media.service.MediaService;
+import kr.co.m2m.instagram.member.mapper.MemberMapper;
+import kr.co.m2m.instagram.post.mapper.PostMapper;
 
 @Service
 public class MediaServiceImpl implements MediaService {
 
 	@Autowired
-	MediaMapper mediaMapper;
+	private MediaMapper mediaMapper;
 	
-	// 이미지 추가
+	@Autowired
+	private MemberMapper memberMapper;
+	
+	@Autowired
+	private PostMapper postMapper;
+	
+	// 프로필 이미지 추가
 	@Override
-	public void insertMedia(FileVO file) {
+	public FileVO insertProfileMedia(FileVO file) {
 	    String filename = file.getFileUrl() + '/' + file.getFileName();
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
-		mediaMapper.insertMedia(vo);
+		int mediaNo = mediaMapper.insertMedia(vo);
+		file.setMediaNo(mediaNo);
+		mediaMapper.updateProfileMedia(file);
+		return file;
+	}
+	// 게시글 이미지 추가
+	@Override
+	public FileVO insertPostMedia(FileVO file) {
+	    String filename = file.getFileUrl() + '/' + file.getFileName();
+		MediaVO vo = new MediaVO();
+		vo.setFilename(filename);
+		int mediaNo = mediaMapper.insertMedia(vo);
+		file.setMediaNo(mediaNo);
+		return file;
 	}
 
-	// 이미지 수정
+	// 프로필 이미지 수정
 	@Override
-	public void updateMedia(FileVO file, int mediaNo) {
+	public FileVO updateProfileMedia(FileVO file) {
 	    String filename = file.getFileUrl() + '/' + file.getFileName();
-	    mediaMapper.deleteMedia(mediaNo);
+	    mediaMapper.deleteMedia(file);
 		MediaVO vo = new MediaVO();
 		vo.setFilename(filename);
 		mediaMapper.insertMedia(vo);
+		file.setMediaNo(vo.getMediaNo());
+		mediaMapper.updateProfileMedia(file);
+		return file;
+	}
+	// 게시글 이미지 수정
+	@Override
+	public FileVO updatePostMedia(FileVO file) {
+	    String filename = file.getFileUrl() + '/' + file.getFileName();
+	    mediaMapper.deleteMedia(file);
+		MediaVO vo = new MediaVO();
+		vo.setFilename(filename);
+		int mediaNo = mediaMapper.insertMedia(vo);
+		file.setMediaNo(mediaNo);
+		mediaMapper.updatePostMedia(file);
+		return file;
 	}
 
-	// 이미지 삭제
+	// 프로필 이미지 삭제
 	@Override
-	public void deleteMedia(int mediaNo) {
-		mediaMapper.deleteMedia(mediaNo);
+	public void deleteProfileMedia(FileVO file) {
+		mediaMapper.deleteMedia(file);
 	}
+	// 게시글 이미지 삭제
+	@Override
+	public void deletePostMedia(FileVO file) {
+		mediaMapper.deleteMedia(file);
+	}
+	
 
 	// 이미지 조회
 	@Override

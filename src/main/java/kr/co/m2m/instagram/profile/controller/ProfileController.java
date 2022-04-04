@@ -1,5 +1,6 @@
 package kr.co.m2m.instagram.profile.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.m2m.instagram.media.model.MediaVO;
+import kr.co.m2m.instagram.media.service.MediaService;
 import kr.co.m2m.instagram.member.model.MemberVO;
 import kr.co.m2m.instagram.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ProfileController {
 	
 	@Autowired
+	private MediaService mediaService;
+	
+	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
@@ -28,11 +34,26 @@ public class ProfileController {
 	
 	// 프로필(회원 정보) 조회
 	@RequestMapping("getProfile")
-	public MemberVO selectMember(@RequestParam int memberNo) {
+	public Map<String, Object> selectMember(@RequestParam int memberNo) {
+		Map<String, Object> result = new HashMap<>();
 		MemberVO mvo = memberService.selectMember(memberNo);
-		log.info(mvo.toString());
-		return mvo;
+		log.info("Get Member Info : {}", mvo);
+		int mediaNo = mvo.getMediaNo();
+		String filename = "";
+		if (mediaNo != 0) filename = mediaService.selectMedia(mediaNo).getFilename();
+		result.put("mvo", mvo);
+		result.put("filename", filename);
+		return result;
 	}
+//	public MemberVO selectMember(@RequestParam int memberNo) {
+//		MemberVO mvo = memberService.selectMember(memberNo);
+//		int mediaNo = mvo.getMediaNo();
+//		MediaVO mediaVO;
+//		if (mediaNo != 0) mediaVO = mediaService.selectMedia(mediaNo);
+//		
+//		log.info(mvo.toString());
+//		return mvo;
+//	}
 	
 	// 프로필(회원 정보) 수정
 	@RequestMapping(value = "editProfile", method = RequestMethod.POST)

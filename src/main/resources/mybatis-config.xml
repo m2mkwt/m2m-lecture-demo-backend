@@ -24,5 +24,6 @@
     	<typeAlias type="kr.co.m2m.instagram.comment.model.CommentSO" alias="CommentSO"/>
     	<typeAlias type="kr.co.m2m.instagram.comment.model.CommentPO" alias="CommentPO"/>
     	<typeAlias type="kr.co.m2m.instagram.media.model.MediaVO" alias="MediaVO"/>
+    	<typeAlias type="kr.co.m2m.framework.web.model.FileVO" alias="FileVO"/>
     </typeAliases>
 </configuration>
