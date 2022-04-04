@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,TCO.post_no
 			  ,TCO.content
 			  ,TCO.delete_yn
-			  ,format(TCO.createdt,'yyyy년 MM월 dd일 HH시 mm분')
+			  ,format(TCO.createdt,'yyyy년 MM월 dd일 HH시 mm분') AS createdt
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      ,TCO.member_no
 			  ,TCO.post_no
 			  ,TCO.content
-			  ,format(TCO.createdt,'yyyy년 MM월 dd일 HH시 mm분')
+			  ,format(TCO.createdt,'yyyy년 MM월 dd일 HH시 mm분') AS createdt
 			  ,TMB.login_id  AS login_id
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
