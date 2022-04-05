@@ -126,7 +126,8 @@
 	<!-- parameter : memberNo -->
 	<!-- result : 게시글번호, 파일명, 게시글당 댓글 수(cntComment) -->
 	<select id="selectMyPost" parameterType="Integer" resultType="java.util.Map">
-		SELECT P.post_no, M.filename,
+		SELECT TOP 9
+			P.post_no, M.filename,
 			(SELECT COUNT(comment_no) FROM comment WHERE post_no = P.post_no AND delete_yn='N') cntComment
 		FROM dbo.post P, dbo.media M
 		WHERE P.media_no = M.media_no
