@@ -29,6 +29,8 @@ public class PostVO implements Serializable, Cloneable {
   @NotBlank
   private String filename;
   private int commentCnt;
+  private String likeFlag;
+  private boolean likeStatus;  
 
   /** 페이징 정렬 컬럼 */
   @Pattern(regexp = "(^[a-zA-Z]+.[_a-zA-Z0-9]*)?")

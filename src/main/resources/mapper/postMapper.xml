@@ -53,25 +53,23 @@
 	        /* wt478, POST, postMapper, selectPost */
 			SELECT 
 			       ROW_NUMBER() OVER(ORDER BY AA.POST_NO) RNUM
+			     , (SELECT ISNULL(UPPER(TLI.DELETE_YN), 'N') FROM dbo.POSTLIKE TLI WHERE TLI.POST_NO = AA.POST_NO AND TLI.MEMBER_NO = #{memberNo} AND TLI.DELETE_YN = 'N') AS LIKE_FLAG
 			     , POST_NO 
 			     , MEMBER_NO 
 			     , CONTENT 
 			     , STR_CREATED_DT 
 			     , MEDIA_NO 
-			     , LIKE_CNT 
+			     , (SELECT COUNT(1) AS CNT FROM dbo.POSTLIKE TLI WHERE TLI.POST_NO = AA.POST_NO AND TLI.DELETE_YN = 'N') AS LIKE_CNT
 			     , LOGIN_ID 
-			     , COMMENT_CNT 
-			     , FILENAME 	   
+			     , (SELECT COUNT(1) FROM dbo.comment AS TCO WHERE TCO.POST_NO = AA.POST_NO and TCO.delete_yn = 'N' ) AS COMMENT_CNT 
+			     , (SELECT TME.FILENAME FROM dbo.media AS TME WHERE TME.MEDIA_NO = AA.MEDIA_NO ) AS FILENAME 	   
 			FROM(        
 				SELECT TPO.POST_NO
 				     , TPO.MEMBER_NO
 					 , TPO.CONTENT
 					 , format(TPO.CREATEDT, 'yyyy년 MM월 dd일 HH시 mm분') AS STR_CREATED_DT
 					 , TPO.MEDIA_NO
-					 , TPO.LIKE_CNT
 					 , TMB.LOGIN_ID 
-					 , (SELECT count(1) FROM dbo.comment AS TCO WHERE TCO.POST_NO = TPO.POST_NO and TCO.delete_yn = 'N' ) AS COMMENT_CNT
-					 , (SELECT TME.FILENAME FROM dbo.media AS TME WHERE TME.MEDIA_NO = TPO.MEDIA_NO ) AS FILENAME
 					 , TPO.CREATEDT
 				  FROM dbo.post AS TPO
 				 INNER JOIN dbo.member AS TMB
@@ -86,11 +84,11 @@
 			
 	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
 		SELECT TPO.post_no
-			  ,TPO.content
-			  ,TPO.createdt
-			  ,TPO.like_cnt
-			  , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
-			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
+			 , TPO.content
+			 , TPO.createdt
+			 , (SELECT COUNT(1) AS CNT FROM dbo.POSTLIKE TLI WHERE POST_NO = ${postNo} AND DELETE_YN = 'N') AS LIKE_CNT
+			 , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
+			 , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
 		  FROM dbo.post AS TPO
 		  where post_no = #{postNo} AND TPO.delete_yn = 'N';
 	</select>

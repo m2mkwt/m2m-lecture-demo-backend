@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
+import kr.co.m2m.framework.auth.BEAuthDetailModel;
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
 import kr.co.m2m.framework.web.model.ErrorResponse;
@@ -36,6 +37,15 @@ public class PostController {
 		log.info("list select Parameter (VO) : {}"+ vo);
 		BasicResponse resEntity = null;
 		List<PostVO> resultList = null;
+		
+		BEAuthDetailModel userInfo = null;
+        Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (details instanceof BEAuthDetailModel) {
+          userInfo = (BEAuthDetailModel)details;
+        }
+        log.info("userInfo : {}", userInfo);        
+        vo.setMemberNo(userInfo.getMemberNo());
+        
 		try {
 		  resultList = postService.selectList(vo);
 		  int totalCnt = postService.countPost(0);
