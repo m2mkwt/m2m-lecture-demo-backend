@@ -5,13 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.m2m.framework.auth.BEAuthDetailModel;
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
+import kr.co.m2m.framework.web.model.ErrorResponse;
 import kr.co.m2m.instagram.media.service.MediaService;
 import kr.co.m2m.instagram.member.model.MemberVO;
 import kr.co.m2m.instagram.member.service.MemberService;
@@ -35,16 +41,31 @@ public class MypageController {
 	// 회원정보 조회
 	@GetMapping("getMember")
 	public ResponseEntity<? extends BasicResponse> getMember(int memberNo) {
-		Map<String, Object> result = new HashMap<>();
-		MemberVO mvo = memberService.selectMember(memberNo);
-		result.put("mvo", mvo);
-		int mediaNo = mvo.getMediaNo();
-		if (mediaNo > 0) {
-			String imgName = mediaService.selectMedia(mediaNo).getFilename();
-			result.put("imgName", imgName);
+		Object obj = SecurityContextHolder.getContext().getAuthentication().getDetails();
+		BEAuthDetailModel adm;
+		int authMemberNo = 0;
+		if(obj instanceof BEAuthDetailModel) {
+			 adm = (BEAuthDetailModel)obj;
+			 authMemberNo = adm.getMemberNo();
 		}
-		log.info("count My Post : total {}", result);
-		return ResponseEntity.ok().body(new CommonResponse<Map<String, Object>>(result));
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if(memberNo == authMemberNo) {			
+			MemberVO mvo = memberService.selectMember(memberNo);
+			result.put("mvo", mvo);
+			int mediaNo = mvo.getMediaNo();
+			if (mediaNo > 0) {
+				String imgName = mediaService.selectMedia(mediaNo).getFilename();
+				result.put("imgName", imgName);
+			}
+			log.info("count My Post : total {}", result);
+		
+			return ResponseEntity.ok().body(new CommonResponse<Map<String, Object>>(result));
+		}else {
+			String error = "unauthorized";
+			return ResponseEntity.internalServerError().body(new ErrorResponse(error));
+		}
 	}
 	
 	// 내 게시글 목록(게시글번호,파일명) 리스트 조회
