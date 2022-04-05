@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  ,TCO.delete_yn
 			  ,TCO.createdt
 			  ,TMB.login_id  AS login_id
+			  ,(SELECT TME.FILENAME FROM dbo.media AS TME WHERE TME.MEDIA_NO = TMB.MEDIA_NO ) AS filename	
 		FROM dbo.comment AS TCO
 		 INNER JOIN dbo.member AS TMB
 		    ON TCO.member_no = TMB.member_no
