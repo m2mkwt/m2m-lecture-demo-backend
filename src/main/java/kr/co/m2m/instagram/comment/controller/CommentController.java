@@ -1,9 +1,10 @@
 package kr.co.m2m.instagram.comment.controller;
 
 import java.util.List;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
+import kr.co.m2m.framework.auth.BEAuthDetailModel;
 import kr.co.m2m.framework.web.model.BasicResponse;
 import kr.co.m2m.framework.web.model.CommonResponse;
 import kr.co.m2m.framework.web.model.ErrorResponse;
@@ -21,8 +21,6 @@ import kr.co.m2m.instagram.comment.model.CommentPO;
 import kr.co.m2m.instagram.comment.model.CommentSO;
 import kr.co.m2m.instagram.comment.model.CommentVO;
 import kr.co.m2m.instagram.comment.service.impl.CommentServiceImpl;
-import kr.co.m2m.instagram.post.model.PostPO;
-import kr.co.m2m.instagram.post.model.PostVO;
 import kr.co.m2m.instagram.post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -84,11 +82,22 @@ public class CommentController {
     }
     @ResponseBody
     @PostMapping(value = "likePost")//좋아요 증가
-    public ResponseEntity<? extends BasicResponse> likesCount(@RequestBody PostVO vo){
-    	String result = commentService.likesCount(vo);
+    public ResponseEntity<? extends BasicResponse> likePost(@RequestBody CommentPO po){
+    	
+    	BEAuthDetailModel userInfo = null;
+    	Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
+    	if (details instanceof BEAuthDetailModel) {
+    	  userInfo = (BEAuthDetailModel)details;
+    	}
+    	log.info("userInfo : {}", userInfo);    	
+    	po.setMemberNo(userInfo.getMemberNo());
+    	
+    	String result = commentService.updateLikes(po);
 		if(result.contentEquals("like Success")) {
-			List<PostVO> resultList = commentService.likesCnt(vo);
-			return ResponseEntity.ok().body(new CommonResponse <List<PostVO>>(resultList));
+		    CommentSO so = new CommentSO();
+		    so.setPostNo(po.getPostNo());		    
+			Integer cnt = commentService.getLikesCnt(so);
+			return ResponseEntity.ok().body(new CommonResponse <Integer>(cnt));
 		}else {
 			return ResponseEntity.internalServerError().body(new ErrorResponse(result));
 		}

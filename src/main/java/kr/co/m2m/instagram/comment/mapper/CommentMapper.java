@@ -26,14 +26,9 @@ public interface CommentMapper {
     public int deleteComment(CommentPO cp);
     
     //좋아요
-	public int likesCount(PostVO vo);
+	public int updateLikes(CommentPO vo);
 
-	public List<PostVO> likesCnt(PostVO vo);
-
-
-
-
-
+	public int getLikesCnt(CommentSO vo);
 }
 
 

@@ -5,17 +5,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="kr.co.m2m.instagram.comment.mapper.CommentMapper">
  	<!-- 좋아요 -->
- 	<update id="likesCount" parameterType="PostVO">
- 		update 
- 			instagram.dbo.post set like_cnt = like_cnt+1 
- 		where post_no = ${postNo};
+ 	<update id="updateLikes" parameterType="kr.co.m2m.instagram.post.model.PostPO">
+        /* 제작자, CommentMapper.xml, updateLikes */
+        MERGE INTO dbo.POSTLIKE TLI 
+        USING ( SELECT #{postNo} POST_NO
+                     , #{memberNo} MEMBER_NO ) T1
+           ON TLI.POST_NO = T1.POST_NO
+          AND TLI.MEMBER_NO = T1.MEMBER_NO
+  WHEN MATCHED THEN
+       UPDATE
+          SET DELETE_YN    = #{deleteYn}
+            , CREATEDT     = GETDATE()
+         WHEN NOT MATCHED THEN   
+       INSERT ( 
+                POST_NO
+              , MEMBER_NO
+              , DELETE_YN
+              , CREATEDT
+              )
+       VALUES ( 
+                #{postNo}
+              , #{memberNo}
+              , 'N'
+              , GETDATE()
+          );
  	</update>
+ 	
  	<!-- 댓글 수 -->
     <select id="commentCount" resultType="int">
         SELECT
             COUNT(*)
         FROM instagram.dbo.comment where post_no = ${postNo} and delete_yn = 'N'
     </select>
+    
     <!-- 댓글 전체 리스트 -->
     <select id="listComment" resultType="CommentVO">
 		SELECT TCO.comment_no
@@ -44,27 +66,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    ON TCO.member_no = TMB.member_no
 		WHERE TCO.post_no = ${postNo};
     </select>
+    
     <!-- 댓글 작성  -->
     <insert id="insertComment" parameterType="CommentPO">
         INSERT INTO
         COMMENT (member_no, post_no, content)
         VALUES(${memberNo},${postNo},#{content}) 
     </insert>
+    
     <!-- 댓글 수정  -->
     <update id="updateComment" parameterType="CommentPO">
         UPDATE instagram.dbo.comment
             SET content = #{content}
         	WHERE comment_no = ${commentNo}
     </update>
+    
 	<!-- 댓글 삭제  -->
     <update id="deleteComment" parameterType="CommentPO">
 	    UPDATE instagram.dbo.comment
 	        SET delete_yn = 'Y'
 	    	WHERE comment_no = ${commentNo}
     </update>
-    <select id="likesCnt" resultType="PostVO">
+    
+    <select id="getLikesCnt" resultType="int">
+    /* 제작자, CommentMapper.xml, getLikesCnt */
         SELECT
-			like_cnt
-        FROM instagram.dbo.post where post_no = ${postNo}
+			COUNT(1) AS CNT
+        FROM dbo.POSTLIKE TLI 
+       WHERE POST_NO   = ${postNo}
+         AND DELETE_YN = 'N'
     </select>
 </mapper>
