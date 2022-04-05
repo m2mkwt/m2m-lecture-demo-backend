@@ -27,5 +27,7 @@ public class CommentVO implements Serializable, Cloneable {
   private Date createdt;
   
   private String loginId;
-
+  
+  private String filename;
+  
 }
