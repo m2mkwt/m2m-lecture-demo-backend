@@ -14,20 +14,16 @@ public class PostVO implements Serializable, Cloneable {
   public PostVO() {}
 
   private int postNo;
-  @NotBlank
   private int memberNo;
-  @NotBlank
   private int mediaNo;
-  @NotBlank
   private String content;
   private String deleyeYn;
   private Date createdt;
 
   private int likeCnt;
-  @NotBlank
   private String loginId;
-  @NotBlank
-  private String filename;
+  private String pFilename;
+  private String mFilename;
   private int commentCnt;
 
   /** 페이징 정렬 컬럼 */
