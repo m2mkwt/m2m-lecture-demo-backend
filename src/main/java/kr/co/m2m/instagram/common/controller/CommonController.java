@@ -43,9 +43,6 @@ public class CommonController {
   @CrossOrigin("*")
   @RequestMapping(value = "uploadImg", method = RequestMethod.POST)
   public ResponseEntity<? extends BasicResponse> requestUploadImage(@RequestParam("fileList") MultipartFile mFile,
-//		  @RequestParam(name = "memberNo", defaultValue = "0") int memberNo,
-//		  @RequestParam(name = "mediaNo", defaultValue = "0") int mediaNo,
-//		  @RequestParam(name = "uploadType", defaultValue = "") String uploadType) {
 		  @RequestParam Map<String, Object> map){
     FileVO file = null;
     log.info("[uploadImg] mFile : {}", mFile);
