@@ -87,9 +87,7 @@ public class ProfileController {
 		if (userDetails instanceof BEAuthDetailModel) {
 			user = (BEAuthDetailModel)userDetails;
 		}
-		if (map.get("memberNo") instanceof Integer) {
-			memberNo = Integer.parseInt(map.get("memberNo").toString());
-		}
+		memberNo = Integer.parseInt(map.get("memberNo").toString());
 		if (user.getMemberNo() == memberNo) {
 			String oldPassword = map.get("oldPassword").toString();		
 			String dbPassword = memberService.selectPassword(memberNo);
