@@ -52,11 +52,11 @@ public class CommonController {
     log.info("[upload info] map : {}", map);
     try {
       file = commonService.saveSvrFileData(mFile, "");
-      int memberNo = (Integer)map.get("memberNo");
+      int memberNo = Integer.parseInt(map.get("memberNo").toString());
 	  file.setMemberNo(memberNo);
       String uploadType = map.get("uploadType").toString();
       if (uploadType.equals("profile")) {
-          int mediaNo = (Integer)map.get("mediaNo");
+          int mediaNo = Integer.parseInt(map.get("mediaNo").toString());
     	  file.setMediaNo(mediaNo);
     	  if (mediaNo == 0) file = mediaService.insertProfileMedia(file);
     	  else file = mediaService.updateProfileMedia(file);
