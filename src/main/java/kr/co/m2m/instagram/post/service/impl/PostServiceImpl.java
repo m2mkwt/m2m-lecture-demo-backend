@@ -74,6 +74,11 @@ public class PostServiceImpl implements PostService {
 		return postMapper.selectMyPost(memberNo);
 	}
 	
+	@Override
+	public int getCntCmt(PostVO vo) {
+		return postMapper.getCntCmt(vo);
+	}
+	
 //	@Override
 //	public ResultListModel<PostVO> selectAll(PostVO vo){
 //		ResultListModel<PostVO> rv = new ResultListModel<>();

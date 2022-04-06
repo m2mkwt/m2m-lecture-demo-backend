@@ -112,4 +112,12 @@ public class PostController {
 		}
 	}
 	
+	@ResponseBody
+	@GetMapping("cmtPost") 
+	public ResponseEntity<? extends BasicResponse> cmtPost(PostVO vo,Model model) {
+		log.info("post cmtCnt Parameter (VO) : {}"+ vo);
+		Integer cmtCnt = postService.getCntCmt(vo);
+		return ResponseEntity.ok().body(new CommonResponse<Integer>(cmtCnt));
+	}
+	
 }
