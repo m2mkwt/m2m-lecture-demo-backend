@@ -26,5 +26,7 @@ public interface PostService {
 	
 	public int countPost(int memberNo);
 	
+	public int getCntCmt(PostVO vo);
+	
 	public List<Map<String, String>> selectMyPost(int memberNo);
 }

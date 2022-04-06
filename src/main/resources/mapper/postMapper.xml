@@ -140,4 +140,12 @@
 	   ORDER BY P.createdt DESC;
 	</select>
 	
+	<select id="getCntCmt" parameterType="Integer" resultType="Integer">
+		SELECT 
+			(SELECT COUNT(1) FROM dbo.comment AS TCO WHERE TCO.POST_NO = TPO.POST_NO and TCO.delete_yn = 'N' ) AS COMMENT_CNT 
+		FROM dbo.post AS TPO 
+		WHERE post_no = #{postNo} 
+		AND TPO.delete_yn = 'N';
+	</select>
+	
 </mapper>
