@@ -4,51 +4,49 @@
 
 	<sql id="sortSql">
 		<if test="sidx != null and sidx != ''">
-		ORDER BY ${sidx} ${sord}
+			ORDER BY ${sidx} ${sord}
 		</if>
 	</sql>
 
 	<sql id="pageSql">
-		OFFSET (#{page}-1)*#{rows} ROWS FETCH NEXT #{rows} ROWS ONLY
+		OFFSET (#{page}-1)*#{rows} ROWS FETCH NEXT #{rows} ROWS
+		ONLY
 	</sql>
-	
+	<!-- @Description("게시글 입력") -->
 	<insert id="insertPost">
-		INSERT INTO instagram.dbo.post (member_no,media_no, content) 
-		VALUES (#{memberNo},#{mediaNo},#{content})
+		/* kt478, POST, postMapper, insertPost */
+		INSERT INTO
+		instagram.dbo.post (member_no,media_no, content)
+		VALUES
+		(#{memberNo},#{mediaNo},#{content})
 	</insert>
-	
+	<!-- @Description("게시글 삭제") -->
 	<delete id="deletePost">
-		UPDATE instagram.dbo.post 
-		SET delete_yn = 'Y' 
+		/* kt478, POST, postMapper, deletePost */
+		UPDATE
+		instagram.dbo.post
+		SET delete_yn = 'Y'
 		WHERE post_no = #{postNo}
 	</delete>
-	
+	<!-- @Description("게시글 수정") -->
 	<update id="updatePost">
-		UPDATE instagram.dbo.post 
-		SET content = #{content} 
+		/* kt478, POST, postMapper, updatePost */
+		UPDATE
+		instagram.dbo.post
+		SET content = #{content}
 		WHERE post_no = #{postNo}
 	</update>
-<!-- 	
-	<select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		SELECT TPO.post_no
-		      ,TPO.member_no
-			  ,TPO.content
-			  ,TPO.createdt
-			  ,TPO.like_cnt
-			  ,TMB.login_id  AS login_id
-			  , (SELECT count(*) FROM dbo.comment AS TCO WHERE TCO.post_no = TPO.post_no and TCO.delete_yn = 'N' ) AS comment_cnt
-			  , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS filename
-		  FROM dbo.post AS TPO
-		 INNER JOIN dbo.member AS TMB
-		    ON TPO.member_no = TMB.member_no
-		 WHERE TPO.delete_yn = 'N'
-	  ORDER BY TPO.createdt DESC;
-	
-	</select>
--->
-	
+	<!-- <select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO"> 
+		SELECT TPO.post_no ,TPO.member_no ,TPO.content ,TPO.createdt ,TPO.like_cnt 
+		,TMB.login_id AS login_id , (SELECT count(*) FROM dbo.comment AS TCO WHERE 
+		TCO.post_no = TPO.post_no and TCO.delete_yn = 'N' ) AS comment_cnt , (SELECT 
+		TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS 
+		filename FROM dbo.post AS TPO INNER JOIN dbo.member AS TMB ON TPO.member_no 
+		= TMB.member_no WHERE TPO.delete_yn = 'N' ORDER BY TPO.createdt DESC; </select> -->
+
 	<!-- @Description("Query기능관련 주석 예) POST본문 페이징 조회") -->
-	<select id="selectPost" resultType="kr.co.m2m.instagram.post.model.PostVO">
+	<select id="selectPost"
+		resultType="kr.co.m2m.instagram.post.model.PostVO">
 		<![CDATA[
 	        /* wt478, POST, postMapper, selectPost */
 			SELECT 
@@ -81,38 +79,50 @@
 			) AA 
 		]]>
 		<include refid="sortSql" />
-		<include refid="pageSql" />	
+		<include refid="pageSql" />
 	</select>
-			
-	<select id="selectPostDetail" resultType="kr.co.m2m.instagram.post.model.PostVO">
-		SELECT TPO.post_no
-			 , TPO.content
-			 , TPO.createdt
-			 , (SELECT ISNULL(UPPER(TLI.DELETE_YN), 'N') FROM dbo.POSTLIKE TLI WHERE TLI.POST_NO = ${postNo} AND TLI.MEMBER_NO = #{memberNo} AND TLI.DELETE_YN = 'N') AS LIKE_FLAG
-			 , (SELECT COUNT(1) AS CNT FROM dbo.POSTLIKE TLI WHERE POST_NO = ${postNo} AND DELETE_YN = 'N') AS LIKE_CNT
-			 , (SELECT TMB.login_id FROM dbo.member AS TMB WHERE TMB.member_no = TPO.member_no ) AS login_id
-			 , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = TPO.media_no ) AS p_filename
-			 , (SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no = 
-			   (SELECT media_no FROM dbo.member WHERE member_no=#{memberNo} AND delete_yn = 'N' )  ) AS m_filename
-		  FROM dbo.post AS TPO
-		  WHERE post_no = #{postNo} AND TPO.delete_yn = 'N';
+	<!-- @Description("상세 게시글 조회") -->
+	<select id="selectPostDetail"
+		resultType="kr.co.m2m.instagram.post.model.PostVO">
+		/* kt478, POST, postMapper, selectPostDetail */
+		SELECT
+		TPO.post_no
+		, TPO.content
+		, TPO.createdt
+		, (SELECT
+		ISNULL(UPPER(TLI.DELETE_YN), 'N') FROM dbo.POSTLIKE TLI WHERE
+		TLI.POST_NO = ${postNo} AND TLI.MEMBER_NO = #{memberNo} AND
+		TLI.DELETE_YN = 'N') AS LIKE_FLAG
+		, (SELECT COUNT(1) AS CNT FROM
+		dbo.POSTLIKE TLI WHERE POST_NO =
+		${postNo} AND DELETE_YN = 'N') AS
+		LIKE_CNT
+		, (SELECT TMB.login_id FROM dbo.member AS TMB WHERE
+		TMB.member_no =
+		TPO.member_no ) AS login_id
+		, (SELECT TME.filename FROM
+		dbo.media AS TME WHERE TME.media_no =
+		TPO.media_no ) AS p_filename
+		,
+		(SELECT TME.filename FROM dbo.media AS TME WHERE TME.media_no =
+		(SELECT media_no FROM dbo.member WHERE member_no=#{memberNo} AND
+		delete_yn = 'N' ) ) AS m_filename
+		FROM dbo.post AS TPO
+		WHERE post_no =
+		#{postNo} AND TPO.delete_yn = 'N';
 	</select>
 	<select id="selectPostAll" resultType="PostVO">
-		SELECT * 
+		SELECT *
 		FROM dbo.post
 	</select>
-	
+
 	<!-- 내 게시글 개수 조회 -->
-<!-- 	
-	<select id="countPost" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*)
-		FROM dbo.post
-		WHERE member_no = #{memberNo}
-	</select> 
--->
-	
+	<!-- <select id="countPost" parameterType="Integer" resultType="Integer"> 
+		SELECT COUNT(*) FROM dbo.post WHERE member_no = #{memberNo} </select> -->
+
 	<!-- @Description("내 게시글 개수 조회") -->
-	<select id="countPost" parameterType="Integer" resultType="Integer">
+	<select id="countPost" parameterType="Integer"
+		resultType="Integer">
 		<![CDATA[
         /* wt478, POST, postMapper, countPost */   	
 		SELECT COUNT(1) AS CNT
@@ -121,32 +131,42 @@
 		    ON TPO.MEMBER_NO = TMB.MEMBER_NO
 	     WHERE TPO.DELETE_YN = 'N'
 	       AND TMB.DELETE_YN = 'N'
-		]]>			       
-	    <if test="memberNo gt 0">
-	       AND TPO.MEMBER_NO = #{memberNo}
-	    </if>
+		]]>
+		<if test="memberNo gt 0">
+			AND TPO.MEMBER_NO = #{memberNo}
+		</if>
 	</select>
-		
+
 	<!-- 내 게시글 리스트 조회 -->
 	<!-- parameter : memberNo -->
 	<!-- result : 게시글번호, 파일명, 게시글당 댓글 수(cntComment) -->
-	<select id="selectMyPost" parameterType="Integer" resultType="java.util.Map">
+	<select id="selectMyPost" parameterType="Integer"
+		resultType="java.util.Map">
 		SELECT TOP 9
-		    P.post_no, M.filename AS p_filename,
-			(SELECT COUNT(comment_no) FROM comment WHERE post_no = P.post_no AND delete_yn='N') cntComment
+		P.post_no, M.filename AS p_filename,
+		(SELECT
+		COUNT(comment_no) FROM comment WHERE post_no = P.post_no AND
+		delete_yn='N') cntComment
 		FROM dbo.post P, dbo.media M
-		WHERE P.media_no = M.media_no
-			and P.member_no = #{memberNo}
-			AND P.delete_yn = 'N'
-	   ORDER BY P.createdt DESC;
+		WHERE P.media_no
+		= M.media_no
+		and P.member_no = #{memberNo}
+		AND P.delete_yn = 'N'
+		ORDER BY
+		P.createdt DESC;
 	</select>
-	
-	<select id="getCntCmt" parameterType="Integer" resultType="Integer">
-		SELECT 
-			(SELECT COUNT(1) FROM dbo.comment AS TCO WHERE TCO.POST_NO = TPO.POST_NO and TCO.delete_yn = 'N' ) AS COMMENT_CNT 
-		FROM dbo.post AS TPO 
-		WHERE post_no = #{postNo} 
+	<!-- @Description("게시글 댓글 추가시 바뀐 댓글 수 조회") -->
+	<select id="getCntCmt" parameterType="Integer"
+		resultType="Integer">
+		/* kt478, POST, postMapper, getCntCmt */
+		SELECT
+		(SELECT
+		COUNT(1) FROM dbo.comment AS TCO WHERE TCO.POST_NO = TPO.POST_NO and
+		TCO.delete_yn = 'N' ) AS COMMENT_CNT
+		FROM dbo.post AS TPO
+		WHERE post_no
+		= #{postNo}
 		AND TPO.delete_yn = 'N';
 	</select>
-	
+
 </mapper>
