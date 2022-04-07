@@ -3,66 +3,81 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.co.m2m.instagram.member.mapper.MemberMapper">
-	
-	<!--회원검색  -->
-	<select id="getLoginMember" parameterType="kr.co.m2m.instagram.common.model.LoginSO" resultType="kr.co.m2m.instagram.common.model.LoginVO">
+<mapper
+	namespace="kr.co.m2m.instagram.member.mapper.MemberMapper">
+
+	<!--회원검색 -->
+	<select id="getLoginMember"
+		parameterType="kr.co.m2m.instagram.common.model.LoginSO"
+		resultType="kr.co.m2m.instagram.common.model.LoginVO">
 		SELECT member_no
-		     , login_id
-		     , user_name
-		     , email
-		     , password
-		     , gender
-		     , media_no
-		  FROM dbo.member 
-		 WHERE login_id = #{id}
-	</select>	
-	
-	<!--회원가입  -->
+		, login_id
+		, user_name
+		, email
+		, password
+		,
+		gender
+		, media_no
+		FROM dbo.member
+		WHERE login_id = #{id}
+	</select>
+
+	<!--회원가입 -->
 	<insert id="insertMember" parameterType="MemberVO">
-		INSERT INTO dbo.member (login_id, user_name, email, password, gender, media_no)
-		VALUES (#{loginId}, #{userName}, #{email}, #{password}, #{gender}, #{mediaNo})
+		INSERT INTO dbo.member
+		(login_id, user_name, email, password, gender, media_no)
+		VALUES
+		(#{loginId}, #{userName}, #{email}, #{password}, #{gender},
+		#{mediaNo})
 	</insert>
-	
+
 	<!-- 회원수정 -->
 	<update id="updateMember" parameterType="MemberVO">
 		UPDATE dbo.member
-		SET login_id = #{loginId}, user_name = #{userName}, email = #{email}, gender = #{gender}
+		SET
+		login_id = #{loginId}, user_name = #{userName}, email = #{email},
+		gender = #{gender}
 		WHERE member_no = #{memberNo}
 	</update>
-	
+
 	<!-- 비밀번호 수정 -->
 	<update id="updatePassword" parameterType="MemberVO">
 		UPDATE dbo.member
-		SET password = #{password}
+		SET
+		password = #{password}
 		WHERE member_no = #{memberNo}
 	</update>
-	
+
 	<!--로그인 -->
 	<select id="login_check" resultType="MemberVO">
-	  SELECT *
-	  FROM dbo.member
-	  WHERE email=#{email} and password=#{password}
+		SELECT *
+		FROM dbo.member
+		WHERE email=#{email} and password=#{password}
 
-	 </select>
-	 
-	 <!--로그인체크 -->
-	 <select id="idCheck" resultType="int">
-		SELECT COUNT(*) FROM instagram.dbo.member
+	</select>
+
+	<!--아이디중복체크 -->
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM
+		instagram.dbo.member
 		WHERE login_id = #{loginId}
-	 </select>
-	 
-	 <!-- 회원정보 조회 -->
-	 <select id="selectMember" resultType="MemberVO" parameterType="Integer">
-	 	SELECT member_no, login_id, user_name, email, gender, media_no
-	 	FROM dbo.member
-	 	WHERE member_no = #{memberNo}
-	 </select>
-	 
-	 <!-- 비밀번호 조회 -->
-	 <select id="selectPassword" resultType="String" parameterType="Integer">
-	 	SELECT password
-	 	FROM dbo.member
-	 	WHERE member_no = #{memberNo}
-	 </select>
+	</select>
+
+	<!-- 회원정보 조회 -->
+	<select id="selectMember" resultType="MemberVO"
+		parameterType="Integer">
+		SELECT member_no, login_id, user_name, email, gender,
+		media_no
+		FROM dbo.member
+		WHERE member_no = #{memberNo}
+	</select>
+
+	<!-- 비밀번호 조회 -->
+	<select id="selectPassword" resultType="String"
+		parameterType="Integer">
+		SELECT password
+		FROM dbo.member
+		WHERE member_no =
+		#{memberNo}
+	</select>
 </mapper>
