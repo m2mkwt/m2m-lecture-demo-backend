@@ -2,7 +2,6 @@ package kr.co.m2m.instagram.post.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.Data;
 
@@ -22,11 +21,11 @@ public class PostVO implements Serializable, Cloneable {
 
   private int likeCnt;
   private String loginId;
-  private String pFilename;
-  private String mFilename;
+  private String pFilename; // 게시글 사진경로
+  private String mFilename; // 프로필 사진경로
   private int commentCnt;
   private String likeFlag;
-  private boolean likeStatus;  
+  private boolean likeStatus;
 
   /** 페이징 정렬 컬럼 */
   @Pattern(regexp = "(^[a-zA-Z]+.[_a-zA-Z0-9]*)?")
@@ -41,8 +40,8 @@ public class PostVO implements Serializable, Cloneable {
 
   /** 한페이지당 보여줄 리스트 수 */
   private Integer rows;
-  
+
   private int startIndex = 0;
-  
+
   private int endIndex = 0;
 }
