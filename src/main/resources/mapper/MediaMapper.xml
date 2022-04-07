@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.m2m.instagram.media.mapper.MediaMapper">
-	<insert id="insertMedia" parameterType="MediaVO" useGeneratedKeys="true" keyProperty="mediaNo">
+
+	<insert id="insertMedia" parameterType="MediaVO"
+		useGeneratedKeys="true" keyProperty="mediaNo">
+		/* cshwang, MediaMapper.xml, insertMedia */
 		INSERT INTO media (filename)
 		VALUES (#{filename})
 	</insert>
 	<update id="updateProfileMedia" parameterType="FileVO">
+		/* cshwang, MediaMapper.xml, updateProfileMedia */
 		UPDATE member
-		SET media_no = #{mediaNo}
+		SET
+		media_no = #{mediaNo}
 		WHERE member_no = #{memberNo}
 	</update>
 	<update id="updatePostMedia" parameterType="FileVO">
+		/* cshwang, MediaMapper.xml, updatePostMedia */
 		UPDATE post
-		SET media_no = #{mediaNo}
+		SET
+		media_no = #{mediaNo}
 		WHERE post_no = #{postNo}
 	</update>
 	<update id="deleteMedia" parameterType="FileVO">
+		/* cshwang, MediaMapper.xml, deleteMedia */
 		UPDATE media
-		SET delete_yn = 'Y'
+		SET
+		delete_yn = 'Y'
 		WHERE media_no = #{mediaNo}
 	</update>
 	<select id="selectMedia" resultType="MediaVO">
+		/* cshwang, MediaMapper.xml, selectMedia */
 		SELECT * FROM media
-		WHERE media_no = #{mediaNo}
+		WHERE
+		media_no = #{mediaNo}
 	</select>
 </mapper>
 
