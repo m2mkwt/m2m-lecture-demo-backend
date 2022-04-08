@@ -4,6 +4,20 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * <pre>
+ * 프로젝트명	: m2m-lecture-demo-backend
+ * 패키지명		: kr.co.m2m.framework.auth
+ * 파일명		: BEAuthDetailModel.java
+ * 작성일		: 2022-04-08
+ * 작성자		: wtkim
+ * 설명		 	: Spring Security 사용자정보 저장 Detail Model
+ *
+ * 수정내역(수정일 수정자 - 수정내용)
+ * -------------------------------------------------------------------------
+ * 2022-04-08	wtkim - 최초생성
+ * </pre>
+ */
 @Data
 public class BEAuthDetailModel implements Serializable {
 
