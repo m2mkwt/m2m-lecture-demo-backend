@@ -44,7 +44,21 @@ public class PostController {
   private PostService postService;
 
 
-  @RequestMapping("selectPostList") // 게시글 전체 리스트 조회
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "ktim"
+   * 설명   :  전체 게시글 조회
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "ktim" - 최초생성
+   * </pre>
+   *
+   * @param vo
+   * @return
+   */
+  @RequestMapping("selectPostList")
   public ResponseEntity<? extends BasicResponse> selectPostList(@RequestBody PostVO vo) {
     log.info("list select Parameter (VO) : {}" + vo);
     BasicResponse resEntity = null;
@@ -72,7 +86,23 @@ public class PostController {
     return ResponseEntity.ok().body(resEntity);
   }
 
-  @GetMapping("getPost") // 게시글 상세 내용 조회
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "ktim"
+   * 설명   :  상세 게시글 내용 조회
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "ktim" - 최초생성
+   * </pre>
+   *
+   * @param vo
+   * @param model
+   * @return
+   */
+
+  @GetMapping("getPost")
   public ResponseEntity<? extends BasicResponse> getPostDetail(PostVO vo, Model model) {
     PostVO resultList = postService.selectDetail(vo);
     log.info("detail select Parameter (VO) : {}" + vo);
@@ -88,8 +118,23 @@ public class PostController {
     return ResponseEntity.ok().body(new CommonResponse<PostVO>(resultList));
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "ktim"
+   * 설명   : 게시글 추가
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "ktim" - 최초생성
+   * </pre>
+   *
+   * @param po
+   * @param file
+   * @return
+   */
   @ResponseBody
-  @PostMapping("addPost") // 게시글 업로드
+  @PostMapping("addPost")
   public ResponseEntity<? extends BasicResponse> addPost(@RequestBody PostPO po,
       MultipartFile file) {
     log.info("Input Parameter (PO) : {}" + po);
@@ -101,8 +146,22 @@ public class PostController {
     }
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "ktim"
+   * 설명   : 게시글 수정
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "ktim" - 최초생성
+   * </pre>
+   *
+   * @param po
+   * @return
+   */
   @ResponseBody
-  @PostMapping("editPost") // 게시글 수정
+  @PostMapping("editPost")
   public ResponseEntity<? extends BasicResponse> editPost(@RequestBody PostPO po) {
     log.info("update Parameter (PO) : {}" + po);
     String result = postService.updatePost(po);
@@ -113,8 +172,22 @@ public class PostController {
     }
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "ktim"
+   * 설명   : 게시글 삭제
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "ktim" - 최초생성
+   * </pre>
+   *
+   * @param po
+   * @return
+   */
   @ResponseBody
-  @PostMapping("removePost") // 게시글 삭제
+  @PostMapping("removePost")
   public ResponseEntity<? extends BasicResponse> removePost(@RequestBody PostPO po) {
     log.info("delete Parameter (PO) : {}" + po);
     String result = postService.deletePost(po);
@@ -125,9 +198,23 @@ public class PostController {
     }
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "ktim"
+   * 설명   : 전체게시글에서 댓글 추가시 바뀐 댓글갯수 조회
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "ktim" - 최초생성
+   * </pre>
+   *
+   * @param vo
+   * @return
+   */
   @ResponseBody
-  @GetMapping("cmtPost") // 게시글 댓글 추가시 바뀐 댓글갯수 조회
-  public ResponseEntity<? extends BasicResponse> cmtPost(PostVO vo, Model model) {
+  @GetMapping("cmtPost")
+  public ResponseEntity<? extends BasicResponse> cmtPost(PostVO vo) {
     log.info("post cmtCnt Parameter (VO) : {}" + vo);
     Integer cmtCnt = postService.getCntCmt(vo);
     return ResponseEntity.ok().body(new CommonResponse<Integer>(cmtCnt));
