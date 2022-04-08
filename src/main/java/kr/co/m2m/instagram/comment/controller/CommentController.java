@@ -39,16 +39,31 @@ import lombok.extern.slf4j.Slf4j;
  * </pre>
  */
 @Slf4j
-@RestController // JSON데이터 요청,응답
-@RequestMapping("/api/v1/comment") // vue. uri 설정
-@CrossOrigin("*") // vue, axios 사용을 위한
+@RestController
+@RequestMapping("/api/v1/comment")
+@CrossOrigin("*")
 public class CommentController {
 
   @Autowired
   private CommentService commentService;
   private PostService postService;
 
-  @GetMapping("selectCommentlist") // 댓글 리스트
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "gwLee"
+   * 설명   : 댓글 리스트
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "gwLee" - 최초생성
+   * </pre>
+   *
+   * @param cv
+   * @param model
+   * @return
+   */
+  @GetMapping("selectCommentlist")
   public ResponseEntity<? extends BasicResponse> selectCommentlist(CommentVO cv, Model model) {
     List<CommentVO> commentList = commentService.listComment(cv);
     log.info("listComment select Parameter (VO) : {}" + cv);
@@ -56,8 +71,23 @@ public class CommentController {
     return ResponseEntity.ok().body(new CommonResponse<List<CommentVO>>(commentList));
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "gwLee"
+   * 설명   : 댓글 작성
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "gwLee" - 최초생성
+   * </pre>
+   *
+   * @param cp
+   * @param model
+   * @return
+   */
   @ResponseBody
-  @PostMapping("addComment") // 댓글 작성
+  @PostMapping("addComment")
   public ResponseEntity<? extends BasicResponse> addComment(@Valid @RequestBody CommentPO cp,
       Model model) {
     String result = commentService.insertComment(cp);
@@ -71,8 +101,22 @@ public class CommentController {
     }
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "gwLee"
+   * 설명   : 댓글 수정
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "gwLee" - 최초생성
+   * </pre>
+   *
+   * @param cp
+   * @return
+   */
   @ResponseBody
-  @PostMapping(value = "editComment") // 댓글 수정
+  @PostMapping(value = "editComment")
   public ResponseEntity<? extends BasicResponse> editComment(@RequestBody CommentPO cp) {
     String result = commentService.updateComment(cp);
     if (result.contentEquals("update Success")) {
@@ -85,8 +129,22 @@ public class CommentController {
     }
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "gwLee"
+   * 설명   : 댓글 삭제
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "gwLee" - 최초생성
+   * </pre>
+   *
+   * @param cp
+   * @return
+   */
   @ResponseBody
-  @PostMapping(value = "removeComment") // 댓글 삭제
+  @PostMapping(value = "removeComment")
   public ResponseEntity<? extends BasicResponse> removeComment(@RequestBody CommentPO cp) {
     String result = commentService.deleteComment(cp);
     if (result.contentEquals("delete Success")) {
@@ -99,8 +157,22 @@ public class CommentController {
     }
   }
 
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "gwLee"
+   * 설명   : 좋아요
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "gwLee" - 최초생성
+   * </pre>
+   *
+   * @param po
+   * @return
+   */
   @ResponseBody
-  @PostMapping(value = "likePost") // 좋아요 증가
+  @PostMapping(value = "likePost")
   public ResponseEntity<? extends BasicResponse> likePost(@RequestBody CommentPO po) {
 
     BEAuthDetailModel userInfo = null;

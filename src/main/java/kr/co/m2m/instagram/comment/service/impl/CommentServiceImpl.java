@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  * 2022-04-07	"gwLee" - 최초생성
  * </pre>
  */
+
 @Slf4j
 @Service
 @Transactional(rollbackFor = Throwable.class)
@@ -34,9 +35,9 @@ public class CommentServiceImpl implements CommentService {
   @Autowired
   private CommentMapper commentMapper;
 
+  
   @Override
   @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-  // 댓글전체목록
   public List<CommentVO> listComment(CommentVO cv) {
     List<CommentVO> commentList = commentMapper.listComment(cv);
     return commentList;
