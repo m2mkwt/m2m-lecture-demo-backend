@@ -47,7 +47,20 @@ public class MypageController {
   @Autowired
   MediaService mediaService;
 
-  // 회원정보 조회
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명  : 회원 정보 조회
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param memberNo
+   * @return result 맵 (mvo (회원정보), imgName (이미지파일명))
+   */
   @GetMapping("getMember")
   public ResponseEntity<? extends BasicResponse> getMember(int memberNo) {
     Object obj = SecurityContextHolder.getContext().getAuthentication().getDetails();
@@ -77,7 +90,20 @@ public class MypageController {
     }
   }
 
-  // 내 게시글 목록(게시글번호,파일명) 리스트 조회
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명  : 내 게시글 목록(게시글번호,파일명) 리스트 조회 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param memberNo
+   * @return result 맵 리스트 (내 게시글 정보 리스트)
+   */
   @GetMapping("searchPostList")
   public ResponseEntity<? extends BasicResponse> selectMyPost(int memberNo) {
     List<Map<String, String>> result = postService.selectMyPost(memberNo);
@@ -85,7 +111,20 @@ public class MypageController {
     return ResponseEntity.ok().body(new CommonResponse<List<Map<String, String>>>(result));
   }
 
-  // 내 게시글 총 개수 조회
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param memberNo
+   * @return result (내 게시글 총 개수)
+   */
   @GetMapping("getPostCnt")
   public ResponseEntity<? extends BasicResponse> countPost(int memberNo) {
     int result = postService.countPost(memberNo);
