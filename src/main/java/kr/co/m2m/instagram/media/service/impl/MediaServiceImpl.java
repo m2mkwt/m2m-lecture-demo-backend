@@ -28,6 +28,20 @@ public class MediaServiceImpl implements MediaService {
   private MediaMapper mediaMapper;
 
   // 게시글 이미지 추가
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param file (추가할 파일 정보)
+   * @return file (이미지 추가 후 생성된 mediaNo 추가한 파일 정보)
+   */
   @Override
   public FileVO insertPostMedia(FileVO file) {
     String filename = file.getFileUrl() + '/' + file.getFileName();
@@ -39,6 +53,20 @@ public class MediaServiceImpl implements MediaService {
   }
 
   // 프로필 이미지 추가
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param file (추가할 파일 정보)
+   * @return file (이미지 추가 후, 생성된 mediaNo 추가한 파일 정보)
+   */
   @Override
   public FileVO insertProfileMedia(FileVO file) {
     String filename = file.getFileUrl() + '/' + file.getFileName();
@@ -51,6 +79,20 @@ public class MediaServiceImpl implements MediaService {
   }
 
   // 게시글 이미지 수정
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param file (수정할 게시글 이미지 파일 정보)
+   * @return file (이미지 정보 테이블 데이터 수정 후, 생성된 mediaNo 추가한 파일 정보)
+   */
   @Override
   public FileVO updatePostMedia(FileVO file) {
     String filename = file.getFileUrl() + '/' + file.getFileName();
@@ -64,6 +106,20 @@ public class MediaServiceImpl implements MediaService {
   }
 
   // 프로필 이미지 수정
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param file (수정할 프로필 이미지 파일 정보)
+   * @return file (이미지 정보 테이블 데이터 수정 후, 생성된 mediaNo 추가한 파일 정보)
+   */
   @Override
   public FileVO updateProfileMedia(FileVO file) {
     String filename = file.getFileUrl() + '/' + file.getFileName();
@@ -77,18 +133,58 @@ public class MediaServiceImpl implements MediaService {
   }
 
   // 게시글 이미지 삭제
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param file (삭제할 게시글 이미지 파일 정보)
+   */
   @Override
   public void deletePostMedia(FileVO file) {
     mediaMapper.deleteMedia(file);
   }
 
   // 프로필 이미지 삭제
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param file (삭제할 프로필 이미지 파일 정보)
+   */
   @Override
   public void deleteProfileMedia(FileVO file) {
     mediaMapper.deleteMedia(file);
   }
 
   // 이미지 1건 정보 조회 (프로필/게시글 무관)
+  /**
+   * <pre>
+   * 작성일 : 2022-04-08
+   * 작성자 : "cshwang"
+   * 설명   : 
+   *
+   * 수정내역(수정일 수정자 - 수정내용)
+   * -------------------------------------------------------------------------
+   * 2022-04-08. "cshwang" - 최초생성
+   * </pre>
+   *
+   * @param mediaNo
+   * @return 이미지 테이블에서 가져온 특정한 이미지의 데이터
+   */
   @Override
   public MediaVO selectMedia(int mediaNo) {
     return mediaMapper.selectMedia(mediaNo);

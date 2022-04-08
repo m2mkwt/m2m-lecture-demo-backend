@@ -59,8 +59,8 @@ public class ProfileController {
    * 2022-04-07. "cshwang" - 최초생성
    * </pre>
    *
-   * @param memberNo
-   * @return 성공 : Map<String, Objecet> result, 실패 : "인증실패"
+   * @param memberNo (회원번호)
+   * @return result(맵) (mvo(회원정보), filename(회원 프로필 이미지 파일명))
    */
   @RequestMapping("getProfile")
   public ResponseEntity<? extends BasicResponse> selectMember(@RequestParam int memberNo) {
@@ -98,8 +98,8 @@ public class ProfileController {
    * 2022-04-07. "cshwang" - 최초생성
    * </pre>
    *
-   * @param mvo
-   * @return 수정 결과 문자열 (수정 성공, 수정 실패)
+   * @param mvo (수정할 회원 정보)
+   * @return result (문자열 : 수정 성공)
    */
   @RequestMapping(value = "editProfile", method = RequestMethod.POST)
   public ResponseEntity<? extends BasicResponse> updateProfile(@RequestBody MemberVO mvo) {
@@ -129,7 +129,7 @@ public class ProfileController {
    * </pre>
    *
    * @param map
-   * @return 수정 결과 문자열 (성공, 비밀번호 불일치, 인증 실패)
+   * @return result (문자열 : 수정 성공, 비밀번호 불일치, 인증 실패)
    */
   @RequestMapping(value = "editPassword", method = RequestMethod.POST)
   public ResponseEntity<? extends BasicResponse> updatePassword(
